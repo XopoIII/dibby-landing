@@ -1,0 +1,21 @@
+# macOS system files
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.DocumentRevisions-V100
+
+# Thumbnails
+Icon?
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
