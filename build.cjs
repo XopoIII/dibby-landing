@@ -1,0 +1,251 @@
+#!/usr/bin/env node
+/* ============================================================================
+   dibby landing — static pre-render build.
+
+   WHY: the page localizes via client-side JS (i18n.js). AI crawlers (GPTBot,
+   PerplexityBot, ClaudeBot, …) and most non-Google engines do NOT run JS, so
+   only the raw English HTML is ever seen and the other 10 locales are
+   invisible. This script "bakes" one static HTML file per language with the
+   text already in the markup, plus hreflang, JSON-LD, sitemap, robots, llms.txt.
+
+   USAGE:  node build.cjs        → writes ./dist/ (deploy that folder)
+   The JS i18n stays as a UX layer; the language picker navigates between the
+   baked URLs (see DIBBY_PATHS injected below).
+
+   TODO before going live: set SITE_URL to the real domain.
+   ========================================================================== */
+"use strict";
+
+const fs = require("fs");
+const path = require("path");
+
+// ---- config ---------------------------------------------------------------
+const SITE_URL = "https://dibby.example"; // <-- REPLACE with the real domain (no trailing slash)
+const ROOT = __dirname;
+const SRC = path.join(ROOT, "landing");
+const ASSETS_SRC = path.join(ROOT, "assets");
+const OUT = path.join(ROOT, "dist");
+
+// Load the translation tables exactly like the browser does.
+global.window = {};
+require(path.join(SRC, "i18n.js"));
+const { LANGS, FRIEND_SLUGS, FRIEND_NAMES, I18N } = global.window;
+
+// per-language: URL sub-path, hreflang/lang code, writing system class
+const URLCODE = { en: "", ru: "ru", zh_CN: "zh-cn", zh_TW: "zh-tw", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
+const HREFLANG = { en: "en", ru: "ru", zh_CN: "zh-Hans", zh_TW: "zh-Hant", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
+const SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk" };
+const REVEAL = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
+const CONFETTI = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
+const FAQ_PAIRS = [["q5", "a5"], ["q1", "a1"], ["q2", "a2"], ["q3", "a3"], ["q4", "a4"]];
+
+const APPLE_SVG = '<svg viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.5 2.2 2.6 2.1 1-.04 1.4-.7 2.7-.7s1.6.7 2.7.66c1.1-.02 1.8-1 2.5-2a9 9 0 001.1-2.3c-.02-.01-2.1-.8-2.1-3.2zM14.3 6.1c.6-.7 1-1.7.9-2.7-.8.03-1.9.5-2.5 1.3-.5.6-1 1.6-.9 2.6.9.07 1.8-.5 2.5-1.2z"/></svg>';
+const PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M3.6 2.3c-.2.2-.3.5-.3.9v17.6c0 .4.1.7.3.9l.1.1L13.5 12 3.7 2.2l-.1.1zM17 8.3l-2.4-1.4L5.6 16l9-5.2L17 9.4v-1.1zM4.7 21.3l9.9-9.3 2.4 1.4c.9.5.9 1.4 0 1.9l-2.4 1.4-9.9 4.6zM5.6 8L14.6 17 17 15.6c.9-.5.9-1.4 0-1.9L14.6 12 5.6 8z"/></svg>';
+
+// the two distinct English description strings present in the <head> template
+const EN_DESC_LONG = "Lower the rope, slip past the rubble, and lift a little friend home. A cozy one-finger arcade. Coming soon to iOS & Android.";
+const EN_DESC_SHORT = "Lower the rope, slip past the rubble, and lift a little friend home. Coming soon to iOS & Android.";
+const EN_TITLE = "dibby — cozy one-finger rescue arcade";
+
+// ---- helpers ---------------------------------------------------------------
+const escText = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escAttr = s => escText(s).replace(/"/g, "&quot;");
+const langPath = code => (code === "en" ? "/" : `/${URLCODE[code]}/`);
+const absUrl = code => SITE_URL + langPath(code);
+
+function storeBadges(t) {
+  return (
+    '<a class="store" href="#get" data-prereg="ios"><span class="store__soon">' + escText(t.soon) + "</span>" + APPLE_SVG +
+    '<span class="store__txt"><span class="store__small">' + escText(t.downloadOn) + '</span><span class="store__big">' + escText(t.appstore) + "</span></span></a>" +
+    '<a class="store" href="#get" data-prereg="android"><span class="store__soon">' + escText(t.soon) + "</span>" + PLAY_SVG +
+    '<span class="store__txt"><span class="store__small">' + escText(t.getItOn) + '</span><span class="store__big">' + escText(t.playstore) + "</span></span></a>"
+  );
+}
+
+function friendsGrid(names, assetPrefix) {
+  const revealedIdx = REVEAL.map(s => FRIEND_SLUGS.indexOf(s)).filter(i => i >= 0);
+  const isRevealed = {};
+  revealedIdx.forEach(i => { isRevealed[i] = true; });
+  const order = revealedIdx.concat(FRIEND_SLUGS.map((_, i) => i).filter(i => !isRevealed[i]));
+  return order.map(i => {
+    const found = !!isRevealed[i];
+    const no = String(i + 1).padStart(2, "0");
+    const name = names[i];
+    return (
+      '<div class="friend ' + (found ? "friend--found" : "friend--locked") + '">' +
+      '<div class="friend__pic"><img class="pixelated" src="' + assetPrefix + "friends/" + FRIEND_SLUGS[i] + '.png" alt="' + (found ? escAttr(name) : "") + '" /></div>' +
+      '<div class="friend__name">' + (found ? escText(name) : "???") + "</div>" +
+      '<div class="friend__no">#' + no + "</div>" +
+      "</div>"
+    );
+  }).join("");
+}
+
+function faqList(t) {
+  return FAQ_PAIRS.map(([q, a]) =>
+    '<div class="faq-item">' +
+    '<button class="faq-q">' + escText(t[q]) + '<span class="chev">+</span></button>' +
+    '<div class="faq-a"><p>' + escText(t[a]) + "</p></div>" +
+    "</div>"
+  ).join("");
+}
+
+function confettiRow(assetPrefix) {
+  return CONFETTI.map((s, i) =>
+    '<img class="pixelated bob" style="animation-delay:' + (i * 0.3) + 's" src="' + assetPrefix + "friends/" + s + '.png" alt="" />'
+  ).join("");
+}
+
+function hreflangLinks() {
+  const links = LANGS.map(l => `<link rel="alternate" hreflang="${HREFLANG[l.code]}" href="${absUrl(l.code)}" />`);
+  links.push(`<link rel="alternate" hreflang="x-default" href="${absUrl("en")}" />`);
+  return links.join("\n");
+}
+
+function jsonLd(code, t) {
+  const game = {
+    "@context": "https://schema.org",
+    "@type": ["VideoGame", "MobileApplication"],
+    name: "dibby",
+    description: t.sub,
+    applicationCategory: "GameApplication",
+    operatingSystem: "iOS, Android",
+    gamePlatform: ["iOS", "Android"],
+    inLanguage: HREFLANG[code],
+    url: absUrl(code),
+    image: SITE_URL + "/assets/screens/main.png",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/PreOrder" },
+    publisher: { "@type": "Organization", name: "dibby", url: SITE_URL + "/" }
+  };
+  const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: HREFLANG[code],
+    mainEntity: FAQ_PAIRS.map(([q, a]) => ({
+      "@type": "Question", name: t[q],
+      acceptedAnswer: { "@type": "Answer", text: t[a] }
+    }))
+  };
+  return (
+    '<script type="application/ld+json">' + JSON.stringify(game) + "</script>\n" +
+    '<script type="application/ld+json">' + JSON.stringify(faq) + "</script>"
+  );
+}
+
+function dibbyConfigScript(code) {
+  const paths = {};
+  LANGS.forEach(l => { paths[l.code] = langPath(l.code); });
+  return '<script>window.DIBBY_LANG=' + JSON.stringify(code) + ";window.DIBBY_PATHS=" + JSON.stringify(paths) + ";</script>";
+}
+
+// ---- per-language render ---------------------------------------------------
+function renderLang(code, template) {
+  const t = I18N[code];
+  const names = FRIEND_NAMES[code] || FRIEND_NAMES.en;
+  const isEn = code === "en";
+  const depth = isEn ? 0 : 1;
+  const assetPrefix = isEn ? "assets/" : "../assets/";
+  const sitePrefix = isEn ? "" : "../";
+
+  let h = template;
+
+  // <html lang/data-script>
+  h = h.replace('<html lang="en" data-script="latin">', `<html lang="${HREFLANG[code]}" data-script="${SCRIPT_OF[code] || "latin"}">`);
+
+  // data-i18n text nodes (data-i18n is always the last attribute in this template)
+  h = h.replace(/data-i18n="(\w+)"\s*>([\s\S]*?)<\//g, (m, key, _inner) => {
+    const val = t[key];
+    return val == null ? m : `data-i18n="${key}">${escText(val)}</`;
+  });
+
+  // JS-injected containers → bake real HTML so crawlers see it (JS rebuilds it identically for users)
+  h = h.split('<div class="stores" data-stores></div>').join('<div class="stores" data-stores>' + storeBadges(t) + "</div>");
+  h = h.replace('<div class="friends-grid" data-friends></div>', '<div class="friends-grid" data-friends>' + friendsGrid(names, assetPrefix) + "</div>");
+  h = h.replace('<div class="faq-list" data-faq></div>', '<div class="faq-list" data-faq>' + faqList(t) + "</div>");
+  h = h.replace('<div class="confetti-row" data-confetti></div>', '<div class="confetti-row" data-confetti>' + confettiRow(assetPrefix) + "</div>");
+  h = h.replace('<div class="final-confetti" data-confetti2></div>', '<div class="final-confetti" data-confetti2>' + confettiRow(assetPrefix) + "</div>");
+
+  // localized <head> title + description (keep the hand-written English as-is)
+  if (!isEn) {
+    const title = `dibby — ${t.kicker}`;
+    const desc = `${t.sub} ${t.footerSoon}`;
+    h = h.split(EN_TITLE).join(escAttr(title));
+    h = h.split(EN_DESC_LONG).join(escAttr(desc));
+    h = h.split(EN_DESC_SHORT).join(escAttr(desc));
+  }
+
+  // absolute URLs: image first (always site root), then canonical + og:url (per-locale)
+  h = h.split('https://dibby.game/assets/screens/main.png').join(SITE_URL + "/assets/screens/main.png");
+  h = h.split('https://dibby.game/"').join(absUrl(code) + '"');
+
+  // relative paths by depth
+  h = h.split('../assets/').join(assetPrefix);                 // icons, og fallbacks, inline ASSET var, etc.
+  h = h.split('var ASSET = "assets/";').join('var ASSET = "' + assetPrefix + '";'); // fix only if the above turned it wrong
+  h = h.replace('href="styles.css"', `href="${sitePrefix}styles.css"`);
+  h = h.replace('<script src="i18n.js"></script>', dibbyConfigScript(code) + '\n<script src="' + sitePrefix + 'i18n.js"></script>');
+
+  // hreflang + JSON-LD before </head>
+  h = h.replace("</head>", hreflangLinks() + "\n" + jsonLd(code, t) + "\n</head>");
+
+  return h;
+}
+
+// ---- sitemap / robots / llms ----------------------------------------------
+function sitemap() {
+  const urls = LANGS.map(l => {
+    const alts = LANGS.map(a => `    <xhtml:link rel="alternate" hreflang="${HREFLANG[a.code]}" href="${absUrl(a.code)}" />`).join("\n") +
+      `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${absUrl("en")}" />`;
+    return `  <url>\n    <loc>${absUrl(l.code)}</loc>\n${alts}\n  </url>`;
+  }).join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`;
+}
+
+function robots() {
+  // Allow everyone (incl. AI bots) — for a coming-soon launch, both AI training and AI-search citation help.
+  return `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+}
+
+function llms() {
+  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free at launch, no ads. Coming soon to iOS & Android.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 11 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n`;
+}
+
+// ---- fs helpers ------------------------------------------------------------
+function rmrf(p) { if (fs.existsSync(p)) fs.rmSync(p, { recursive: true, force: true }); }
+function copyDir(src, dst) {
+  fs.mkdirSync(dst, { recursive: true });
+  for (const e of fs.readdirSync(src, { withFileTypes: true })) {
+    if (e.name === ".DS_Store") continue;
+    const s = path.join(src, e.name), d = path.join(dst, e.name);
+    if (e.isDirectory()) copyDir(s, d); else fs.copyFileSync(s, d);
+  }
+}
+
+// ---- build -----------------------------------------------------------------
+function build() {
+  const template = fs.readFileSync(path.join(SRC, "index.html"), "utf8");
+  rmrf(OUT);
+  fs.mkdirSync(OUT, { recursive: true });
+
+  // shared static files
+  copyDir(ASSETS_SRC, path.join(OUT, "assets"));
+  fs.copyFileSync(path.join(SRC, "styles.css"), path.join(OUT, "styles.css"));
+  fs.copyFileSync(path.join(SRC, "i18n.js"), path.join(OUT, "i18n.js"));
+
+  // one HTML per language
+  for (const l of LANGS) {
+    const html = renderLang(l.code, template);
+    const dir = l.code === "en" ? OUT : path.join(OUT, URLCODE[l.code]);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "index.html"), html);
+  }
+
+  fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemap());
+  fs.writeFileSync(path.join(OUT, "robots.txt"), robots());
+  fs.writeFileSync(path.join(OUT, "llms.txt"), llms());
+
+  console.log(`Built ${LANGS.length} locales → ${path.relative(ROOT, OUT)}/`);
+  console.log(`Locales: ${LANGS.map(l => l.code === "en" ? "/" : "/" + URLCODE[l.code] + "/").join("  ")}`);
+  if (SITE_URL.includes("example")) console.log("⚠  SITE_URL is still a placeholder — set the real domain in build.cjs before deploying.");
+}
+
+build();

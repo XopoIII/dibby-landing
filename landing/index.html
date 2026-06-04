@@ -366,8 +366,15 @@ Save a friend.</h1>
       b.setAttribute("role", "menuitem");
       b.textContent = l.name;
       b.addEventListener("click", function () {
-        applyLang(l.code);
         document.getElementById("lang").classList.remove("open");
+        // On the pre-rendered multi-URL build, jump to the language's own URL
+        // (keeps URL == content, so each locale stays crawlable). In the raw
+        // dev file there is no DIBBY_PATHS, so we swap in place as before.
+        if (window.DIBBY_PATHS && window.DIBBY_PATHS[l.code] && l.code !== window.DIBBY_LANG) {
+          location.href = window.DIBBY_PATHS[l.code];
+        } else {
+          applyLang(l.code);
+        }
       });
       menu.appendChild(b);
     });
@@ -447,6 +454,10 @@ Save a friend.</h1>
 
   /* ---------- boot ---------- */
   function pickInitialLang() {
+    // On a pre-rendered locale page, the page's own language wins (so JS never
+    // clobbers the baked-in localized HTML). Otherwise fall back to the saved
+    // choice, then English.
+    if (window.DIBBY_LANG && window.I18N[window.DIBBY_LANG]) return window.DIBBY_LANG;
     try { var s = localStorage.getItem("dibby_lang"); if (s && window.I18N[s]) return s; } catch (e) {}
     return "en"; // default per spec
   }
