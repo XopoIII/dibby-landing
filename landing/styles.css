@@ -137,7 +137,7 @@ a { color: inherit; text-decoration: none; }
   min-width: 184px;
   box-shadow: 0 5px 0 0 rgba(0, 0, 0, 0.25), 0 14px 24px -12px rgba(61, 74, 82, 0.6);
   transition: transform 0.16s var(--ease);
-  cursor: default;
+  cursor: pointer;
 }
 .store:hover { transform: translateY(-2px); }
 .store svg { width: 26px; height: 26px; flex: none; fill: var(--cream); }
@@ -218,30 +218,6 @@ a { color: inherit; text-decoration: none; }
 .lang__opt:hover { background: var(--mint); }
 .lang__opt[aria-current="true"] { background: var(--peach); }
 
-/* ---------- hero switcher (design-explore control) ---------- */
-.hero-switch {
-  position: fixed;
-  left: 50%; bottom: 16px; transform: translateX(-50%);
-  z-index: 60;
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(61, 74, 82, 0.92);
-  color: var(--cream);
-  border-radius: 999px;
-  padding: 6px 8px 6px 14px;
-  box-shadow: var(--shadow-soft);
-  font-family: var(--font-ui); font-size: 0.78rem; font-weight: 700;
-  backdrop-filter: blur(6px);
-}
-.hero-switch span { opacity: 0.8; margin-right: 4px; }
-.hero-switch button {
-  font-family: var(--font-pixel); font-size: 0.95rem;
-  width: 30px; height: 30px; border-radius: 50%;
-  border: none; cursor: pointer; color: var(--cream);
-  background: rgba(255, 255, 255, 0.14); transition: background 0.15s, color 0.15s, transform 0.15s;
-}
-.hero-switch button:hover { background: rgba(255, 255, 255, 0.28); }
-.hero-switch button[aria-current="true"] { background: var(--gold); color: var(--ink); transform: scale(1.08); }
-
 /* ---------- generic section ---------- */
 section { position: relative; }
 .section-pad { padding: clamp(56px, 9vw, 110px) 0; }
@@ -259,13 +235,8 @@ section { position: relative; }
 .center .section-lede { margin-inline: auto; }
 
 /* ============================================================
-   HERO (three variants toggled by [data-hero] on <body>)
+   HERO (cozy split)
    ============================================================ */
-.hero { display: none; }
-body[data-hero="1"] #hero1,
-body[data-hero="2"] #hero2,
-body[data-hero="3"] #hero3 { display: block; }
-
 .hero-copy .eyebrow { margin-bottom: 14px; }
 .hero-h1 { font-size: clamp(2.3rem, 6.2vw, 4.4rem); white-space: pre-line; }
 .hero-sub { font-size: clamp(1.05rem, 2.1vw, 1.35rem); color: var(--ink-soft); margin-top: 20px; max-width: 30ch; text-wrap: pretty; }
@@ -346,43 +317,31 @@ body[data-hero="3"] #hero3 { display: block; }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @media (prefers-reduced-motion: reduce) { .bob { animation: none; } }
 
-/* ----- Hero 1: cozy split ----- */
-#hero1 .hero-grid {
+/* ----- Hero: cozy split ----- */
+#hero .hero-grid {
   display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 5vw, 64px);
-  align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 6vw, 90px);
+  align-items: center; padding: clamp(40px, 6vw, 80px) 0 clamp(36px, 5vw, 64px);
 }
-#hero1 .phone-wrap { display: flex; justify-content: center; }
-#hero1 .logo { font-size: clamp(3rem, 7vw, 4.4rem); margin-bottom: 6px; }
+#hero .phone-wrap { display: flex; justify-content: center; }
+#hero .logo { font-size: clamp(3rem, 7vw, 4.4rem); margin-bottom: 6px; }
 
-/* ----- Hero 2: immersive vertical (mobile-game feel, bottom-heavy CTA) ----- */
-#hero2 .hero2-stage {
-  position: relative;
-  min-height: min(92vh, 820px);
-  display: flex; flex-direction: column; align-items: center;
-  padding: clamp(28px, 5vw, 56px) 0 0;
-  text-align: center; overflow: hidden;
+/* status line + dot near the CTA */
+.status-line {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-ui); font-weight: 800; font-size: 0.92rem;
+  color: var(--ink); background: rgba(255,255,255,0.55);
+  border: 2px solid rgba(61,74,82,0.18); border-radius: 999px;
+  padding: 6px 14px 6px 12px;
 }
-#hero2 .logo { font-size: clamp(3.4rem, 12vw, 6.5rem); }
-#hero2 .hero-h1 { font-size: clamp(1.9rem, 5vw, 3.2rem); margin-top: 10px; }
-#hero2 .hero-sub { margin-inline: auto; }
-#hero2 .phone { margin-top: 26px; box-shadow: 0 -10px 0 0 transparent, 0 40px 70px -30px rgba(61,74,82,0.7); }
-#hero2 .hero2-cta {
-  position: sticky; bottom: 0; width: 100%;
-  display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
-  padding: 18px; margin-top: 22px;
-  background: linear-gradient(0deg, var(--cream) 55%, rgba(255,253,247,0));
-}
+.status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); border: 1.5px solid var(--ink); flex: none; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn--lg { font-size: 1.08rem; padding: 0.95em 1.6em; }
+.cta-note { font-family: var(--font-ui); font-weight: 700; font-size: 0.84rem; color: var(--ink-soft); }
 
-/* ----- Hero 3: playful big-type ----- */
-#hero3 .hero3-stage { padding: clamp(44px, 7vw, 96px) 0; text-align: center; position: relative; }
-#hero3 .logo { font-size: clamp(3.2rem, 9vw, 6rem); }
-#hero3 .hero-h1 { font-size: clamp(2.6rem, 8.5vw, 6.2rem); margin: 8px auto 0; max-width: 16ch; }
-#hero3 .hero-sub { margin: 18px auto 0; }
-#hero3 .hero3-cta { justify-content: center; align-items: center; margin-inline: auto; margin-top: 28px; }
-#hero3 .hero-cta { align-items: center; }
-#hero3 .confetti-row { display: flex; justify-content: center; gap: clamp(6px, 2vw, 22px); margin-top: 40px; flex-wrap: wrap; }
-#hero3 .confetti-row img { width: clamp(46px, 9vw, 78px); height: auto; }
-#hero3 .mascot-peek { width: clamp(120px, 22vw, 200px); margin: 8px auto -4px; }
+/* confetti row of friends (hero + final cta) */
+.confetti-row { display: flex; justify-content: center; gap: clamp(6px, 2vw, 22px); margin-top: 4px; flex-wrap: wrap; }
+.confetti-row img { width: clamp(44px, 8vw, 70px); height: auto; }
+#hero .confetti-row { margin-top: clamp(8px, 2vw, 22px); }
 
 /* ---------- how to play ---------- */
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 48px; }
@@ -528,15 +487,29 @@ body[data-hero="3"] #hero3 { display: block; }
 /* decorative downward chevrons used in section backgrounds */
 .chev-bg { position: absolute; inset: 0; pointer-events: none; opacity: 0.5; overflow: hidden; }
 
+/* ---------- mobile sticky CTA bar (base hidden; shown in the media query below) ---------- */
+.mobile-cta {
+  display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 55;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(0deg, var(--cream) 70%, rgba(255,253,247,0));
+  justify-content: center;
+}
+.mobile-cta .btn { width: 100%; max-width: 420px; justify-content: center; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 880px) {
   .nav { display: none; }
-  #hero1 .hero-grid { grid-template-columns: 1fr; text-align: center; }
-  #hero1 .hero-cta { align-items: center; }
-  #hero1 .hero-sub { margin-inline: auto; }
-  #hero1 .phone-wrap { order: -1; }
+  #hero .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  #hero .hero-cta { align-items: center; }
+  #hero .hero-sub { margin-inline: auto; }
+  #hero .status-line { align-self: center; }
+  #hero .cta-row { justify-content: center; }
+  #hero .phone-wrap { order: -1; }
   .steps { grid-template-columns: 1fr; }
   .feat-grid { grid-template-columns: 1fr; }
+  /* keep the primary CTA reachable on phones */
+  body { padding-bottom: 72px; }
+  .mobile-cta { display: flex; }
 }
 @media (max-width: 560px) {
   .site-header .wrap { gap: 10px; }
@@ -550,7 +523,13 @@ body[data-hero="3"] #hero3 { display: block; }
   .friend__pic img { max-height: 58px; }
 }
 
-/* keep the fixed hero-switch from covering hero2's sticky CTA on phones */
-@media (max-width: 560px) {
-  .hero-switch { bottom: auto; top: 74px; }
-}
+/* ---------- final CTA section ---------- */
+.final-cta { position: relative; background: linear-gradient(180deg, rgba(166,220,203,0) 0%, rgba(255,214,165,0.35) 100%); }
+.final-cta .center-cta { margin-top: 30px; display: inline-flex; flex-direction: column; align-items: center; gap: 16px; }
+.final-cta .stores { justify-content: center; }
+.final-confetti { display: flex; justify-content: center; gap: clamp(8px, 2.4vw, 24px); margin-bottom: 26px; flex-wrap: wrap; }
+.final-confetti img { width: clamp(48px, 9vw, 76px); height: auto; }
+
+/* ---------- friends gallery: secret teaser + cta ---------- */
+.friends-secret { margin-top: 18px; font-family: var(--font-ui); font-weight: 700; color: var(--ink-soft); font-size: 1rem; }
+.friends-cta { margin-top: 18px; }

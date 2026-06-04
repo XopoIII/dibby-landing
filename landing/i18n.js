@@ -40,6 +40,14 @@ window.FRIEND_NAMES = {
 
 window.I18N = {
   en: {
+    notify: "Notify me at launch", joinCommunity: "Join the community", ctaNote: "Free at launch · no ads",
+    statusLine: "Coming soon — iOS & Android", friendsCta: "Save the other 30 — get a launch reminder",
+    secretLine: "…and a few rare friends hide even deeper.",
+    finalKicker: "almost time", finalTitle: "Be there when the rope drops",
+    finalSub: "We'll send a single nudge the day dibby lands — then get out of your way.",
+    q5: "When does it launch — and how do I not miss it?",
+    a5: "Soon. Pre-register and we'll ping you the moment dibby is live — one message, no spam in between.",
+    footerGame: "Game", footerGet: "Get",
     kicker: "Cozy one-finger arcade",
     h1: "Lower the rope.\nSave a friend.",
     sub: "Guide a rope with one finger, slip past the falling rubble, and lift the little friend waiting at the bottom of the pit back home.",
@@ -72,6 +80,14 @@ window.I18N = {
     langLabel: "Language"
   },
   ru: {
+    notify: "Сообщить о выходе", joinCommunity: "В сообщество", ctaNote: "Бесплатно на старте · без рекламы",
+    statusLine: "Скоро — iOS и Android", friendsCta: "Спаси остальных 30 — узнай о выходе",
+    secretLine: "…а пара редких друзей прячется ещё глубже.",
+    finalKicker: "почти пора", finalTitle: "Будь рядом, когда упадёт верёвка",
+    finalSub: "В день выхода dibby пришлём один тихий сигнал — и больше не потревожим.",
+    q5: "Когда выход — и как не пропустить?",
+    a5: "Скоро. Оставь заявку, и мы напишем, как только dibby выйдет — одно сообщение, без спама между.",
+    footerGame: "Игра", footerGet: "Скачать",
     kicker: "Уютная аркада одним пальцем",
     h1: "Опусти верёвку.\nСпаси друга.",
     sub: "Веди верёвку одним пальцем, проскальзывай мимо падающих обломков и подними наверх друга, что ждёт на дне ямы.",
@@ -104,6 +120,14 @@ window.I18N = {
     langLabel: "Язык"
   },
   zh_CN: {
+    notify: "上线时通知我", joinCommunity: "加入社区", ctaNote: "上线免费 · 无广告",
+    statusLine: "即将上线 — iOS 与安卓", friendsCta: "救起其余 30 个 — 上线时提醒我",
+    secretLine: "……还有几个稀有伙伴藏得更深。",
+    finalKicker: "就快了", finalTitle: "绳子落下时，别错过",
+    finalSub: "dibby 上线当天，我们只轻轻提醒一次——之后绝不打扰。",
+    q5: "什么时候上线——怎样才不会错过？",
+    a5: "很快。先预约，dibby 一上线我们就通知你——只有一条消息，中间绝无骚扰。",
+    footerGame: "游戏", footerGet: "获取",
     kicker: "一根手指的治愈小游戏",
     h1: "放下绳子。\n救起朋友。",
     sub: "用一根手指牵引绳子，避开坠落的碎石，把在坑底等待的小朋友拉回家。",
@@ -136,6 +160,14 @@ window.I18N = {
     langLabel: "语言"
   },
   zh_TW: {
+    notify: "上線時通知我", joinCommunity: "加入社群", ctaNote: "上線免費 · 無廣告",
+    statusLine: "即將推出 — iOS 與 Android", friendsCta: "救起其餘 30 個 — 上線時提醒我",
+    secretLine: "……還有幾個稀有夥伴藏得更深。",
+    finalKicker: "就快了", finalTitle: "繩子落下時，別錯過",
+    finalSub: "dibby 上線當天，我們只輕輕提醒一次——之後絕不打擾。",
+    q5: "什麼時候上線——怎樣才不會錯過？",
+    a5: "很快。先預約，dibby 一上線我們就通知你——只有一則訊息，中間絕無騷擾。",
+    footerGame: "遊戲", footerGet: "取得",
     kicker: "一根手指的療癒小遊戲",
     h1: "放下繩子。\n救起朋友。",
     sub: "用一根手指牽引繩子，避開墜落的碎石，把在坑底等待的小朋友拉回家。",
@@ -168,6 +200,14 @@ window.I18N = {
     langLabel: "語言"
   },
   ja: {
+    notify: "配信時に知らせる", joinCommunity: "コミュニティに参加", ctaNote: "配信時は無料 · 広告なし",
+    statusLine: "近日配信 — iOS・Android", friendsCta: "のこり30ひきも救う — 配信のお知らせを受け取る",
+    secretLine: "……それに、レアななかまが何ひきか、もっと深くにかくれている。",
+    finalKicker: "もうすぐ", finalTitle: "ロープが落ちる、その瞬間に",
+    finalSub: "dibby 配信の日に、そっと一度だけお知らせします。あとは静かに。",
+    q5: "いつ配信？ どうすれば見逃さない？",
+    a5: "もうすぐ。事前登録すれば、dibby 配信の瞬間にお知らせします。メッセージは一通だけ、あいだにスパムはありません。",
+    footerGame: "ゲーム", footerGet: "入手",
     kicker: "指一本のほっこりアーケード",
     h1: "ロープを下ろして、\nなかまを救おう。",
     sub: "指一本でロープを導き、落ちてくる岩を避けて、穴の底で待つ小さななかまを家まで引き上げよう。",
@@ -200,6 +240,14 @@ window.I18N = {
     langLabel: "言語"
   },
   ko: {
+    notify: "출시되면 알려줘요", joinCommunity: "커뮤니티 참여", ctaNote: "출시 시 무료 · 광고 없음",
+    statusLine: "출시 예정 — iOS·Android", friendsCta: "나머지 30명도 구하기 — 출시 알림 받기",
+    secretLine: "…그리고 희귀한 친구 몇몇은 더 깊이 숨어 있어요.",
+    finalKicker: "거의 다 됐어요", finalTitle: "밧줄이 내려가는 순간, 함께해요",
+    finalSub: "dibby가 나오는 날 딱 한 번 살짝 알려드리고, 그다음엔 조용히 비켜 있을게요.",
+    q5: "언제 출시되나요 — 어떻게 놓치지 않죠?",
+    a5: "곧이에요. 사전 등록하면 dibby가 켜지는 순간 알려드려요 — 메시지 한 통, 그 사이 스팸은 없어요.",
+    footerGame: "게임", footerGet: "받기",
     kicker: "손가락 하나로 즐기는 포근한 아케이드",
     h1: "밧줄을 내리고,\n친구를 구해요.",
     sub: "손가락 하나로 밧줄을 이끌어 떨어지는 잔해를 피하고, 구덩이 바닥에서 기다리는 작은 친구를 집까지 끌어올리세요.",
@@ -232,6 +280,14 @@ window.I18N = {
     langLabel: "언어"
   },
   de: {
+    notify: "Zum Start benachrichtigen", joinCommunity: "Zur Community", ctaNote: "Kostenlos zum Start · keine Werbung",
+    statusLine: "Bald — iOS & Android", friendsCta: "Rette die anderen 30 — Erinnerung zum Start sichern",
+    secretLine: "… und ein paar seltene Freunde verstecken sich noch tiefer.",
+    finalKicker: "fast so weit", finalTitle: "Sei dabei, wenn das Seil fällt",
+    finalSub: "Am Tag, an dem dibby landet, gibt's einen einzigen Wink — dann lassen wir dich in Ruhe.",
+    q5: "Wann erscheint es — und wie verpasse ich es nicht?",
+    a5: "Bald. Registrier dich vorab und wir melden uns, sobald dibby live ist — eine Nachricht, dazwischen kein Spam.",
+    footerGame: "Spiel", footerGet: "Holen",
     kicker: "Gemütliche Ein-Finger-Arcade",
     h1: "Lass das Seil hinab.\nRette einen Freund.",
     sub: "Führe ein Seil mit einem Finger, gleite an herabfallendem Geröll vorbei und hol den kleinen Freund vom Grund der Grube wieder nach Hause.",
@@ -264,6 +320,14 @@ window.I18N = {
     langLabel: "Sprache"
   },
   fr: {
+    notify: "Me prévenir au lancement", joinCommunity: "Rejoindre la communauté", ctaNote: "Gratuit au lancement · sans pub",
+    statusLine: "Bientôt — iOS et Android", friendsCta: "Sauve les 30 autres — reçois un rappel au lancement",
+    secretLine: "… et quelques amis rares se cachent encore plus bas.",
+    finalKicker: "presque l'heure", finalTitle: "Sois là quand la corde tombe",
+    finalSub: "Le jour où dibby arrive, on t'envoie un seul petit mot — puis on te laisse tranquille.",
+    q5: "C'est pour quand — et comment ne pas rater ça ?",
+    a5: "Bientôt. Pré-inscris-toi et on te prévient dès que dibby est en ligne — un seul message, aucun spam entre-temps.",
+    footerGame: "Jeu", footerGet: "Obtenir",
     kicker: "Arcade tout en douceur, à un doigt",
     h1: "Descends la corde.\nSauve un ami.",
     sub: "Guide une corde d'un seul doigt, faufile-toi entre les gravats qui tombent et remonte le petit ami qui attend au fond du gouffre.",
@@ -296,6 +360,14 @@ window.I18N = {
     langLabel: "Langue"
   },
   es: {
+    notify: "Avísame al salir", joinCommunity: "Unirse a la comunidad", ctaNote: "Gratis al salir · sin anuncios",
+    statusLine: "Pronto — iOS y Android", friendsCta: "Salva a los otros 30 — recibe un aviso al salir",
+    secretLine: "…y unos cuantos amigos raros se esconden aún más hondo.",
+    finalKicker: "casi es la hora", finalTitle: "Está cuando caiga la cuerda",
+    finalSub: "El día que llegue dibby te daremos un solo aviso — y luego te dejamos en paz.",
+    q5: "¿Cuándo sale y cómo no me lo pierdo?",
+    a5: "Pronto. Regístrate antes y te avisamos en cuanto dibby esté disponible — un mensaje, sin spam entremedias.",
+    footerGame: "Juego", footerGet: "Conseguir",
     kicker: "Arcade acogedor de un dedo",
     h1: "Baja la cuerda.\nSalva a un amigo.",
     sub: "Guía una cuerda con un dedo, escabúllete entre los escombros que caen y sube a casa al amiguito que espera en el fondo del pozo.",
@@ -328,6 +400,14 @@ window.I18N = {
     langLabel: "Idioma"
   },
   pt: {
+    notify: "Avise-me no lançamento", joinCommunity: "Entrar na comunidade", ctaNote: "Grátis no lançamento · sem anúncios",
+    statusLine: "Em breve — iOS e Android", friendsCta: "Salve os outros 30 — receba um aviso no lançamento",
+    secretLine: "…e alguns amigos raros se escondem ainda mais fundo.",
+    finalKicker: "quase na hora", finalTitle: "Esteja lá quando a corda descer",
+    finalSub: "No dia em que dibby chegar, mandamos um único toque — e depois saímos do seu caminho.",
+    q5: "Quando lança — e como não perder?",
+    a5: "Em breve. Faça o pré-registro e a gente avisa no instante em que dibby entrar no ar — uma mensagem só, sem spam no meio.",
+    footerGame: "Jogo", footerGet: "Baixar",
     kicker: "Arcade aconchegante de um dedo",
     h1: "Desça a corda.\nSalve um amigo.",
     sub: "Guie uma corda com um dedo, passe pelos escombros que caem e leve para casa o amiguinho que espera no fundo do poço.",
@@ -360,6 +440,14 @@ window.I18N = {
     langLabel: "Idioma"
   },
   pl: {
+    notify: "Powiadom mnie o premierze", joinCommunity: "Dołącz do społeczności", ctaNote: "Za darmo na start · bez reklam",
+    statusLine: "Wkrótce — iOS i Android", friendsCta: "Uratuj pozostałych 30 — dostań przypomnienie o premierze",
+    secretLine: "…a kilku rzadkich przyjaciół chowa się jeszcze głębiej.",
+    finalKicker: "już prawie czas", finalTitle: "Bądź, gdy lina opada",
+    finalSub: "W dniu premiery dibby wyślemy jeden cichy sygnał — a potem zejdziemy ci z drogi.",
+    q5: "Kiedy premiera — i jak jej nie przegapić?",
+    a5: "Wkrótce. Zarejestruj się wcześniej, a damy znać w chwili, gdy dibby ruszy — jedna wiadomość, między nimi żadnego spamu.",
+    footerGame: "Gra", footerGet: "Pobierz",
     kicker: "Przytulna gra na jeden palec",
     h1: "Opuść linę.\nUratuj przyjaciela.",
     sub: "Prowadź linę jednym palcem, przemykaj obok spadającego gruzu i wyciągnij do domu małego przyjaciela, który czeka na dnie dołu.",
