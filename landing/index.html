@@ -31,6 +31,7 @@
     <a class="logo" href="#top" aria-label="dibby">dibby</a>
     <nav class="nav" aria-label="Primary">
       <a href="#how" data-i18n="navHow">How to play</a>
+      <a href="#shots" data-i18n="navShots">Screenshots</a>
       <a href="#friends" data-i18n="navFriends">Friends</a>
       <a href="#why" data-i18n="navWhy">Why it's fun</a>
       <a href="#faq" data-i18n="navFaq">FAQ</a>
@@ -105,6 +106,25 @@ Save a friend.</h1>
         <h3 data-i18n="s3t">Bring them home</h3>
         <p data-i18n="s3d">Reach the bottom, scoop up your friend, and carry them back to the camp.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SCREENSHOTS GALLERY ============================ -->
+<section class="section-pad shots" id="shots">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="shotsKicker">Real screenshots</p>
+      <h2 class="section-title" data-i18n="shotsTitle">Straight from the pit</h2>
+      <p class="section-lede" data-i18n="shotsSub">Real frames from the game — four biomes, dozens of friends, one rope.</p>
+    </div>
+    <div class="shots-grid">
+      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/gp-earth.png" alt="dibby gameplay — lowering the rope past obstacles in the earth biome" /></div><figcaption data-i18n="shot1">One finger, one rope</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/gp-water.png" alt="dibby gameplay — threading the rope between obstacles in the water biome" /></div><figcaption data-i18n="shot2">Every near-miss feels good</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/gp-crystal.png" alt="dibby gameplay — deeper crystal biome with new dangers" /></div><figcaption data-i18n="shot3">Deeper down, new dangers</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/rescued.png" alt="dibby — the moment a little friend is rescued from the pit" /></div><figcaption data-i18n="shot4">Bring a friend home</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/finale.png" alt="dibby — the finale screen with all 36 friends saved" /></div><figcaption data-i18n="shot5">36 friends, all saved</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/friends-menu.png" alt="dibby — the camp screen showing the collection of rescued friends" /></div><figcaption data-i18n="shot6">Your camp keeps growing</figcaption></figure>
     </div>
   </div>
 </section>
@@ -202,6 +222,7 @@ Save a friend.</h1>
         <div class="footer-col">
           <h4 data-i18n="footerGame">Game</h4>
           <a href="#how" data-i18n="navHow">How to play</a>
+          <a href="#shots" data-i18n="navShots">Screenshots</a>
           <a href="#friends" data-i18n="navFriends">Friends</a>
           <a href="#why" data-i18n="navWhy">Why it's fun</a>
           <a href="#faq" data-i18n="navFaq">FAQ</a>
@@ -393,7 +414,13 @@ Save a friend.</h1>
   // Drop the capture in when ready, then flip HAS_VIDEO to true (files: assets/gameplay.mp4 + .webm).
   var HAS_VIDEO = false;
   var VIDEO = [[ASSET + "gameplay.webm", "video/webm"], [ASSET + "gameplay.mp4", "video/mp4"]];
-  var SCREENS = [ASSET + "screens/main.png", ASSET + "screens/menu.png"];
+  var SCREENS = [
+    ASSET + "screens/gp-water.png",
+    ASSET + "screens/gp-crystal.png",
+    ASSET + "screens/rescued.png",
+    ASSET + "screens/gp-space.png",
+    ASSET + "screens/finale.png"
+  ];
 
   function buildPhones() {
     document.querySelectorAll("[data-phone]").forEach(function (scr) {
