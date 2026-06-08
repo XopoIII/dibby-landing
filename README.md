@@ -1,60 +1,60 @@
-# dibby — лендинг
+# dibby — landing page
 
-Уютный лендинг для игры **dibby** (one-finger rescue arcade). Локализован на 11 языков.
+A cozy landing page for the game **dibby** (one-finger rescue arcade). Localized into 11 languages.
 
-## Запуск (разработка)
-Открой `landing/index.html` в браузере. Для разработки сборка не нужна — чистый HTML/CSS/JS.
-(Если шрифты/картинки не грузятся при открытии файла напрямую — запусти локальный сервер из корня проекта, например `python3 -m http.server`, и открой `http://localhost:8000/landing/`.)
+## Running (development)
+Open `landing/index.html` in a browser. No build step is needed for development — it's plain HTML/CSS/JS.
+(If fonts/images don't load when opening the file directly, start a local server from the project root, e.g. `python3 -m http.server`, and open `http://localhost:8000/landing/`.)
 
-## Сборка для продакшена (SEO/GEO)
+## Production build (SEO/GEO)
 ```
 node build.cjs
 ```
-Генерирует папку `dist/` — это и есть то, что нужно деплоить (а не `landing/`).
+Generates the `dist/` folder — that's what you deploy (not `landing/`).
 
-**Зачем:** лендинг локализуется клиентским JS (`i18n.js`). AI-краулеры (GPTBot, PerplexityBot, ClaudeBot и др.) **не исполняют JavaScript**, а Baidu — почти нет. Без pre-render они видят только сырой английский HTML, а 10 локалей не существуют как индексируемый контент. `build.cjs` «запекает» по одному статическому файлу на язык (`/`, `/ru/`, `/ja/`, `/zh-cn/`, `/zh-tw/`, `/ko/`, `/de/`, `/fr/`, `/es/`, `/pt/`, `/pl/`) с уже подставленным текстом, локализованными `<title>`/`<meta>`, `hreflang`, JSON-LD (`VideoGame`+`MobileApplication`, `Organization`, `FAQPage`), а также `sitemap.xml`, `robots.txt`, `llms.txt`. FAQ, галерея друзей и store-бейджи выводятся в сырой HTML (раньше строились только JS — были невидимы краулерам). JS-i18n остаётся как UX-слой: переключатель языков навигирует между готовыми URL.
+**Why:** the landing page is localized with client-side JS (`i18n.js`). AI crawlers (GPTBot, PerplexityBot, ClaudeBot, etc.) **do not execute JavaScript**, and Baidu barely does. Without pre-rendering they only see the raw English HTML, and the other 10 locales don't exist as indexable content. `build.cjs` "bakes" one static file per language (`/`, `/ru/`, `/ja/`, `/zh-cn/`, `/zh-tw/`, `/ko/`, `/de/`, `/fr/`, `/es/`, `/pt/`, `/pl/`) with the text already substituted, localized `<title>`/`<meta>`, `hreflang`, JSON-LD (`VideoGame`+`MobileApplication`, `Organization`, `FAQPage`), plus `sitemap.xml`, `robots.txt`, `llms.txt`. The FAQ, friends gallery, and store badges are emitted as raw HTML (previously built only via JS — invisible to crawlers). JS i18n stays as a UX layer: the language switcher navigates between the pre-built URLs.
 
-**Домены:** основной сайт — `https://dibbyplay.com` (он прописан в `SITE_URL` в `build.cjs` — управляет canonical, OG, JSON-LD, sitemap, robots разом). Короткий брендовый домен **`dib.by` делает 301-редирект на `dibbyplay.com`** — его раздаём в соцсетях/рекламе. Настройка редиректа и готовые конфиги (Cloudflare / Netlify / Vercel / форвардинг регистратора) — в **[DEPLOY-REDIRECT.md](DEPLOY-REDIRECT.md)** и папке `deploy/`. После деплоя добавь `dibbyplay.com` в Google Search Console и отправь `sitemap.xml`.
+**Domains:** the main site is `https://dibbyplay.com` (set in `SITE_URL` in `build.cjs` — it controls canonical, OG, JSON-LD, sitemap, and robots all at once). The short brand domain **`dib.by` does a 301 redirect to `dibbyplay.com`** — use it in social media/ads. The redirect setup and ready-made configs (Cloudflare / Netlify / Vercel / registrar forwarding) are in **[DEPLOY-REDIRECT.md](DEPLOY-REDIRECT.md)** and the `deploy/` folder. After deploying, add `dibbyplay.com` to Google Search Console and submit `sitemap.xml`.
 
-`dist/` в `.gitignore` — артефакт сборки, не коммитится; генерируй при деплое.
+`dist/` is in `.gitignore` — it's a build artifact, not committed; generate it at deploy time.
 
-## Структура
+## Structure
 ```
 landing/
-  index.html     ← страница (разметка + вся логика: i18n, плеер, галерея)
-  styles.css     ← стили (палитра взята из игры)
-  i18n.js        ← переводы 11 языков + имена 36 друзей
+  index.html     ← page (markup + all logic: i18n, player, gallery)
+  styles.css     ← styles (palette taken from the game)
+  i18n.js        ← translations for 11 languages + names of 36 friends
 assets/
-  fonts/         ← m6x11 (пиксельный) + Golos Text
-  friends/       ← 36 спрайтов друзей
-  mascot/        ← кадры анимаций маскота
-  screens/       ← скриншоты игры (main, menu) — fallback для плеера
-  icon.png       ← фавикон
+  fonts/         ← m6x11 (pixel) + Golos Text
+  friends/       ← 36 friend sprites
+  mascot/        ← mascot animation frames
+  screens/       ← game screenshots (main, menu) — fallback for the player
+  icon.png       ← favicon
 ```
 
-## Как показать геймплей видео
-Сейчас в рамке телефона крутятся реальные скриншоты (`assets/screens/`).
-Когда будет запись:
-1. Положи `assets/gameplay.mp4` (по желанию ещё `assets/gameplay.webm` для меньшего веса).
-2. В `landing/index.html` найди `var HAS_VIDEO = false;` и поставь `true`.
-   Плеер сам покажет видео; скриншоты останутся как fallback, если видео не загрузится.
+## How to show gameplay video
+Right now the phone frame cycles through real screenshots (`assets/screens/`).
+Once a recording is available:
+1. Drop in `assets/gameplay.mp4` (optionally `assets/gameplay.webm` too for a smaller size).
+2. In `landing/index.html` find `var HAS_VIDEO = false;` and set it to `true`.
+   The player shows the video automatically; screenshots remain as a fallback if the video fails to load.
 
-## Ссылки запуска (заполнить перед публикацией)
-В `landing/index.html` в начале скрипта есть объект `LINKS`:
+## Launch links (fill in before publishing)
+At the start of the script in `landing/index.html` there's a `LINKS` object:
 ```js
 var LINKS = {
   preregIos:     "", // App Store "coming soon"/pre-order
   preregAndroid: "", // Google Play pre-registration
-  discord:       "", // инвайт в сообщество
+  discord:       "", // community invite
   youtube:       "",
   x:             ""
 };
 ```
-Пока значение пустое — соответствующая кнопка плавно ведёт к hero-CTA (`#get`), ничего не выглядит сломанным. Соц-иконки в футере, для которых нет ссылки, автоматически скрываются. Как появятся реальные URL — просто вставь их сюда: главный CTA «Notify me», store-бейджи и ссылки `Get` подхватятся сами.
+While a value is empty, the corresponding button smoothly scrolls to the hero CTA (`#get`), so nothing looks broken. Footer social icons with no link are hidden automatically. Once real URLs are available, just paste them here: the main "Notify me" CTA, store badges, and `Get` links pick them up automatically.
 
-Домен в meta-тегах (`canonical`, `og:*`, `twitter:*`) уже прописан как `https://dibbyplay.com/`; `build.cjs` переписывает их по локалям при сборке. Если домен сменится — правь `SITE_URL` в `build.cjs` (плюс плейсхолдеры в `landing/index.html`, на которые он опирается).
+The domain in the meta tags (`canonical`, `og:*`, `twitter:*`) is already set to `https://dibbyplay.com/`; `build.cjs` rewrites them per locale at build time. If the domain changes, edit `SITE_URL` in `build.cjs` (plus the placeholders in `landing/index.html` that it relies on).
 
-## Полезное
-- **Языки**: переключатель справа вверху. По умолчанию — English. Выбор запоминается. Все 11 языков имеют полный набор ключей.
-- **Hero**: один вариант (cozy split). Переключателя `hero 1/2/3` больше нет — выбран и зафиксирован #hero1 + ряд друзей и строка статуса «Coming soon».
-- **Галерея друзей**: 6 раскрыты, остальные 30 — силуэты («???»). Какие раскрыты — массив `REVEAL` в `index.html`. Под счётчиком — тизер скрытых друзей и CTA.
+## Notes
+- **Languages**: switcher in the top right. Default is English. The choice is remembered. All 11 languages have a complete set of keys.
+- **Hero**: a single variant (cozy split). The `hero 1/2/3` switcher is gone — #hero1 is chosen and locked in, with the friends row and a "Coming soon" status line.
+- **Friends gallery**: 6 are revealed, the other 30 are silhouettes ("???"). Which ones are revealed is the `REVEAL` array in `index.html`. Below the counter is a teaser for the hidden friends and a CTA.
