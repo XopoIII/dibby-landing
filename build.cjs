@@ -20,7 +20,7 @@ const fs = require("fs");
 const path = require("path");
 
 // ---- config ---------------------------------------------------------------
-const SITE_URL = "https://dibby.example"; // <-- REPLACE with the real domain (no trailing slash)
+const SITE_URL = "https://dibbyplay.com"; // canonical site (no trailing slash). dib.by is a short domain that 301-redirects here — see DEPLOY-REDIRECT.md
 const ROOT = __dirname;
 const SRC = path.join(ROOT, "landing");
 const ASSETS_SRC = path.join(ROOT, "assets");
@@ -175,8 +175,8 @@ function renderLang(code, template) {
   }
 
   // absolute URLs: image first (always site root), then canonical + og:url (per-locale)
-  h = h.split('https://dibby.game/assets/screens/main.png').join(SITE_URL + "/assets/screens/main.png");
-  h = h.split('https://dibby.game/"').join(absUrl(code) + '"');
+  h = h.split('https://dibbyplay.com/assets/screens/main.png').join(SITE_URL + "/assets/screens/main.png");
+  h = h.split('https://dibbyplay.com/"').join(absUrl(code) + '"');
 
   // relative paths by depth
   h = h.split('../assets/').join(assetPrefix);                 // icons, og fallbacks, inline ASSET var, etc.

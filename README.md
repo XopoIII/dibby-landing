@@ -14,7 +14,7 @@ node build.cjs
 
 **Зачем:** лендинг локализуется клиентским JS (`i18n.js`). AI-краулеры (GPTBot, PerplexityBot, ClaudeBot и др.) **не исполняют JavaScript**, а Baidu — почти нет. Без pre-render они видят только сырой английский HTML, а 10 локалей не существуют как индексируемый контент. `build.cjs` «запекает» по одному статическому файлу на язык (`/`, `/ru/`, `/ja/`, `/zh-cn/`, `/zh-tw/`, `/ko/`, `/de/`, `/fr/`, `/es/`, `/pt/`, `/pl/`) с уже подставленным текстом, локализованными `<title>`/`<meta>`, `hreflang`, JSON-LD (`VideoGame`+`MobileApplication`, `Organization`, `FAQPage`), а также `sitemap.xml`, `robots.txt`, `llms.txt`. FAQ, галерея друзей и store-бейджи выводятся в сырой HTML (раньше строились только JS — были невидимы краулерам). JS-i18n остаётся как UX-слой: переключатель языков навигирует между готовыми URL.
 
-**Перед деплоем:** замени `SITE_URL` в начале `build.cjs` на реальный домен (сейчас плейсхолдер `https://dibby.example`). Это обновит canonical, OG, JSON-LD, sitemap и robots разом. После — добавь домен в Google Search Console и отправь `sitemap.xml`.
+**Домены:** основной сайт — `https://dibbyplay.com` (он прописан в `SITE_URL` в `build.cjs` — управляет canonical, OG, JSON-LD, sitemap, robots разом). Короткий брендовый домен **`dib.by` делает 301-редирект на `dibbyplay.com`** — его раздаём в соцсетях/рекламе. Настройка редиректа и готовые конфиги (Cloudflare / Netlify / Vercel / форвардинг регистратора) — в **[DEPLOY-REDIRECT.md](DEPLOY-REDIRECT.md)** и папке `deploy/`. После деплоя добавь `dibbyplay.com` в Google Search Console и отправь `sitemap.xml`.
 
 `dist/` в `.gitignore` — артефакт сборки, не коммитится; генерируй при деплое.
 
@@ -52,7 +52,7 @@ var LINKS = {
 ```
 Пока значение пустое — соответствующая кнопка плавно ведёт к hero-CTA (`#get`), ничего не выглядит сломанным. Соц-иконки в футере, для которых нет ссылки, автоматически скрываются. Как появятся реальные URL — просто вставь их сюда: главный CTA «Notify me», store-бейджи и ссылки `Get` подхватятся сами.
 
-Также: после хостинга замени домен `https://dibby.game/` в meta-тегах (`canonical`, `og:*`, `twitter:*`) в `<head>`.
+Домен в meta-тегах (`canonical`, `og:*`, `twitter:*`) уже прописан как `https://dibbyplay.com/`; `build.cjs` переписывает их по локалям при сборке. Если домен сменится — правь `SITE_URL` в `build.cjs` (плюс плейсхолдеры в `landing/index.html`, на которые он опирается).
 
 ## Полезное
 - **Языки**: переключатель справа вверху. По умолчанию — English. Выбор запоминается. Все 11 языков имеют полный набор ключей.

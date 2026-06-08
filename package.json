@@ -1,0 +1,12 @@
+{
+  "name": "dibby-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "dibby pre-launch landing — static multilingual pre-render build",
+  "scripts": {
+    "build": "node build.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

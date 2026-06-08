@@ -1,0 +1,14 @@
+{
+  // Cloudflare Workers — static-assets-only deploy for the dibby landing.
+  // The repo's build command (`npm run build` -> node build.cjs) writes ./dist,
+  // and `npx wrangler deploy` publishes that folder as a static site.
+  // No Worker code (no "main") — this is a pure static asset deployment.
+  "name": "dibby-landing",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "./dist",
+    // serve /ru/ as /ru/index.html etc.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}

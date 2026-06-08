@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>dibby</title>
+<!-- Client-side redirect fallback for dib.by when the host can't do a 301.
+     Prefer a real 301 (see DEPLOY-REDIRECT.md). This preserves path + query. -->
+<link rel="canonical" href="https://dibbyplay.com/" />
+<meta name="robots" content="noindex" />
+<script>
+  var dest = "https://dibbyplay.com" + location.pathname + location.search + location.hash;
+  location.replace(dest);
+</script>
+<meta http-equiv="refresh" content="0; url=https://dibbyplay.com/" />
+</head>
+<body>
+<p>Redirecting to <a href="https://dibbyplay.com/">dibbyplay.com</a>…</p>
+</body>
+</html>

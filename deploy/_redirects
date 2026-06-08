@@ -1,0 +1,4 @@
+# Netlify / Cloudflare Pages redirect file for the SHORT domain dib.by.
+# Deploy this (as a one-file site) on whatever serves dib.by.
+# 301, path + query preserved -> dibbyplay.com
+/*  https://dibbyplay.com/:splat  301!
