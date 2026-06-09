@@ -355,6 +355,12 @@ Save a friend.</h1>
 
   /* ---------- i18n apply ---------- */
   var SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk" };
+  function rememberLang(code) {
+    // Persist the explicit choice. The cookie mirror lets the Cloudflare edge
+    // (worker.js) honour it when deciding what to serve at "/".
+    try { localStorage.setItem("dibby_lang", code); } catch (e) {}
+    try { document.cookie = "dibby_lang=" + code + ";path=/;max-age=31536000;samesite=lax"; } catch (e) {}
+  }
   function applyLang(lang) {
     var t = window.I18N[lang] || window.I18N.en;
     document.documentElement.lang = lang.replace("_", "-");
@@ -373,7 +379,7 @@ Save a friend.</h1>
     document.querySelectorAll(".lang__opt").forEach(function (o) {
       o.setAttribute("aria-current", o.getAttribute("data-code") === lang ? "true" : "false");
     });
-    try { localStorage.setItem("dibby_lang", lang); } catch (e) {}
+    rememberLang(lang);
   }
 
   /* ---------- language picker ---------- */
@@ -388,6 +394,9 @@ Save a friend.</h1>
       b.textContent = l.name;
       b.addEventListener("click", function () {
         document.getElementById("lang").classList.remove("open");
+        // Save the choice BEFORE any navigation so the edge redirect on "/"
+        // honours it (otherwise picking e.g. English from /ru/ would bounce back).
+        rememberLang(l.code);
         // On the pre-rendered multi-URL build, jump to the language's own URL
         // (keeps URL == content, so each locale stays crawlable). In the raw
         // dev file there is no DIBBY_PATHS, so we swap in place as before.
@@ -480,13 +489,33 @@ Save a friend.</h1>
   }
 
   /* ---------- boot ---------- */
+  // Map a single BCP-47 browser tag (e.g. "pt-BR", "zh-Hant") to one of our codes.
+  function matchBrowserLang(tag) {
+    if (!tag) return null;
+    tag = tag.toLowerCase();
+    if (tag.indexOf("zh") === 0) return /hant|tw|hk|mo/.test(tag) ? "zh_TW" : "zh_CN";
+    var direct = { en: "en", ru: "ru", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
+    return direct[tag.split("-")[0]] || null;
+  }
+  function detectBrowserLang() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      var hit = matchBrowserLang(list[i]);
+      if (hit && window.I18N[hit]) return hit;
+    }
+    return null;
+  }
+
   function pickInitialLang() {
-    // On a pre-rendered locale page, the page's own language wins (so JS never
-    // clobbers the baked-in localized HTML). Otherwise fall back to the saved
-    // choice, then English.
-    if (window.DIBBY_LANG && window.I18N[window.DIBBY_LANG]) return window.DIBBY_LANG;
+    // A localized URL (/ru/, /de/, …) is an explicit choice and always wins, so
+    // JS never clobbers the baked-in localized HTML. "en" is the default root,
+    // so it does NOT lock the page — there we let the saved choice / browser
+    // language decide. (The Cloudflare edge already redirects "/" to the right
+    // locale; this is the JS fallback for when the page is served without it,
+    // e.g. local dev or a cached response.)
+    if (window.DIBBY_LANG && window.DIBBY_LANG !== "en" && window.I18N[window.DIBBY_LANG]) return window.DIBBY_LANG;
     try { var s = localStorage.getItem("dibby_lang"); if (s && window.I18N[s]) return s; } catch (e) {}
-    return "en"; // default per spec
+    return detectBrowserLang() || "en"; // browser/system language, else English
   }
 
   buildLangMenu();

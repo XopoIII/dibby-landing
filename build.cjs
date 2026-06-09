@@ -231,6 +231,10 @@ function build() {
   fs.copyFileSync(path.join(SRC, "styles.css"), path.join(OUT, "styles.css"));
   fs.copyFileSync(path.join(SRC, "i18n.js"), path.join(OUT, "i18n.js"));
 
+  // Cloudflare Pages "advanced mode" edge router: redirects "/" to the visitor's
+  // locale (cookie / Accept-Language), passes everything else through to assets.
+  fs.copyFileSync(path.join(ROOT, "worker.js"), path.join(OUT, "_worker.js"));
+
   // one HTML per language
   for (const l of LANGS) {
     const html = renderLang(l.code, template);
