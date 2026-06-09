@@ -20,7 +20,7 @@ const fs = require("fs");
 const path = require("path");
 
 // ---- config ---------------------------------------------------------------
-const SITE_URL = "https://dibbyplay.com"; // canonical site (no trailing slash). dib.by is a short domain that 301-redirects here — see DEPLOY-REDIRECT.md
+const SITE_URL = "https://dibbyplay.com"; // canonical site (no trailing slash). dib.by is a short domain that 301-redirects here
 const ROOT = __dirname;
 const SRC = path.join(ROOT, "landing");
 const ASSETS_SRC = path.join(ROOT, "assets");
