@@ -40,7 +40,7 @@ const { LANGS, FRIEND_SLUGS, FRIEND_NAMES, I18N } = global.window;
 //
 // ⚠️  BEFORE GOING LIVE: fill every [...] placeholder in PUBLISHER.
 const PUBLISHER = {
-  name:    "Малашенков Антон Викторович (Malashenkov Anton Viktorovich)", // legal name of the individual (trader)
+  name:    "Malashenkov Anton", // legal name of the individual (trader)
   email:   "support@dib.by",  // public support + privacy contact
   address: "",                // not shown on the website — provided to the stores for the EU DSA display
   phone:   "",                // none — provided to the stores for the EU DSA display
