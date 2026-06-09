@@ -14,7 +14,7 @@
   "support": {
     "title": "支援",
     "updated": "",
-    "html": "<p>需要 dibby 的協助、發現了錯誤，或有任何問題嗎？我們很樂意聽到您的意見。</p>\n\n<h2>聯絡我們</h2>\n<p>電子郵件：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n我們通常會在數個工作日內回覆。</p>\n\n<h2>快速解答</h2>\n<ul>\n  <li><strong>需要多少費用？</strong>dibby 可免費遊玩 &mdash; 只要下載即可開始。</li>\n  <li><strong>可以在什麼裝置上玩？</strong>iPhone 與 Android 手機。</li>\n  <li><strong>支援哪些語言？</strong>十九種，可隨時切換。</li>\n  <li><strong>我的進度如何儲存？</strong>儲存在您裝置的本機上。本遊戲沒有帳號或雲端同步。</li>\n</ul>\n\n<h2>隱私權</h2>\n<p>關於資料如何處理，請參閱我們的 <a href=\"{{PRIVACY_URL}}\">隱私權政策</a>。</p>"
+    "html": "<p>需要 dibby 的協助、發現了錯誤，或有任何問題嗎？歡迎寫信給我們。</p>\n\n<h2>聯絡我們</h2>\n<p>電子郵件：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n我們通常會在數個工作日內回覆。</p>\n\n<h2>快速解答</h2>\n<ul>\n  <li><strong>需要多少費用？</strong>dibby 可免費遊玩 &mdash; 只要下載即可開始。</li>\n  <li><strong>可以在什麼裝置上玩？</strong>iPhone 與 Android 手機。</li>\n  <li><strong>支援哪些語言？</strong>十九種，可隨時切換。</li>\n  <li><strong>我的進度如何儲存？</strong>儲存在您裝置的本機上。本遊戲沒有帳號或雲端同步。</li>\n</ul>\n\n<h2>隱私權</h2>\n<p>關於資料如何處理，請參閱我們的 <a href=\"{{PRIVACY_URL}}\">隱私權政策</a>。</p>"
   },
   "legal": {
     "title": "法律聲明",

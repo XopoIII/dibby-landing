@@ -14,7 +14,7 @@
   "support": {
     "title": "支持",
     "updated": "",
-    "html": "<p>在使用 dibby 时需要帮助、发现了错误，或有任何疑问？我们很乐意听取您的反馈。</p>\n\n<h2>联系我们</h2>\n<p>邮箱：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n我们通常会在几个工作日内回复。</p>\n\n<h2>常见问题</h2>\n<ul>\n  <li><strong>需要付费吗？</strong>dibby 免费畅玩 &mdash; 下载即可开始。</li>\n  <li><strong>可以在什么设备上玩？</strong>iPhone 和 Android 手机。</li>\n  <li><strong>支持哪些语言？</strong>十九种，随时可切换。</li>\n  <li><strong>我的进度如何保存？</strong>本地保存在您的设备上。本游戏没有账号或云同步。</li>\n</ul>\n\n<h2>隐私</h2>\n<p>有关数据处理方式，请参阅我们的<a href=\"{{PRIVACY_URL}}\">隐私政策</a>。</p>"
+    "html": "<p>玩 dibby 时遇到问题、发现 bug，或者想跟我们说点什么？随时来找我们。</p>\n\n<h2>联系我们</h2>\n<p>邮箱：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n我们通常会在几个工作日内回复。</p>\n\n<h2>常见问题</h2>\n<ul>\n  <li><strong>需要付费吗？</strong>dibby 免费畅玩 &mdash; 下载即可开始。</li>\n  <li><strong>可以在什么设备上玩？</strong>iPhone 和 Android 手机。</li>\n  <li><strong>支持哪些语言？</strong>十九种，随时可切换。</li>\n  <li><strong>我的进度如何保存？</strong>本地保存在您的设备上。本游戏没有账号或云同步。</li>\n</ul>\n\n<h2>隐私</h2>\n<p>有关数据处理方式，请参阅我们的<a href=\"{{PRIVACY_URL}}\">隐私政策</a>。</p>"
   },
   "legal": {
     "title": "法律声明",

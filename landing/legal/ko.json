@@ -14,7 +14,7 @@
   "support": {
     "title": "지원",
     "updated": "",
-    "html": "<p>dibby에 대한 도움이 필요하거나, 버그를 발견했거나, 질문이 있으신가요? 기꺼이 연락을 받겠습니다.</p>\n\n<h2>문의하기</h2>\n<p>이메일: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n보통 영업일 기준 며칠 이내에 답변드립니다.</p>\n\n<h2>간단한 답변</h2>\n<ul>\n  <li><strong>비용은 얼마인가요?</strong> dibby는 무료로 플레이할 수 있습니다 &mdash; 다운로드하고 바로 시작하세요.</li>\n  <li><strong>어떤 기기에서 플레이할 수 있나요?</strong> iPhone과 Android 휴대폰입니다.</li>\n  <li><strong>어떤 언어를 지원하나요?</strong> 19개 언어를 지원하며 언제든지 전환할 수 있습니다.</li>\n  <li><strong>진행 상황은 어떻게 저장되나요?</strong> 기기에 로컬로 저장됩니다. 게임에는 계정이나 클라우드 동기화가 없습니다.</li>\n</ul>\n\n<h2>개인정보 보호</h2>\n<p>데이터 처리 방법은 <a href=\"{{PRIVACY_URL}}\">개인정보 처리방침</a>을 참조하십시오.</p>"
+    "html": "<p>dibby를 쓰다가 도움이 필요하거나, 버그를 발견했거나, 궁금한 점이 있으면 언제든 편하게 연락 주세요.</p>\n\n<h2>문의하기</h2>\n<p>이메일: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n보통 영업일 기준 며칠 안에 답장드립니다.</p>\n\n<h2>자주 묻는 것</h2>\n<ul>\n  <li><strong>비용은 얼마인가요?</strong> dibby는 무료로 플레이할 수 있습니다 &mdash; 다운로드하고 바로 시작하세요.</li>\n  <li><strong>어떤 기기에서 플레이할 수 있나요?</strong> iPhone과 Android 휴대폰입니다.</li>\n  <li><strong>어떤 언어를 지원하나요?</strong> 19개 언어를 지원하며 언제든지 전환할 수 있습니다.</li>\n  <li><strong>진행 상황은 어떻게 저장되나요?</strong> 기기에 로컬로 저장됩니다. 게임에는 계정이나 클라우드 동기화가 없습니다.</li>\n</ul>\n\n<h2>개인정보 보호</h2>\n<p>데이터 처리 방법은 <a href=\"{{PRIVACY_URL}}\">개인정보 처리방침</a>을 참조하십시오.</p>"
   },
   "legal": {
     "title": "법적 고지",
