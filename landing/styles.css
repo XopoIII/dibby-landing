@@ -54,6 +54,28 @@
   --font-ui: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Malgun Gothic", system-ui, sans-serif;
   --font-body: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Malgun Gothic", system-ui, sans-serif;
 }
+/* Scripts the pixel font can't draw: use the OS face for every role (headings too). */
+:root[data-script="thai"] {
+  --font-pixel: "Noto Sans Thai", "Thonburi", "Leelawadee UI", system-ui, sans-serif;
+  --font-ui: "Noto Sans Thai", "Thonburi", "Leelawadee UI", system-ui, sans-serif;
+  --font-body: "Noto Sans Thai", "Thonburi", "Leelawadee UI", system-ui, sans-serif;
+}
+:root[data-script="deva"] {
+  --font-pixel: "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", system-ui, sans-serif;
+  --font-ui: "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", system-ui, sans-serif;
+  --font-body: "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", system-ui, sans-serif;
+}
+:root[data-script="arab"] {
+  --font-pixel: "Noto Naskh Arabic", "Geeza Pro", "Tahoma", system-ui, sans-serif;
+  --font-ui: "Noto Naskh Arabic", "Geeza Pro", "Tahoma", system-ui, sans-serif;
+  --font-body: "Noto Naskh Arabic", "Geeza Pro", "Tahoma", system-ui, sans-serif;
+}
+/* Arabic is right-to-left. Mirror text flow and the few left-anchored bits. */
+[dir="rtl"] { direction: rtl; }
+[dir="rtl"] .store__txt { text-align: right; }
+[dir="rtl"] .hero-cta,
+[dir="rtl"] .hero-h1,
+[dir="rtl"] .hero-sub { text-align: right; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 

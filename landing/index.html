@@ -354,7 +354,8 @@ Save a friend.</h1>
   }
 
   /* ---------- i18n apply ---------- */
-  var SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk" };
+  var SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk", th: "thai", hi: "deva", ar: "arab" };
+  var RTL = { ar: true };
   function rememberLang(code) {
     // Persist the explicit choice. The cookie mirror lets the Cloudflare edge
     // (worker.js) honour it when deciding what to serve at "/".
@@ -365,6 +366,7 @@ Save a friend.</h1>
     var t = window.I18N[lang] || window.I18N.en;
     document.documentElement.lang = lang.replace("_", "-");
     document.documentElement.setAttribute("data-script", SCRIPT_OF[lang] || "latin");
+    document.documentElement.dir = RTL[lang] ? "rtl" : "ltr";
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var k = el.getAttribute("data-i18n");
       if (t[k] != null) el.textContent = t[k];
@@ -386,7 +388,14 @@ Save a friend.</h1>
   function buildLangMenu() {
     var menu = document.getElementById("langMenu");
     menu.innerHTML = "";
-    window.LANGS.forEach(function (l) {
+    // Show the active (auto-selected) language first, then the rest alphabetically.
+    var current = pickInitialLang();
+    var ordered = window.LANGS.slice().sort(function (a, b) {
+      if (a.code === current) return -1;
+      if (b.code === current) return 1;
+      return a.name.localeCompare(b.name);
+    });
+    ordered.forEach(function (l) {
       var b = document.createElement("button");
       b.className = "lang__opt";
       b.setAttribute("data-code", l.code);
@@ -494,7 +503,7 @@ Save a friend.</h1>
     if (!tag) return null;
     tag = tag.toLowerCase();
     if (tag.indexOf("zh") === 0) return /hant|tw|hk|mo/.test(tag) ? "zh_TW" : "zh_CN";
-    var direct = { en: "en", ru: "ru", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
+    var direct = { en: "en", ru: "ru", uk: "uk", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
     return direct[tag.split("-")[0]] || null;
   }
   function detectBrowserLang() {

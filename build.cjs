@@ -32,9 +32,11 @@ require(path.join(SRC, "i18n.js"));
 const { LANGS, FRIEND_SLUGS, FRIEND_NAMES, I18N } = global.window;
 
 // per-language: URL sub-path, hreflang/lang code, writing system class
-const URLCODE = { en: "", ru: "ru", zh_CN: "zh-cn", zh_TW: "zh-tw", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
-const HREFLANG = { en: "en", ru: "ru", zh_CN: "zh-Hans", zh_TW: "zh-Hant", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
-const SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk" };
+const URLCODE = { en: "", ru: "ru", zh_CN: "zh-cn", zh_TW: "zh-tw", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", uk: "uk", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
+const HREFLANG = { en: "en", ru: "ru", zh_CN: "zh-Hans", zh_TW: "zh-Hant", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", uk: "uk", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
+// writing-system class (drives fonts + RTL in styles.css). Latin/Cyrillic locales omit it (default).
+const SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk", th: "thai", hi: "deva", ar: "arab" };
+const RTL = { ar: true };
 const REVEAL = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
 const CONFETTI = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
 const FAQ_PAIRS = [["q5", "a5"], ["q1", "a1"], ["q2", "a2"], ["q3", "a3"], ["q4", "a4"]];
@@ -150,7 +152,7 @@ function renderLang(code, template) {
   let h = template;
 
   // <html lang/data-script>
-  h = h.replace('<html lang="en" data-script="latin">', `<html lang="${HREFLANG[code]}" data-script="${SCRIPT_OF[code] || "latin"}">`);
+  h = h.replace('<html lang="en" data-script="latin">', `<html lang="${HREFLANG[code]}" data-script="${SCRIPT_OF[code] || "latin"}"${RTL[code] ? ' dir="rtl"' : ""}>`);
 
   // data-i18n text nodes (data-i18n is always the last attribute in this template)
   h = h.replace(/data-i18n="(\w+)"\s*>([\s\S]*?)<\//g, (m, key, _inner) => {
@@ -206,7 +208,7 @@ function robots() {
 }
 
 function llms() {
-  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free at launch, no ads. Coming soon to iOS & Android.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 11 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n`;
+  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free at launch, no ads. Coming soon to iOS & Android.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 19 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n`;
 }
 
 // ---- fs helpers ------------------------------------------------------------

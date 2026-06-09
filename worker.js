@@ -27,6 +27,14 @@ const LOCALE_PATH = {
   es: "/es/",
   pt: "/pt/",
   pl: "/pl/",
+  uk: "/uk/",
+  it: "/it/",
+  id: "/id/",
+  tr: "/tr/",
+  vi: "/vi/",
+  th: "/th/",
+  hi: "/hi/",
+  ar: "/ar/",
 };
 
 // Map a single BCP-47 tag (e.g. "pt-BR", "zh-Hant", "en-US") to one of our codes.
@@ -37,7 +45,7 @@ function matchTag(tag) {
   if (tag.startsWith("zh")) {
     return /hant|tw|hk|mo/.test(tag) ? "zh_TW" : "zh_CN"; // zh / zh-cn / zh-sg / zh-hans -> Simplified
   }
-  const direct = { en: "en", ru: "ru", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl" };
+  const direct = { en: "en", ru: "ru", uk: "uk", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
   return direct[tag.split("-")[0]] || null;
 }
 
