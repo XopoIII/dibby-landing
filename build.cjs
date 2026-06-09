@@ -233,9 +233,9 @@ function build() {
   fs.copyFileSync(path.join(SRC, "styles.css"), path.join(OUT, "styles.css"));
   fs.copyFileSync(path.join(SRC, "i18n.js"), path.join(OUT, "i18n.js"));
 
-  // Cloudflare Pages "advanced mode" edge router: redirects "/" to the visitor's
-  // locale (cookie / Accept-Language), passes everything else through to assets.
-  fs.copyFileSync(path.join(ROOT, "worker.js"), path.join(OUT, "_worker.js"));
+  // NOTE: the edge language router (worker.js) is NOT copied into dist anymore.
+  // It's deployed as the Worker entrypoint via "main" in wrangler.jsonc; a
+  // _worker.js inside the assets dir makes `wrangler deploy` refuse the upload.
 
   // one HTML per language
   for (const l of LANGS) {

@@ -1,9 +1,9 @@
 // Edge language router for the dibby landing.
 //
 // The site is a static, pre-rendered multilingual build (dist/, one folder per
-// locale) deployed on Cloudflare Pages. build.cjs copies this file to
-// dist/_worker.js, which puts Pages into "advanced mode": this Worker handles
-// every request, and we serve static files through env.ASSETS.fetch().
+// locale) deployed on Cloudflare Workers static assets. This file is the Worker
+// entrypoint ("main" in wrangler.jsonc) and runs in front of the assets
+// (run_worker_first); we serve static files through env.ASSETS.fetch().
 //
 // Only the root "/" makes a language decision, based on, in order:
 //   1. an explicit saved choice  — cookie `dibby_lang` (set by the picker / applyLang)

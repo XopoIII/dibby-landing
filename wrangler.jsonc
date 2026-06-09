@@ -1,12 +1,21 @@
 {
-  // Cloudflare Workers — static-assets-only deploy for the dibby landing.
+  // Cloudflare Workers — static assets + an edge language router for the dibby landing.
   // The repo's build command (`npm run build` -> node build.cjs) writes ./dist,
-  // and `npx wrangler deploy` publishes that folder as a static site.
-  // No Worker code (no "main") — this is a pure static asset deployment.
+  // and `npx wrangler deploy` publishes that folder as static assets.
+  //
+  // worker.js (referenced by "main") runs in front of the assets: it redirects
+  // the root "/" to the visitor's locale (cookie / Accept-Language) and passes
+  // every other request straight through to the static asset via env.ASSETS.
   "name": "dibby-landing",
+  "main": "worker.js",
   "compatibility_date": "2025-01-01",
   "assets": {
     "directory": "./dist",
+    // expose the static assets to worker.js as env.ASSETS.fetch(...)
+    "binding": "ASSETS",
+    // run worker.js before serving assets so "/" can make its locale decision
+    // (otherwise "/" would match index.html and the Worker would never run)
+    "run_worker_first": true,
     // serve /ru/ as /ru/index.html etc.
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"
