@@ -212,7 +212,11 @@ a { color: inherit; text-decoration: none; }
 }
 .nav a:hover { color: var(--ink); border-color: var(--peach-deep); }
 .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-.header-right .btn { padding: 0.45em 1.1em; font-size: 0.9rem; box-shadow: 0 3px 0 0 var(--peach-edge), 0 8px 14px -8px rgba(61, 74, 82, 0.5); }
+/* Button radius rule: clickable buttons are rounded rectangles, never full pills.
+   Radius scales with height — large CTAs use --radius (18px); compact controls
+   in the header (this button + .lang__btn) use 13px. 999px is reserved for
+   non-interactive chips only (tags, stats, .live-tag, .status-line). */
+.header-right .btn { padding: 0.45em 1.1em; font-size: 0.9rem; border-radius: 13px; box-shadow: 0 3px 0 0 var(--peach-edge), 0 8px 14px -8px rgba(61, 74, 82, 0.5); }
 .header-right .btn:hover { box-shadow: 0 5px 0 0 var(--peach-edge), 0 12px 18px -8px rgba(61, 74, 82, 0.5); }
 .header-right .btn:active { box-shadow: 0 1px 0 0 var(--peach-edge); }
 
