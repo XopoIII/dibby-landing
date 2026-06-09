@@ -1,0 +1,29 @@
+{
+  "back": "← dibby に戻る",
+  "footer": {
+    "footerLegal": "法的事項",
+    "linkPrivacy": "プライバシーポリシー",
+    "linkSupport": "サポート",
+    "linkLegal": "法的表示"
+  },
+  "privacy": {
+    "title": "プライバシーポリシー",
+    "updated": "最終更新日: {{UPDATED}}",
+    "html": "<p>本プライバシーポリシーは、モバイルゲーム <strong>dibby</strong>（以下「本ゲーム」「当社」といいます）が情報をどのように取り扱うかについて説明するものです。dibby の発行者は {{PUBLISHER_NAME}} です。</p>\n\n<h2>1. 当社が収集する情報</h2>\n<p>本ゲーム自体はアカウント、サインイン、登録を<strong>必要とせず</strong>、お客様の個人情報を収集したり当社へ送信したりすることは<strong>ありません</strong>。ゲームの進行状況はお客様の端末内にローカルで保存されます。</p>\n\n<h2>2. 広告（第三者）</h2>\n<p>dibby は <strong>Yandex Mobile Ads SDK</strong>（Yandex Advertising Network）を通じて広告を表示します。広告の選定および測定のため、この第三者の SDK は以下を含む技術データを自動的に収集・処理する場合があります。</p>\n<ul>\n  <li>端末の広告識別子（例: Apple IDFA / Google Advertising ID）</li>\n  <li>IP アドレスおよびそれに基づいて推定されるおおよその（粗い）位置情報</li>\n  <li>端末およびオペレーティングシステムの情報（機種、OS バージョン、言語、画面）</li>\n  <li>広告とのインタラクションに関するデータ（表示回数、クリック）</li>\n</ul>\n<p>これらのデータは、Yandex が独自の規約に基づき独立した管理者として処理します。Yandex が収集する内容およびその管理方法の詳細については、<a href=\"{{YANDEX_PRIVACY}}\" target=\"_blank\" rel=\"noopener\">Yandex プライバシーポリシー</a>をご覧ください。当社はこれらのデータを個人を特定できる形で受領することはありません。</p>\n\n<h2>3. 児童について</h2>\n<p>dibby は全年齢対象（4+）と評価されていますが、<strong>児童を対象としたものではなく</strong>、Apple Kids Category や Google Play の「Designed for Families」プログラムの一部でもありません。当社は児童から個人データを意図的に収集することはありません。児童が個人データを提供したと思われる場合は、当社までご連絡ください。対応いたします。</p>\n\n<h2>4. お客様の選択と権利</h2>\n<ul>\n  <li><strong>広告トラッキングの制限:</strong> 端末の設定で広告識別子をリセットまたは無効化できます（iOS: 設定 &rarr; プライバシーとセキュリティ &rarr; トラッキング / Apple の広告; Android: 設定 &rarr; プライバシー &rarr; 広告）。</li>\n  <li><strong>GDPR（EEA/英国）:</strong> お客様は、自身のデータへのアクセス、訂正、削除、処理への異議を申し立てる権利、および監督機関へ苦情を申し立てる権利を有する場合があります。</li>\n  <li><strong>CCPA/CPRA（カリフォルニア州）:</strong> 当社はお客様の個人情報を「販売」しません。プライバシーに関する権利は当社へご連絡いただくことで行使できます。</li>\n</ul>\n\n<h2>5. データの保持</h2>\n<p>当社自身が個人データを保存することはありません。広告関連のデータは、Yandex が独自のポリシーに従って保持します。</p>\n\n<h2>6. 本ポリシーの変更</h2>\n<p>当社は本ポリシーを更新することがあります。重要な変更は、上記の「最終更新日」に反映されます。</p>\n\n<h2>7. お問い合わせ</h2>\n<p>プライバシーに関するご質問やご要望: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n{{PUBLISHER_NAME}}, {{PUBLISHER_ADDRESS}}</p>"
+  },
+  "support": {
+    "title": "サポート",
+    "updated": "",
+    "html": "<p>dibby についてお困りのことやバグの発見、ご質問はありませんか？ぜひお聞かせください。</p>\n\n<h2>お問い合わせ</h2>\n<p>メール: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n通常、数営業日以内に返信いたします。</p>\n\n<h2>よくある質問</h2>\n<ul>\n  <li><strong>料金はかかりますか？</strong> dibby は無料でプレイできます &mdash; ダウンロードしてすぐに遊べます。</li>\n  <li><strong>どの端末でプレイできますか？</strong> iPhone と Android スマートフォンです。</li>\n  <li><strong>対応言語は？</strong> 19 言語に対応しており、いつでも切り替えられます。</li>\n  <li><strong>進行状況はどのように保存されますか？</strong> 端末内にローカルで保存されます。本ゲームにはアカウントやクラウド同期はありません。</li>\n</ul>\n\n<h2>プライバシー</h2>\n<p>データの取り扱いについては、<a href=\"{{PRIVACY_URL}}\">プライバシーポリシー</a>をご覧ください。</p>"
+  },
+  "legal": {
+    "title": "法的表示",
+    "updated": "",
+    "html": "<p>本情報は、EU Digital Services Act (Regulation (EU) 2022/2065) および適用される消費者保護法に従って提供されるものです。</p>\n\n<h2>発行者</h2>\n<p>dibby は、商業的立場で活動する個人（事業者）である {{PUBLISHER_NAME}} により発行されています。</p>\n\n<h2>お問い合わせ</h2>\n<p>メール: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a></p>\n<p>EU Digital Services Act に基づき必要とされる郵送先住所その他の事業者連絡先情報は、Apple および Google に提供されて検証されており、App Store および Google Play の dibby の掲載ページに表示されています。</p>"
+  },
+  "cookie": {
+    "cookieText": "言語設定を保存するために必要な Cookie を使用し、お客様の同意がある場合に限り、サイトの利用状況を把握するための任意の Cookie を使用します。",
+    "cookieAccept": "同意する",
+    "cookieDecline": "拒否する"
+  }
+}

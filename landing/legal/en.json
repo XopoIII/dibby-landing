@@ -1,0 +1,29 @@
+{
+  "back": "← Back to dibby",
+  "footer": {
+    "footerLegal": "Legal",
+    "linkPrivacy": "Privacy Policy",
+    "linkSupport": "Support",
+    "linkLegal": "Legal notice"
+  },
+  "cookie": {
+    "cookieText": "We use a necessary cookie to remember your language, and — only with your consent — optional cookies to understand how the site is used.",
+    "cookieAccept": "Accept",
+    "cookieDecline": "Decline"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: {{UPDATED}}",
+    "html": "<p>This Privacy Policy explains how the mobile game <strong>dibby</strong> (\"the game\", \"we\", \"us\") handles information. dibby is published by {{PUBLISHER_NAME}}.</p>\n\n<h2>1. What we collect</h2>\n<p>The game itself does <strong>not</strong> require an account, sign-in, or registration, and it does <strong>not</strong> collect or transmit your personal information to us. Your game progress is stored locally on your device.</p>\n\n<h2>2. Advertising (third party)</h2>\n<p>dibby shows advertising through the <strong>Yandex Mobile Ads SDK</strong> (Yandex Advertising Network). To select and measure ads, this third-party SDK may automatically collect and process technical data, which may include:</p>\n<ul>\n  <li>your device's advertising identifier (e.g. Apple IDFA / Google Advertising ID);</li>\n  <li>IP address and approximate (coarse) location derived from it;</li>\n  <li>device and operating-system information (model, OS version, language, screen);</li>\n  <li>ad interaction data (impressions, clicks).</li>\n</ul>\n<p>This data is processed by Yandex as an independent controller under its own terms. See the <a href=\"{{YANDEX_PRIVACY}}\" target=\"_blank\" rel=\"noopener\">Yandex Privacy Policy</a> for details on what it collects and how to manage it. We do not receive this data in personally identifiable form.</p>\n\n<h2>3. Children</h2>\n<p>dibby is rated suitable for all ages (4+), but it is <strong>not directed at children</strong> and is not part of the Apple Kids Category or Google Play \"Designed for Families\" program. We do not knowingly collect personal data from children. If you believe a child has provided personal data, contact us and we will address it.</p>\n\n<h2>4. Your choices and rights</h2>\n<ul>\n  <li><strong>Limit ad tracking:</strong> you can reset or disable your advertising identifier in your device settings (iOS: Settings &rarr; Privacy &amp; Security &rarr; Tracking / Apple Advertising; Android: Settings &rarr; Privacy &rarr; Ads).</li>\n  <li><strong>GDPR (EEA/UK):</strong> you may have the right to access, correct, delete, or object to the processing of your data, and to lodge a complaint with a supervisory authority.</li>\n  <li><strong>CCPA/CPRA (California):</strong> we do not \"sell\" your personal information. You may exercise your privacy rights by contacting us.</li>\n</ul>\n\n<h2>5. Data retention</h2>\n<p>We do not store personal data ourselves. Ad-related data is retained by Yandex according to its own policy.</p>\n\n<h2>6. Changes to this policy</h2>\n<p>We may update this policy. Material changes will be reflected by the \"last updated\" date above.</p>\n\n<h2>7. Contact</h2>\n<p>For privacy questions or requests: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n{{PUBLISHER_NAME}}, {{PUBLISHER_ADDRESS}}</p>"
+  },
+  "support": {
+    "title": "Support",
+    "updated": "",
+    "html": "<p>Need help with dibby, found a bug, or have a question? We're happy to hear from you.</p>\n\n<h2>Contact us</h2>\n<p>Email: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\nWe usually reply within a few business days.</p>\n\n<h2>Quick answers</h2>\n<ul>\n  <li><strong>What does it cost?</strong> dibby is free to play &mdash; just download and dive in.</li>\n  <li><strong>What can I play it on?</strong> iPhone and Android phones.</li>\n  <li><strong>Which languages?</strong> Nineteen, switchable any time.</li>\n  <li><strong>How is my progress saved?</strong> Locally on your device. The game has no accounts or cloud sync.</li>\n</ul>\n\n<h2>Privacy</h2>\n<p>See our <a href=\"{{PRIVACY_URL}}\">Privacy Policy</a> for how data is handled.</p>"
+  },
+  "legal": {
+    "title": "Legal Notice",
+    "updated": "",
+    "html": "<p>Information provided in accordance with the EU Digital Services Act (Regulation (EU) 2022/2065) and applicable consumer-protection law.</p>\n\n<h2>Publisher</h2>\n<p>dibby is published by {{PUBLISHER_NAME}}, a private individual acting in a commercial capacity (trader).</p>\n\n<h2>Contact</h2>\n<p>Email: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a></p>\n<p>The postal address and other trader contact details required under the EU Digital Services Act are provided to and verified by Apple and Google and are shown on the dibby listing on the App Store and Google Play.</p>"
+  }
+}

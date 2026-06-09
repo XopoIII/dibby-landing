@@ -67,7 +67,7 @@ Save a friend.</h1>
           <a class="btn btn--ghost" href="#get" data-community data-i18n="joinCommunity">Join the community</a>
         </div>
         <div class="stores" data-stores></div>
-        <p class="cta-note" data-i18n="ctaNote">Free at launch · no ads</p>
+        <p class="cta-note" data-i18n="ctaNote">Free to play</p>
       </div>
     </div>
     <div class="phone-wrap">
@@ -198,7 +198,7 @@ Save a friend.</h1>
         <a class="btn btn--ghost" href="#get" data-community data-i18n="joinCommunity">Join the community</a>
       </div>
       <div class="stores" data-stores></div>
-      <p class="cta-note" data-i18n="ctaNote">Free at launch · no ads</p>
+      <p class="cta-note" data-i18n="ctaNote">Free to play</p>
     </div>
   </div>
 </section>
@@ -212,6 +212,7 @@ Save a friend.</h1>
       <div>
         <div class="logo">dibby</div>
         <p class="footer-soon" data-i18n="footerSoon">Coming soon to iOS &amp; Android</p>
+        <span class="age-badge" title="Suitable for all ages — rated 4+">4+</span>
         <div class="socials">
           <a href="#" data-social="discord" aria-label="Discord"><svg viewBox="0 0 24 24"><path d="M20 4.4A19 19 0 0015.3 3l-.3.5a14 14 0 014.2 2.1 14 14 0 00-12.4 0A14 14 0 0011 3.5L10.7 3A19 19 0 006 4.4 19.4 19.4 0 002.5 17.5 19.2 19.2 0 008.3 21l.7-1.2a12.5 12.5 0 01-2-1l.5-.4a13.7 13.7 0 0012 0l.5.4a12.5 12.5 0 01-2 1L18.7 21a19.2 19.2 0 005.8-3.5A19.4 19.4 0 0020 4.4zM9 14.7c-.9 0-1.7-.9-1.7-1.9S8 10.8 9 10.8s1.7.9 1.7 2-.7 1.9-1.7 1.9zm6 0c-.9 0-1.7-.9-1.7-1.9s.8-2 1.7-2 1.7.9 1.7 2-.7 1.9-1.7 1.9z"/></svg></a>
           <a href="#" data-social="youtube" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 00-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 001 7.5 31 31 0 00.6 12 31 31 0 001 16.5a3 3 0 002.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 002.1-2.1A31 31 0 0023.4 12 31 31 0 0023 7.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
@@ -232,14 +233,34 @@ Save a friend.</h1>
           <a href="#get" data-prereg="ios" data-i18n="appstore">App Store</a>
           <a href="#get" data-prereg="android" data-i18n="playstore">Google Play</a>
         </div>
+        <div class="footer-col">
+          <h4 data-i18n="footerLegal">Legal</h4>
+          <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a>
+          <a href="/support/" data-i18n="linkSupport">Support</a>
+          <a href="/legal/" data-i18n="linkLegal">Legal notice</a>
+        </div>
       </nav>
     </div>
+    <nav class="footer-legal" aria-label="Legal">
+      <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a>
+      <a href="/support/" data-i18n="linkSupport">Support</a>
+      <a href="/legal/" data-i18n="linkLegal">Legal notice</a>
+    </nav>
     <div class="footer-bottom">
       <p class="footer-credits" data-i18n="credits">Fonts: m6x11 by Daniel Linssen (Cyrillic by Natto Games) · Fusion Pixel by TakWolf · Golos Text. UI tiles by Cup Nooble — Sprout Lands.</p>
       <p class="footer-made" data-i18n="footerMade">Made with care for small hands and tired evenings.</p>
     </div>
   </div>
 </footer>
+
+<!-- cookie consent banner — shown only until the visitor makes a choice -->
+<div class="cookie-banner" id="cookieBanner" hidden role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <p class="cookie-text"><span data-i18n="cookieText">We use a necessary cookie to remember your language, and — only with your consent — optional cookies to understand how the site is used.</span> <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a></p>
+  <div class="cookie-actions">
+    <button class="btn btn--ghost cookie-btn" id="cookieDecline" data-i18n="cookieDecline">Decline</button>
+    <button class="btn cookie-btn" id="cookieAccept" data-i18n="cookieAccept">Accept</button>
+  </div>
+</div>
 
 <!-- mobile sticky CTA — shown only on narrow screens -->
 <div class="mobile-cta">
@@ -497,6 +518,31 @@ Save a friend.</h1>
     });
   }
 
+  /* ---------- cookie consent ----------
+     The site itself only sets a functional "dibby_lang" cookie (no tracking).
+     This banner records the visitor's choice so that any optional/analytics
+     cookies added later are loaded ONLY when consent === "all". */
+  function initConsent() {
+    var banner = document.getElementById("cookieBanner");
+    if (!banner) return;
+    var stored = null;
+    try { stored = localStorage.getItem("dibby_consent"); } catch (e) {}
+    if (stored === "all" || stored === "necessary") { window.__dibbyConsent = stored; return; }
+    document.body.classList.add("consent-open");
+    banner.hidden = false;
+    function choose(val) {
+      try { localStorage.setItem("dibby_consent", val); } catch (e) {}
+      window.__dibbyConsent = val;
+      banner.hidden = true;
+      document.body.classList.remove("consent-open");
+      // hook point: if val === "all", load analytics here in the future.
+    }
+    var a = document.getElementById("cookieAccept");
+    var d = document.getElementById("cookieDecline");
+    if (a) a.addEventListener("click", function () { choose("all"); });
+    if (d) d.addEventListener("click", function () { choose("necessary"); });
+  }
+
   /* ---------- boot ---------- */
   // Map a single BCP-47 browser tag (e.g. "pt-BR", "zh-Hant") to one of our codes.
   function matchBrowserLang(tag) {
@@ -531,6 +577,7 @@ Save a friend.</h1>
   buildConfetti();
   applyLang(pickInitialLang());
   buildPhones();
+  initConsent();
   requestAnimationFrame(function () { requestAnimationFrame(playVisiblePhones); });
 })();
 </script>

@@ -1,0 +1,29 @@
+{
+  "back": "← Volver a dibby",
+  "footer": {
+    "footerLegal": "Aviso legal",
+    "linkPrivacy": "Política de privacidad",
+    "linkSupport": "Soporte",
+    "linkLegal": "Aviso legal"
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "updated": "Última actualización: {{UPDATED}}",
+    "html": "<p>Esta Política de privacidad explica cómo el juego para móvil <strong>dibby</strong> («el juego», «nosotros») trata la información. dibby es publicado por {{PUBLISHER_NAME}}.</p>\n\n<h2>1. Qué recopilamos</h2>\n<p>El juego en sí <strong>no</strong> requiere cuenta, inicio de sesión ni registro, y <strong>no</strong> recopila ni nos transmite tu información personal. El progreso del juego se almacena localmente en tu dispositivo.</p>\n\n<h2>2. Publicidad (terceros)</h2>\n<p>dibby muestra publicidad a través del <strong>Yandex Mobile Ads SDK</strong> (Yandex Advertising Network). Para seleccionar y medir los anuncios, este SDK de terceros puede recopilar y procesar automáticamente datos técnicos, que pueden incluir:</p>\n<ul>\n  <li>el identificador publicitario de tu dispositivo (p. ej. Apple IDFA / Google Advertising ID);</li>\n  <li>la dirección IP y la ubicación aproximada (poco precisa) derivada de ella;</li>\n  <li>información del dispositivo y del sistema operativo (modelo, versión del SO, idioma, pantalla);</li>\n  <li>datos de interacción con los anuncios (impresiones, clics).</li>\n</ul>\n<p>Estos datos son tratados por Yandex como responsable independiente conforme a sus propias condiciones. Consulta la <a href=\"{{YANDEX_PRIVACY}}\" target=\"_blank\" rel=\"noopener\">Política de privacidad de Yandex</a> para más detalles sobre qué recopila y cómo gestionarlo. Nosotros no recibimos estos datos de forma que permita identificarte personalmente.</p>\n\n<h2>3. Menores</h2>\n<p>dibby está clasificado como apto para todas las edades (4+), pero <strong>no está dirigido a menores</strong> ni forma parte de la Apple Kids Category ni del programa «Diseñado para la familia» de Google Play. No recopilamos conscientemente datos personales de menores. Si crees que un menor ha facilitado datos personales, contáctanos y lo resolveremos.</p>\n\n<h2>4. Tus opciones y derechos</h2>\n<ul>\n  <li><strong>Limitar el seguimiento publicitario:</strong> puedes restablecer o desactivar tu identificador publicitario en los ajustes de tu dispositivo (iOS: Ajustes &rarr; Privacidad y seguridad &rarr; Seguimiento / Publicidad de Apple; Android: Ajustes &rarr; Privacidad &rarr; Anuncios).</li>\n  <li><strong>GDPR (EEE/Reino Unido):</strong> puedes tener derecho a acceder, rectificar, suprimir u oponerte al tratamiento de tus datos, así como a presentar una reclamación ante una autoridad de control.</li>\n  <li><strong>CCPA/CPRA (California):</strong> no «vendemos» tu información personal. Puedes ejercer tus derechos de privacidad contactándonos.</li>\n</ul>\n\n<h2>5. Conservación de datos</h2>\n<p>Nosotros no almacenamos datos personales. Los datos relacionados con la publicidad los conserva Yandex de acuerdo con su propia política.</p>\n\n<h2>6. Cambios en esta política</h2>\n<p>Podemos actualizar esta política. Los cambios sustanciales se reflejarán en la fecha de «última actualización» indicada arriba.</p>\n\n<h2>7. Contacto</h2>\n<p>Para consultas o solicitudes sobre privacidad: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n{{PUBLISHER_NAME}}, {{PUBLISHER_ADDRESS}}</p>"
+  },
+  "support": {
+    "title": "Soporte",
+    "updated": "",
+    "html": "<p>¿Necesitas ayuda con dibby, has encontrado un error o tienes alguna pregunta? Estaremos encantados de saber de ti.</p>\n\n<h2>Contáctanos</h2>\n<p>Correo: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\nNormalmente respondemos en unos pocos días laborables.</p>\n\n<h2>Respuestas rápidas</h2>\n<ul>\n  <li><strong>¿Cuánto cuesta?</strong> dibby es gratis &mdash; solo descárgalo y empieza a jugar.</li>\n  <li><strong>¿En qué puedo jugarlo?</strong> En iPhone y teléfonos Android.</li>\n  <li><strong>¿En qué idiomas?</strong> Diecinueve, que puedes cambiar en cualquier momento.</li>\n  <li><strong>¿Cómo se guarda mi progreso?</strong> Localmente en tu dispositivo. El juego no tiene cuentas ni sincronización en la nube.</li>\n</ul>\n\n<h2>Privacidad</h2>\n<p>Consulta nuestra <a href=\"{{PRIVACY_URL}}\">Política de privacidad</a> para saber cómo se tratan los datos.</p>"
+  },
+  "legal": {
+    "title": "Aviso legal",
+    "updated": "",
+    "html": "<p>Información facilitada de conformidad con el EU Digital Services Act (Regulation (EU) 2022/2065) y la legislación aplicable en materia de protección del consumidor.</p>\n\n<h2>Editor</h2>\n<p>dibby es publicado por {{PUBLISHER_NAME}}, un particular que actúa con fines comerciales (comerciante).</p>\n\n<h2>Contacto</h2>\n<p>Correo: <a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a></p>\n<p>La dirección postal y los demás datos de contacto del comerciante exigidos por el EU Digital Services Act se facilitan a Apple y Google, que los verifican, y se muestran en la ficha de dibby en la App Store y en Google Play.</p>"
+  },
+  "cookie": {
+    "cookieText": "Utilizamos una cookie necesaria para recordar tu idioma y, solo con tu consentimiento, cookies opcionales para entender cómo se usa el sitio.",
+    "cookieAccept": "Aceptar",
+    "cookieDecline": "Rechazar"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "back": "← 返回 dibby",
+  "footer": {
+    "footerLegal": "法律資訊",
+    "linkPrivacy": "隱私權政策",
+    "linkSupport": "支援",
+    "linkLegal": "法律聲明"
+  },
+  "privacy": {
+    "title": "隱私權政策",
+    "updated": "最後更新：{{UPDATED}}",
+    "html": "<p>本隱私權政策說明手機遊戲 <strong>dibby</strong>（「本遊戲」、「我們」）如何處理資訊。dibby 由 {{PUBLISHER_NAME}} 發行。</p>\n\n<h2>1. 我們蒐集哪些資料</h2>\n<p>本遊戲本身<strong>不</strong>需要帳號、登入或註冊，且<strong>不</strong>會向我們蒐集或傳輸您的個人資訊。您的遊戲進度會儲存在您裝置的本機上。</p>\n\n<h2>2. 廣告（第三方）</h2>\n<p>dibby 透過 <strong>Yandex Mobile Ads SDK</strong>（Yandex Advertising Network）顯示廣告。為了挑選與評估廣告，此第三方 SDK 可能會自動蒐集並處理技術資料，其中可能包括：</p>\n<ul>\n  <li>您裝置的廣告識別碼（例如 Apple IDFA／Google Advertising ID）；</li>\n  <li>IP 位址，以及由其推算出的概略（粗略）位置；</li>\n  <li>裝置與作業系統資訊（型號、作業系統版本、語言、螢幕）；</li>\n  <li>廣告互動資料（曝光、點擊）。</li>\n</ul>\n<p>這些資料由 Yandex 依其自身條款作為獨立控管者進行處理。如需瞭解其蒐集內容及管理方式的詳情，請參閱 <a href=\"{{YANDEX_PRIVACY}}\" target=\"_blank\" rel=\"noopener\">Yandex 隱私權政策</a>。我們不會以可識別個人身分的形式接收這些資料。</p>\n\n<h2>3. 兒童</h2>\n<p>dibby 經評定適合所有年齡（4+），但<strong>並非以兒童為對象</strong>，亦未納入 Apple Kids Category 或 Google Play 的「Designed for Families」計畫。我們不會在知情的情況下蒐集兒童的個人資料。若您認為有兒童提供了個人資料，請與我們聯絡，我們將會處理。</p>\n\n<h2>4. 您的選擇與權利</h2>\n<ul>\n  <li><strong>限制廣告追蹤：</strong>您可以在裝置設定中重設或停用您的廣告識別碼（iOS：設定 &rarr; 隱私權與安全性 &rarr; 追蹤／Apple 廣告；Android：設定 &rarr; 隱私權 &rarr; 廣告）。</li>\n  <li><strong>GDPR（歐洲經濟區／英國）：</strong>您可能有權存取、更正、刪除您的資料或反對其處理，並向監管機關提出申訴。</li>\n  <li><strong>CCPA/CPRA（加州）：</strong>我們不會「出售」您的個人資訊。您可透過聯絡我們行使您的隱私權。</li>\n</ul>\n\n<h2>5. 資料保存</h2>\n<p>我們本身不會儲存個人資料。與廣告相關的資料由 Yandex 依其自身政策保存。</p>\n\n<h2>6. 本政策之變更</h2>\n<p>我們可能會更新本政策。重大變更將以上方的「最後更新」日期反映。</p>\n\n<h2>7. 聯絡方式</h2>\n<p>有關隱私權的問題或要求：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n{{PUBLISHER_NAME}}，{{PUBLISHER_ADDRESS}}</p>"
+  },
+  "support": {
+    "title": "支援",
+    "updated": "",
+    "html": "<p>需要 dibby 的協助、發現了錯誤，或有任何問題嗎？我們很樂意聽到您的意見。</p>\n\n<h2>聯絡我們</h2>\n<p>電子郵件：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a><br>\n我們通常會在數個工作日內回覆。</p>\n\n<h2>快速解答</h2>\n<ul>\n  <li><strong>需要多少費用？</strong>dibby 可免費遊玩 &mdash; 只要下載即可開始。</li>\n  <li><strong>可以在什麼裝置上玩？</strong>iPhone 與 Android 手機。</li>\n  <li><strong>支援哪些語言？</strong>十九種，可隨時切換。</li>\n  <li><strong>我的進度如何儲存？</strong>儲存在您裝置的本機上。本遊戲沒有帳號或雲端同步。</li>\n</ul>\n\n<h2>隱私權</h2>\n<p>關於資料如何處理，請參閱我們的 <a href=\"{{PRIVACY_URL}}\">隱私權政策</a>。</p>"
+  },
+  "legal": {
+    "title": "法律聲明",
+    "updated": "",
+    "html": "<p>本資訊係依據 EU Digital Services Act (Regulation (EU) 2022/2065) 及適用之消費者保護法律提供。</p>\n\n<h2>發行者</h2>\n<p>dibby 由 {{PUBLISHER_NAME}} 發行，該發行者為以商業身分（交易者）行為之自然人。</p>\n\n<h2>聯絡方式</h2>\n<p>電子郵件：<a href=\"mailto:{{PUBLISHER_EMAIL}}\">{{PUBLISHER_EMAIL}}</a></p>\n<p>依 EU Digital Services Act 所要求之通訊地址及其他交易者聯絡資訊，已提供予 Apple 與 Google 並經其驗證，並顯示於 App Store 及 Google Play 上的 dibby 商品頁。</p>"
+  },
+  "cookie": {
+    "cookieText": "我們使用一個必要的 Cookie 來記住您的語言，並且——僅在您同意的情況下——使用選用 Cookie 來了解網站的使用情況。",
+    "cookieAccept": "接受",
+    "cookieDecline": "拒絕"
+  }
+}

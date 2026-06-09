@@ -31,6 +31,64 @@ global.window = {};
 require(path.join(SRC, "i18n.js"));
 const { LANGS, FRIEND_SLUGS, FRIEND_NAMES, I18N } = global.window;
 
+// ---- legal / utility pages ------------------------------------------------
+// Required to publish: privacy (both stores), support (Apple 1.5),
+// legal/Impressum (EU DSA trader info). Content lives in landing/legal/<code>.json
+// — one file per locale, so the pages are fully localized like the rest of the
+// site. Publisher details + tokens below are the single source of truth; the
+// build substitutes {{TOKENS}} into every page.
+//
+// ⚠️  BEFORE GOING LIVE: fill every [...] placeholder in PUBLISHER.
+const PUBLISHER = {
+  name:    "Малашенков Антон Викторович (Malashenkov Anton Viktorovich)", // legal name of the individual (trader)
+  email:   "support@dib.by",  // public support + privacy contact
+  address: "",                // not shown on the website — provided to the stores for the EU DSA display
+  phone:   "",                // none — provided to the stores for the EU DSA display
+  updated: "2026-06-09"       // privacy-policy "last updated" date
+};
+const YANDEX_PRIVACY = "https://yandex.com/legal/confidential/";
+const LEGAL_SLUGS = ["privacy", "support", "legal"];
+const LEGAL_DIR = path.join(SRC, "legal");
+
+// load every landing/legal/<code>.json (filename base === our internal LANGS code)
+const LEGAL = {};
+for (const f of fs.readdirSync(LEGAL_DIR)) {
+  if (!f.endsWith(".json")) continue;
+  LEGAL[f.slice(0, -5)] = JSON.parse(fs.readFileSync(path.join(LEGAL_DIR, f), "utf8"));
+}
+const LEGAL_LANGS = LANGS.map(l => l.code).filter(c => LEGAL[c]);
+
+// merge each locale's footer labels + cookie-banner strings into the i18n table
+// so the baked footer (data-i18n="linkPrivacy" …) and cookie banner are
+// localized in every language straight from the per-locale legal JSON.
+for (const code of LEGAL_LANGS) {
+  const extra = Object.assign({}, LEGAL[code].footer, LEGAL[code].cookie);
+  for (const k in extra) if (I18N[code] && I18N[code][k] == null) I18N[code][k] = extra[k];
+}
+
+// replace {{TOKENS}} (publisher details, links) for a given locale
+function fillTokens(str, code) {
+  const privacyUrl = (code === "en" ? "/" : "/" + URLCODE[code] + "/") + "privacy/";
+  // optional fields: when blank, drop their fragment cleanly (works across all
+  // locales — the localized label/punctuation is matched generically).
+  if (!PUBLISHER.address) {
+    str = str.replace(/\s*\{\{PUBLISHER_ADDRESS\}\}<br>/g, "");                  // own-line address
+    str = str.replace(/[,،、，]?\s*\{\{PUBLISHER_ADDRESS\}\}/g, ""); // ", address" + leftovers
+  }
+  if (!PUBLISHER.phone) {
+    str = str.replace(/<br>\s*[^<\n]*\{\{PUBLISHER_PHONE\}\}/g, "");             // "<br> label: phone"
+    str = str.replace(/\{\{PUBLISHER_PHONE\}\}/g, "");
+  }
+  return str
+    .split("{{PUBLISHER_NAME}}").join(escText(PUBLISHER.name))
+    .split("{{PUBLISHER_EMAIL}}").join(escText(PUBLISHER.email))
+    .split("{{PUBLISHER_ADDRESS}}").join(escText(PUBLISHER.address))
+    .split("{{PUBLISHER_PHONE}}").join(escText(PUBLISHER.phone))
+    .split("{{YANDEX_PRIVACY}}").join(YANDEX_PRIVACY)
+    .split("{{PRIVACY_URL}}").join(privacyUrl)
+    .split("{{UPDATED}}").join(escText(PUBLISHER.updated));
+}
+
 // per-language: URL sub-path, hreflang/lang code, writing system class
 const URLCODE = { en: "", ru: "ru", zh_CN: "zh-cn", zh_TW: "zh-tw", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", uk: "uk", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
 const HREFLANG = { en: "en", ru: "ru", zh_CN: "zh-Hans", zh_TW: "zh-Hant", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", uk: "uk", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
@@ -189,7 +247,75 @@ function renderLang(code, template) {
   // hreflang + JSON-LD before </head>
   h = h.replace("</head>", hreflangLinks() + "\n" + jsonLd(code, t) + "\n</head>");
 
+  // footer legal links → this locale's own /xx/privacy/ pages when we render
+  // them; locales without a legal translation fall back to the English set.
+  if (code !== "en" && LEGAL[code]) {
+    const pre = "/" + URLCODE[code];
+    h = h.split('href="/privacy/"').join('href="' + pre + '/privacy/"');
+    h = h.split('href="/support/"').join('href="' + pre + '/support/"');
+    h = h.split('href="/legal/"').join('href="' + pre + '/legal/"');
+  }
+
   return h;
+}
+
+// ---- legal pages (privacy / support / legal) -------------------------------
+// Standalone pages sharing the site chrome + styles.css. Root-absolute paths
+// (these only ever exist in dist/, never opened as local files).
+function renderLegalPage(code, slug) {
+  const data = LEGAL[code];
+  const page = data[slug];
+  const home = code === "en" ? "/" : "/" + URLCODE[code] + "/";
+  const lp = sub => home + sub + "/";
+  const navLabel = s => escText(data[s].title);
+  const updated = page.updated ? `<p class="legal-updated">${escText(fillTokens(page.updated, code))}</p>` : "";
+  return `<!DOCTYPE html>
+<html lang="${HREFLANG[code]}" data-script="${SCRIPT_OF[code] || "latin"}"${RTL[code] ? ' dir="rtl"' : ""}>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>${escText(page.title)} — dibby</title>
+<meta name="theme-color" content="#bde8db" />
+<link rel="icon" type="image/png" href="/assets/icon.png" />
+<link rel="apple-touch-icon" href="/assets/icon.png" />
+<link rel="canonical" href="${SITE_URL}${lp(slug)}" />
+<meta name="robots" content="index,follow" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="${home}" aria-label="dibby">dibby</a>
+    <nav class="nav" aria-label="Legal">
+      <a href="${lp("privacy")}">${navLabel("privacy")}</a>
+      <a href="${lp("support")}">${navLabel("support")}</a>
+      <a href="${lp("legal")}">${navLabel("legal")}</a>
+    </nav>
+  </div>
+</header>
+<main class="legal-main">
+  <div class="wrap legal">
+    <h1 class="section-title">${escText(page.title)}</h1>
+    ${updated}
+    ${fillTokens(page.html, code).trim()}
+    <p class="legal-back"><a href="${home}">${escText(data.back)}</a></p>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p class="footer-made">${escText(PUBLISHER.name)}</p>
+      <nav class="footer-links" aria-label="Legal">
+        <a href="${lp("privacy")}">${navLabel("privacy")}</a>
+        <a href="${lp("support")}">${navLabel("support")}</a>
+        <a href="${lp("legal")}">${navLabel("legal")}</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
+`;
 }
 
 // ---- sitemap / robots / llms ----------------------------------------------
@@ -208,7 +334,7 @@ function robots() {
 }
 
 function llms() {
-  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free at launch, no ads. Coming soon to iOS & Android.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 19 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n`;
+  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free to play. Coming soon to iOS & Android.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 19 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n- [Privacy Policy](${SITE_URL}/privacy/) · [Support](${SITE_URL}/support/) · [Legal](${SITE_URL}/legal/)\n`;
 }
 
 // ---- fs helpers ------------------------------------------------------------
@@ -245,13 +371,24 @@ function build() {
     fs.writeFileSync(path.join(dir, "index.html"), html);
   }
 
+  // legal/utility pages (EN at /privacy/, RU at /ru/privacy/, etc.)
+  for (const code of LEGAL_LANGS) {
+    for (const slug of LEGAL_SLUGS) {
+      const dir = code === "en" ? path.join(OUT, slug) : path.join(OUT, URLCODE[code], slug);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, "index.html"), renderLegalPage(code, slug));
+    }
+  }
+
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemap());
   fs.writeFileSync(path.join(OUT, "robots.txt"), robots());
   fs.writeFileSync(path.join(OUT, "llms.txt"), llms());
 
   console.log(`Built ${LANGS.length} locales → ${path.relative(ROOT, OUT)}/`);
   console.log(`Locales: ${LANGS.map(l => l.code === "en" ? "/" : "/" + URLCODE[l.code] + "/").join("  ")}`);
+  console.log(`Legal pages: ${LEGAL_SLUGS.join(", ")} × ${LEGAL_LANGS.length} locales (${LEGAL_LANGS.join(" ")})`);
   if (SITE_URL.includes("example")) console.log("⚠  SITE_URL is still a placeholder — set the real domain in build.cjs before deploying.");
+  if (JSON.stringify(PUBLISHER).includes("[")) console.log("⚠  PUBLISHER details still contain [placeholders] — fill them in the PUBLISHER block in build.cjs before store submission (EU DSA trader + Apple Guideline 1.5).");
 }
 
 build();
