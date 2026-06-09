@@ -47,6 +47,11 @@ const PUBLISHER = {
   updated: "2026-06-09"       // privacy-policy "last updated" date
 };
 const YANDEX_PRIVACY = "https://yandex.com/legal/confidential/";
+// Public profiles for the brand entity (App Store / Google Play / Discord / X / YouTube …).
+// Fill these as channels go live — they feed Organization/VideoGame `sameAs`, which is how
+// search + AI engines tie the unsearched name "dibby" to a recognised entity. Keep in sync
+// with LINKS in landing/index.html.
+const SAMEAS = [];
 const LEGAL_SLUGS = ["privacy", "support", "legal"];
 const LEGAL_DIR = path.join(SRC, "legal");
 
@@ -95,6 +100,8 @@ const HREFLANG = { en: "en", ru: "ru", zh_CN: "zh-Hans", zh_TW: "zh-Hant", ja: "
 // writing-system class (drives fonts + RTL in styles.css). Latin/Cyrillic locales omit it (default).
 const SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk", th: "thai", hi: "deva", ar: "arab" };
 const RTL = { ar: true };
+// Open Graph locale (Facebook/og uses xx_YY, not BCP-47 hreflang).
+const OGLOCALE = { en: "en_US", ru: "ru_RU", zh_CN: "zh_CN", zh_TW: "zh_TW", ja: "ja_JP", ko: "ko_KR", de: "de_DE", fr: "fr_FR", es: "es_ES", pt: "pt_PT", pl: "pl_PL", uk: "uk_UA", it: "it_IT", id: "id_ID", tr: "tr_TR", vi: "vi_VN", th: "th_TH", hi: "hi_IN", ar: "ar_AR" };
 const REVEAL = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
 const CONFETTI = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
 const FAQ_PAIRS = [["q5", "a5"], ["q1", "a1"], ["q2", "a2"], ["q3", "a3"], ["q4", "a4"]];
@@ -103,9 +110,10 @@ const APPLE_SVG = '<svg viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.
 const PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M3.6 2.3c-.2.2-.3.5-.3.9v17.6c0 .4.1.7.3.9l.1.1L13.5 12 3.7 2.2l-.1.1zM17 8.3l-2.4-1.4L5.6 16l9-5.2L17 9.4v-1.1zM4.7 21.3l9.9-9.3 2.4 1.4c.9.5.9 1.4 0 1.9l-2.4 1.4-9.9 4.6zM5.6 8L14.6 17 17 15.6c.9-.5.9-1.4 0-1.9L14.6 12 5.6 8z"/></svg>';
 
 // the two distinct English description strings present in the <head> template
-const EN_DESC_LONG = "Lower the rope, slip past the rubble, and lift a little friend home. A cozy one-finger arcade. Coming soon to iOS & Android.";
-const EN_DESC_SHORT = "Lower the rope, slip past the rubble, and lift a little friend home. Coming soon to iOS & Android.";
-const EN_TITLE = "dibby — cozy one-finger rescue arcade";
+// (must match landing/index.html byte-for-byte so the per-locale split() below finds them)
+const EN_DESC_LONG = "Cozy one-finger arcade for iOS & Android. Lower the rope past the rubble and carry a little friend home. Free to play — get a launch reminder.";
+const EN_DESC_SHORT = "Cozy one-finger rope-rescue arcade. Lower the rope, save a little friend. Free — coming soon to iOS & Android.";
+const EN_TITLE = "Cozy one-finger rope-rescue arcade — dibby";
 
 // ---- helpers ---------------------------------------------------------------
 const escText = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -142,10 +150,10 @@ function friendsGrid(names, assetPrefix) {
 }
 
 function faqList(t) {
-  return FAQ_PAIRS.map(([q, a]) =>
+  return FAQ_PAIRS.map(([q, a], i) =>
     '<div class="faq-item">' +
-    '<button class="faq-q">' + escText(t[q]) + '<span class="chev">+</span></button>' +
-    '<div class="faq-a"><p>' + escText(t[a]) + "</p></div>" +
+    '<button class="faq-q" id="faq-q-' + i + '" aria-expanded="false" aria-controls="faq-a-' + i + '">' + escText(t[q]) + '<span class="chev" aria-hidden="true">+</span></button>' +
+    '<div class="faq-a" id="faq-a-' + i + '" role="region" aria-labelledby="faq-q-' + i + '"><p>' + escText(t[a]) + "</p></div>" +
     "</div>"
   ).join("");
 }
@@ -162,34 +170,62 @@ function hreflangLinks() {
   return links.join("\n");
 }
 
+// One @graph with @id-cross-linked nodes (Organization ← WebSite ← VideoGame + FAQPage).
+// This entity model is what lets search/AI engines resolve "dibby" into a recognised thing.
 function jsonLd(code, t) {
+  const ORG_ID = SITE_URL + "/#org";
+  const SITE_ID = SITE_URL + "/#website";
+  const GAME_ID = SITE_URL + "/#game";
+  const org = {
+    "@type": "Organization",
+    "@id": ORG_ID,
+    name: "dibby",
+    url: SITE_URL + "/",
+    logo: { "@type": "ImageObject", url: SITE_URL + "/assets/icon.png", width: 1024, height: 1024 }
+  };
+  if (SAMEAS.length) org.sameAs = SAMEAS;
+  const website = {
+    "@type": "WebSite",
+    "@id": SITE_ID,
+    url: SITE_URL + "/",
+    name: "dibby",
+    inLanguage: HREFLANG[code],
+    publisher: { "@id": ORG_ID }
+  };
   const game = {
-    "@context": "https://schema.org",
     "@type": ["VideoGame", "MobileApplication"],
+    "@id": GAME_ID,
     name: "dibby",
     description: t.sub,
     applicationCategory: "GameApplication",
+    genre: "Arcade",
     operatingSystem: "iOS, Android",
     gamePlatform: ["iOS", "Android"],
     inLanguage: HREFLANG[code],
     url: absUrl(code),
     image: SITE_URL + "/assets/screens/main.png",
+    screenshot: ["gp-earth", "gp-water", "gp-crystal", "rescued", "finale", "friends-menu"]
+      .map(s => SITE_URL + "/assets/screens/" + s + ".png"),
+    datePublished: PUBLISHER.updated,
+    dateModified: PUBLISHER.updated,
+    isPartOf: { "@id": SITE_ID },
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/PreOrder" },
-    publisher: { "@type": "Organization", name: "dibby", url: SITE_URL + "/" }
+    publisher: { "@id": ORG_ID },
+    author: { "@id": ORG_ID }
   };
+  if (SAMEAS.length) game.sameAs = SAMEAS;
   const faq = {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": absUrl(code) + "#faq",
     inLanguage: HREFLANG[code],
+    isPartOf: { "@id": SITE_ID },
     mainEntity: FAQ_PAIRS.map(([q, a]) => ({
       "@type": "Question", name: t[q],
       acceptedAnswer: { "@type": "Answer", text: t[a] }
     }))
   };
-  return (
-    '<script type="application/ld+json">' + JSON.stringify(game) + "</script>\n" +
-    '<script type="application/ld+json">' + JSON.stringify(faq) + "</script>"
-  );
+  const graph = { "@context": "https://schema.org", "@graph": [org, website, game, faq] };
+  return '<script type="application/ld+json">' + JSON.stringify(graph) + "</script>";
 }
 
 function dibbyConfigScript(code) {
@@ -225,9 +261,12 @@ function renderLang(code, template) {
   h = h.replace('<div class="confetti-row" data-confetti></div>', '<div class="confetti-row" data-confetti>' + confettiRow(assetPrefix) + "</div>");
   h = h.replace('<div class="final-confetti" data-confetti2></div>', '<div class="final-confetti" data-confetti2>' + confettiRow(assetPrefix) + "</div>");
 
+  // per-locale og:locale (Facebook uses xx_YY, not BCP-47). EN keeps the template's en_US.
+  h = h.replace('<meta property="og:locale" content="en_US" />', `<meta property="og:locale" content="${OGLOCALE[code]}" />`);
+
   // localized <head> title + description (keep the hand-written English as-is)
   if (!isEn) {
-    const title = `dibby — ${t.kicker}`;
+    const title = `${t.kicker} — dibby`;   // front-load the localized genre, brand last
     const desc = `${t.sub} ${t.footerSoon}`;
     h = h.split(EN_TITLE).join(escAttr(title));
     h = h.split(EN_DESC_LONG).join(escAttr(desc));
@@ -269,6 +308,18 @@ function renderLegalPage(code, slug) {
   const lp = sub => home + sub + "/";
   const navLabel = s => escText(data[s].title);
   const updated = page.updated ? `<p class="legal-updated">${escText(fillTokens(page.updated, code))}</p>` : "";
+  // reciprocal hreflang for this slug across every localized legal page + x-default
+  const hreflang = LEGAL_LANGS.map(c => `<link rel="alternate" hreflang="${HREFLANG[c]}" href="${legalUrl(slug, c)}" />`).join("\n") +
+    `\n<link rel="alternate" hreflang="x-default" href="${legalUrl(slug, "en")}" />`;
+  // BreadcrumbList (unaffected by the 2025-26 FAQ rich-result deprecation, still renders in SERPs)
+  const breadcrumb = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "dibby", item: SITE_URL + home },
+      { "@type": "ListItem", position: 2, name: page.title, item: SITE_URL + lp(slug) }
+    ]
+  });
   return `<!DOCTYPE html>
 <html lang="${HREFLANG[code]}" data-script="${SCRIPT_OF[code] || "latin"}"${RTL[code] ? ' dir="rtl"' : ""}>
 <head>
@@ -280,6 +331,8 @@ function renderLegalPage(code, slug) {
 <link rel="apple-touch-icon" href="/assets/icon.png" />
 <link rel="canonical" href="${SITE_URL}${lp(slug)}" />
 <meta name="robots" content="index,follow" />
+${hreflang}
+<script type="application/ld+json">${breadcrumb}</script>
 <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -319,18 +372,37 @@ function renderLegalPage(code, slug) {
 }
 
 // ---- sitemap / robots / llms ----------------------------------------------
+const legalUrl = (slug, code) => SITE_URL + (code === "en" ? "/" : "/" + URLCODE[code] + "/") + slug + "/";
+
 function sitemap() {
-  const urls = LANGS.map(l => {
-    const alts = LANGS.map(a => `    <xhtml:link rel="alternate" hreflang="${HREFLANG[a.code]}" href="${absUrl(a.code)}" />`).join("\n") +
-      `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${absUrl("en")}" />`;
-    return `  <url>\n    <loc>${absUrl(l.code)}</loc>\n${alts}\n  </url>`;
-  }).join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`;
+  const entry = (loc, altPairs) => {
+    const alts = altPairs.map(([hl, href]) => `    <xhtml:link rel="alternate" hreflang="${hl}" href="${href}" />`).join("\n");
+    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${PUBLISHER.updated}</lastmod>\n${alts}\n  </url>`;
+  };
+  const urls = [];
+  // home locales
+  const homeAlts = LANGS.map(a => [HREFLANG[a.code], absUrl(a.code)]).concat([["x-default", absUrl("en")]]);
+  LANGS.forEach(l => urls.push(entry(absUrl(l.code), homeAlts)));
+  // legal / utility pages (privacy · support · legal), each localized with its own hreflang set
+  LEGAL_SLUGS.forEach(slug => {
+    const alts = LEGAL_LANGS.map(c => [HREFLANG[c], legalUrl(slug, c)]).concat([["x-default", legalUrl(slug, "en")]]);
+    LEGAL_LANGS.forEach(c => urls.push(entry(legalUrl(slug, c), alts)));
+  });
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join("\n")}\n</urlset>\n`;
 }
 
 function robots() {
-  // Allow everyone (incl. AI bots) — for a coming-soon launch, both AI training and AI-search citation help.
-  return `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+  // Allow everyone, and explicitly name the AI answer-engines + search crawlers we welcome —
+  // for a coming-soon launch both AI training and AI-search citation help discovery.
+  const NAMED = [
+    "Googlebot", "Bingbot", "DuckDuckBot", "YandexBot", "Applebot",
+    "GPTBot", "OAI-SearchBot", "ChatGPT-User",
+    "ClaudeBot", "Claude-SearchBot", "anthropic-ai",
+    "PerplexityBot", "Perplexity-User",
+    "Google-Extended", "Applebot-Extended", "Meta-ExternalAgent", "Amazonbot"
+  ];
+  const blocks = NAMED.map(ua => `User-agent: ${ua}\nAllow: /\n`).join("\n");
+  return `User-agent: *\nAllow: /\n\n${blocks}\nSitemap: ${SITE_URL}/sitemap.xml\n`;
 }
 
 function llms() {
@@ -343,6 +415,7 @@ function copyDir(src, dst) {
   fs.mkdirSync(dst, { recursive: true });
   for (const e of fs.readdirSync(src, { withFileTypes: true })) {
     if (e.name === ".DS_Store") continue;
+    if (e.name.endsWith(".ttf")) continue; // superseded by subset .woff2; don't ship the 215KB source
     const s = path.join(src, e.name), d = path.join(dst, e.name);
     if (e.isDirectory()) copyDir(s, d); else fs.copyFileSync(s, d);
   }

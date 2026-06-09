@@ -7,12 +7,12 @@
 
 @font-face {
   font-family: "m6x11";
-  src: url("../assets/fonts/m6x11cyrillic.ttf") format("truetype");
+  src: url("../assets/fonts/m6x11cyrillic.woff2") format("woff2");
   font-display: swap;
 }
 @font-face {
   font-family: "GolosText";
-  src: url("../assets/fonts/GolosText.ttf") format("truetype");
+  src: url("../assets/fonts/GolosText.woff2") format("woff2");
   font-weight: 400 700;
   font-display: swap;
 }
@@ -24,8 +24,9 @@
   --peach: #ffd6a5;
   --peach-deep: #f0b878;
   --peach-edge: #d99a55;
+  --peach-text: #9c5f20; /* AA-contrast peach for small TEXT on cream/mint; --peach-edge stays for decorative shadows */
   --ink: #3d4a52;
-  --ink-soft: #6a7780;
+  --ink-soft: #566068; /* WCAG AA: 4.5:1+ on mint/cream (was #6a7780 ≈ 3.45:1) */
   --pink: #ff5c8a;
   --sky: #5bc0eb;
   --gold: #ffcf4d;
@@ -79,10 +80,23 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; } /* keep anchor targets clear of the 66px sticky header */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* ---------- keyboard focus (WCAG 2.2 — was entirely absent) ---------- */
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* on the dark footer / dark store badges a dark ring is invisible — use a light one */
+.site-footer :focus-visible,
+.store:focus-visible,
+.mobile-cta :focus-visible { outline-color: var(--cream); }
+/* don't paint a ring on mouse clicks, only keyboard/AT */
+:focus:not(:focus-visible) { outline: none; }
 
 body {
   font-family: var(--font-body);
@@ -246,7 +260,7 @@ section { position: relative; }
 .eyebrow {
   font-family: var(--font-pixel);
   font-size: clamp(0.95rem, 2.4vw, 1.15rem);
-  color: var(--peach-edge);
+  color: var(--peach-text);
   letter-spacing: 0.04em;
   text-transform: lowercase;
   margin-bottom: 12px;
@@ -292,6 +306,9 @@ section { position: relative; }
   position: absolute; inset: 0; width: 100%; height: 100%;
 }
 .game-video { object-fit: cover; display: block; background: var(--mint); }
+/* baked LCP poster (pre-JS / no-JS); buildPhones() swaps it for the live crossfade/video */
+.phone__screen > picture { position: absolute; inset: 0; }
+.phone__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .game-fallback { display: none; }
 .game-fallback img {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -433,7 +450,7 @@ section { position: relative; }
 .friend__pic { height: 74px; display: grid; place-items: center; margin-bottom: 6px; }
 .friend__pic img { max-height: 74px; width: auto; }
 .friend__name { font-family: var(--font-ui); font-weight: 800; font-size: 0.92rem; }
-.friend__no { font-family: var(--font-pixel); font-size: 0.8rem; color: var(--peach-edge); }
+.friend__no { font-family: var(--font-pixel); font-size: 0.8rem; color: var(--peach-text); }
 
 /* revealed-friend pop-in */
 .friend--found .friend__pic img { animation: friendPop 0.5s var(--ease) both; }
@@ -466,7 +483,7 @@ section { position: relative; }
   opacity: 0.55;
 }
 
-.friends-tally b { color: var(--peach-edge); }
+.friends-tally b { color: var(--peach-text); }
 .friends-tally .sep { opacity: 0.5; margin: 0 2px; }
 
 .friends-tally {
@@ -491,6 +508,24 @@ section { position: relative; }
 .feat__icon svg { width: 28px; height: 28px; }
 .feat h3 { font-size: 1.22rem; margin-bottom: 5px; }
 .feat p { color: var(--ink-soft); }
+
+/* ---------- "at a glance" — answer-first lede + key-facts (GEO/AI extractability) ---------- */
+.about-lede {
+  max-width: 60ch; margin: 22px auto 0; text-align: center;
+  font-size: clamp(1.05rem, 2vw, 1.28rem); color: var(--ink); text-wrap: pretty;
+}
+.keyfacts {
+  margin: 34px auto 0; max-width: 620px; width: 100%;
+  border-collapse: collapse;
+  background: var(--cream); border: 2.5px solid var(--ink); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 0 6px 0 -2px var(--peach-deep);
+  font-family: var(--font-ui);
+}
+.keyfacts th, .keyfacts td { text-align: left; padding: 12px 18px; vertical-align: top; }
+.keyfacts tr + tr th, .keyfacts tr + tr td { border-top: 2px solid rgba(61,74,82,0.1); }
+.keyfacts th { font-weight: 800; color: var(--ink-soft); width: 42%; white-space: nowrap; }
+.keyfacts td { font-weight: 700; color: var(--ink); }
+[dir="rtl"] .keyfacts th, [dir="rtl"] .keyfacts td { text-align: right; }
 
 /* ---------- faq ---------- */
 .faq-list { max-width: 760px; margin: 44px auto 0; display: flex; flex-direction: column; gap: 14px; }
@@ -517,7 +552,7 @@ section { position: relative; }
 .site-footer .logo { font-size: 3rem; color: var(--peach); -webkit-text-stroke: 2px #1c2429; text-shadow: 0 2px 0 var(--peach-edge), 0 4px 0 #1c2429; }
 .footer-soon { font-family: var(--font-ui); font-weight: 800; color: var(--cream); margin-top: 10px; font-size: 1.05rem; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 28px; }
-.footer-col h4 { font-family: var(--font-ui); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: #8a98a0; margin-bottom: 12px; }
+.footer-col h3 { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #bdc7cc; margin-bottom: 12px; }
 .footer-col a { display: block; color: #cdd6db; font-size: 0.95rem; padding: 4px 0; transition: color 0.14s; }
 .footer-col a:hover { color: var(--gold); }
 .socials { display: flex; gap: 12px; margin-top: 4px; flex-wrap: wrap; }
@@ -529,8 +564,8 @@ section { position: relative; }
 .socials svg { width: 19px; height: 19px; fill: #cdd6db; }
 .socials a span { font-family: var(--font-ui); font-weight: 800; font-size: 0.82rem; color: #cdd6db; }
 .footer-bottom { margin-top: 40px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; }
-.footer-credits { font-size: 0.78rem; color: #8a98a0; max-width: 70ch; line-height: 1.6; }
-.footer-made { font-size: 0.86rem; color: #aab5bb; }
+.footer-credits { font-size: 0.78rem; color: #bdc7cc; max-width: 70ch; line-height: 1.6; }
+.footer-made { font-size: 0.86rem; color: #bdc7cc; }
 
 /* decorative downward chevrons used in section backgrounds */
 .chev-bg { position: absolute; inset: 0; pointer-events: none; opacity: 0.5; overflow: hidden; }
@@ -603,7 +638,7 @@ section { position: relative; }
 .legal p { margin: 12px 0; color: var(--ink); }
 .legal ul { margin: 12px 0 12px 1.2em; }
 .legal li { margin: 7px 0; color: var(--ink); }
-.legal a { color: var(--peach-edge); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.legal a { color: var(--peach-text); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 .legal a:hover { color: var(--ink); }
 .legal-back { margin-top: 40px; }
 .legal-back a { font-family: var(--font-ui); font-weight: 800; }
@@ -632,7 +667,7 @@ section { position: relative; }
   font-family: var(--font-ui); font-weight: 700; font-size: 0.92rem;
   color: var(--ink); max-width: 720px; line-height: 1.45;
 }
-.cookie-text a { color: var(--peach-edge); text-decoration: underline; text-underline-offset: 2px; }
+.cookie-text a { color: var(--peach-text); text-decoration: underline; text-underline-offset: 2px; }
 .cookie-actions { display: flex; gap: 10px; flex: none; }
 .cookie-btn { padding: 0.6em 1.2em; font-size: 0.95rem; }
 /* while the consent banner is open, don't stack the mobile CTA on top of it */

@@ -3,24 +3,33 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>dibby — cozy one-finger rescue arcade</title>
-<meta name="description" content="Lower the rope, slip past the rubble, and lift a little friend home. A cozy one-finger arcade. Coming soon to iOS & Android." />
+<title>Cozy one-finger rope-rescue arcade — dibby</title>
+<meta name="description" content="Cozy one-finger arcade for iOS & Android. Lower the rope past the rubble and carry a little friend home. Free to play — get a launch reminder." />
 <meta name="theme-color" content="#bde8db" />
 <link rel="icon" type="image/png" href="../assets/icon.png" />
 <link rel="apple-touch-icon" href="../assets/icon.png" />
+<link rel="preload" href="../assets/fonts/GolosText.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../assets/fonts/m6x11cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" as="image" href="../assets/screens/gp-water.webp" type="image/webp" fetchpriority="high" />
 <!-- canonical + social cards. Domain: dibbyplay.com (dib.by short-link 301s here). build.cjs rewrites these per-locale. -->
 <link rel="canonical" href="https://dibbyplay.com/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="dibby" />
-<meta property="og:title" content="dibby — cozy one-finger rescue arcade" />
-<meta property="og:description" content="Lower the rope, slip past the rubble, and lift a little friend home. A cozy one-finger arcade. Coming soon to iOS & Android." />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Cozy one-finger rope-rescue arcade — dibby" />
+<meta property="og:description" content="Cozy one-finger arcade for iOS & Android. Lower the rope past the rubble and carry a little friend home. Free to play — get a launch reminder." />
 <meta property="og:url" content="https://dibbyplay.com/" />
-<meta property="og:image" content="https://dibbyplay.com/assets/screens/main.png" />
-<meta property="og:image:alt" content="dibby gameplay — guiding a rope down a pit to rescue a little friend" />
+<meta property="og:image" content="https://dibbyplay.com/assets/og.png" />
+<meta property="og:image:secure_url" content="https://dibbyplay.com/assets/og.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="dibby — a cozy one-finger rope-rescue arcade, coming soon to iOS and Android" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="dibby — cozy one-finger rescue arcade" />
-<meta name="twitter:description" content="Lower the rope, slip past the rubble, and lift a little friend home. Coming soon to iOS & Android." />
-<meta name="twitter:image" content="https://dibbyplay.com/assets/screens/main.png" />
+<meta name="twitter:title" content="Cozy one-finger rope-rescue arcade — dibby" />
+<meta name="twitter:description" content="Cozy one-finger rope-rescue arcade. Lower the rope, save a little friend. Free — coming soon to iOS & Android." />
+<meta name="twitter:image" content="https://dibbyplay.com/assets/og.png" />
+<meta name="twitter:image:alt" content="dibby — a cozy one-finger rope-rescue arcade, coming soon to iOS and Android" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -72,11 +81,33 @@ Save a friend.</h1>
     </div>
     <div class="phone-wrap">
       <div class="phone bob">
-        <div class="phone__screen" data-phone></div>
+        <div class="phone__screen" data-phone><picture><source type="image/webp" srcset="../assets/screens/gp-water.webp" /><img class="pixelated phone__poster" width="540" height="960" fetchpriority="high" src="../assets/screens/gp-water.png" alt="dibby gameplay — guiding the rope down the pit toward a little friend" /></picture></div>
       </div>
     </div>
   </div>
   <div class="wrap"><div class="confetti-row" data-confetti></div></div>
+</section>
+
+<!-- ============================ AT A GLANCE — answer-first, for AI/GEO extractability ============================ -->
+<section class="section-pad" id="about">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="aboutKicker">In short</p>
+      <h2 class="section-title" data-i18n="aboutTitle">What is dibby?</h2>
+      <p class="about-lede" data-i18n="aboutLede">dibby is a free, cozy one-finger rope-rescue arcade game, coming soon to iOS and Android. You lower a rope with a single finger, slip past falling rubble, and carry 36 little friends home to a growing camp — in runs of about 30 seconds.</p>
+    </div>
+    <table class="keyfacts">
+      <tbody>
+        <tr><th scope="row" data-i18n="factPrice">Price</th><td data-i18n="factPriceV">Free to play</td></tr>
+        <tr><th scope="row" data-i18n="factPlatforms">Platforms</th><td>iOS &amp; Android</td></tr>
+        <tr><th scope="row" data-i18n="factGenre">Genre</th><td data-i18n="factGenreV">Cozy arcade</td></tr>
+        <tr><th scope="row" data-i18n="factControls">Controls</th><td data-i18n="factControlsV">One finger</td></tr>
+        <tr><th scope="row" data-i18n="factFriends">Friends to rescue</th><td>36</td></tr>
+        <tr><th scope="row" data-i18n="factLangs">Languages</th><td>19</td></tr>
+        <tr><th scope="row" data-i18n="factStatus">Status</th><td data-i18n="factStatusV">Coming soon</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- ============================ HOW TO PLAY ============================ -->
@@ -119,12 +150,12 @@ Save a friend.</h1>
       <p class="section-lede" data-i18n="shotsSub">Real frames from the game — four biomes, dozens of friends, one rope.</p>
     </div>
     <div class="shots-grid">
-      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/gp-earth.png" alt="dibby gameplay — lowering the rope past obstacles in the earth biome" /></div><figcaption data-i18n="shot1">One finger, one rope</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/gp-water.png" alt="dibby gameplay — threading the rope between obstacles in the water biome" /></div><figcaption data-i18n="shot2">Every near-miss feels good</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/gp-crystal.png" alt="dibby gameplay — deeper crystal biome with new dangers" /></div><figcaption data-i18n="shot3">Deeper down, new dangers</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/rescued.png" alt="dibby — the moment a little friend is rescued from the pit" /></div><figcaption data-i18n="shot4">Bring a friend home</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/finale.png" alt="dibby — the finale screen with all 36 friends saved" /></div><figcaption data-i18n="shot5">36 friends, all saved</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><img class="pixelated" loading="lazy" src="../assets/screens/friends-menu.png" alt="dibby — the camp screen showing the collection of rescued friends" /></div><figcaption data-i18n="shot6">Your camp keeps growing</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/gp-earth.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/gp-earth.png" alt="dibby gameplay — lowering the rope past obstacles in the earth biome" /></picture></div><figcaption data-i18n="shot1">One finger, one rope</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/gp-water.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/gp-water.png" alt="dibby gameplay — threading the rope between obstacles in the water biome" /></picture></div><figcaption data-i18n="shot2">Every near-miss feels good</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/gp-crystal.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/gp-crystal.png" alt="dibby gameplay — deeper crystal biome with new dangers" /></picture></div><figcaption data-i18n="shot3">Deeper down, new dangers</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/rescued.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/rescued.png" alt="dibby — the moment a little friend is rescued from the pit" /></picture></div><figcaption data-i18n="shot4">Bring a friend home</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/finale.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/finale.png" alt="dibby — the finale screen with all 36 friends saved" /></picture></div><figcaption data-i18n="shot5">36 friends, all saved</figcaption></figure>
+      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/friends-menu.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/friends-menu.png" alt="dibby — the camp screen showing the collection of rescued friends" /></picture></div><figcaption data-i18n="shot6">Your camp keeps growing</figcaption></figure>
     </div>
   </div>
 </section>
@@ -221,7 +252,7 @@ Save a friend.</h1>
       </div>
       <nav class="footer-links" aria-label="Footer">
         <div class="footer-col">
-          <h4 data-i18n="footerGame">Game</h4>
+          <h3 data-i18n="footerGame">Game</h3>
           <a href="#how" data-i18n="navHow">How to play</a>
           <a href="#shots" data-i18n="navShots">Screenshots</a>
           <a href="#friends" data-i18n="navFriends">Friends</a>
@@ -229,12 +260,12 @@ Save a friend.</h1>
           <a href="#faq" data-i18n="navFaq">FAQ</a>
         </div>
         <div class="footer-col">
-          <h4 data-i18n="footerGet">Get</h4>
+          <h3 data-i18n="footerGet">Get</h3>
           <a href="#get" data-prereg="ios" data-i18n="appstore">App Store</a>
           <a href="#get" data-prereg="android" data-i18n="playstore">Google Play</a>
         </div>
         <div class="footer-col">
-          <h4 data-i18n="footerLegal">Legal</h4>
+          <h3 data-i18n="footerLegal">Legal</h3>
           <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a>
           <a href="/support/" data-i18n="linkSupport">Support</a>
           <a href="/legal/" data-i18n="linkLegal">Legal notice</a>
@@ -349,16 +380,18 @@ Save a friend.</h1>
     if (!wrap) return;
     var pairs = [["q5", "a5"], ["q1", "a1"], ["q2", "a2"], ["q3", "a3"], ["q4", "a4"]];
     wrap.innerHTML = "";
-    pairs.forEach(function (p) {
+    pairs.forEach(function (p, i) {
       var item = document.createElement("div");
       item.className = "faq-item";
+      var aid = "faq-a-" + i, qid = "faq-q-" + i;
       item.innerHTML =
-        '<button class="faq-q">' + t[p[0]] + '<span class="chev">+</span></button>' +
-        '<div class="faq-a"><p>' + t[p[1]] + "</p></div>";
+        '<button class="faq-q" id="' + qid + '" aria-expanded="false" aria-controls="' + aid + '">' + t[p[0]] + '<span class="chev" aria-hidden="true">+</span></button>' +
+        '<div class="faq-a" id="' + aid + '" role="region" aria-labelledby="' + qid + '">' + '<p>' + t[p[1]] + "</p></div>";
       var q = item.querySelector(".faq-q");
       var a = item.querySelector(".faq-a");
       q.addEventListener("click", function () {
         var open = item.classList.toggle("open");
+        q.setAttribute("aria-expanded", open ? "true" : "false");
         a.style.maxHeight = open ? a.scrollHeight + "px" : "0";
       });
       wrap.appendChild(item);
@@ -454,11 +487,11 @@ Save a friend.</h1>
   var HAS_VIDEO = false;
   var VIDEO = [[ASSET + "gameplay.webm", "video/webm"], [ASSET + "gameplay.mp4", "video/mp4"]];
   var SCREENS = [
-    ASSET + "screens/gp-water.png",
-    ASSET + "screens/gp-crystal.png",
-    ASSET + "screens/rescued.png",
-    ASSET + "screens/gp-space.png",
-    ASSET + "screens/finale.png"
+    ASSET + "screens/gp-water.webp",
+    ASSET + "screens/gp-crystal.webp",
+    ASSET + "screens/rescued.webp",
+    ASSET + "screens/gp-space.webp",
+    ASSET + "screens/finale.webp"
   ];
 
   function buildPhones() {
