@@ -106,8 +106,30 @@ const REVEAL = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
 const CONFETTI = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
 const FAQ_PAIRS = [["q5", "a5"], ["q1", "a1"], ["q2", "a2"], ["q3", "a3"], ["q4", "a4"]];
 
-const APPLE_SVG = '<svg viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.5 2.2 2.6 2.1 1-.04 1.4-.7 2.7-.7s1.6.7 2.7.66c1.1-.02 1.8-1 2.5-2a9 9 0 001.1-2.3c-.02-.01-2.1-.8-2.1-3.2zM14.3 6.1c.6-.7 1-1.7.9-2.7-.8.03-1.9.5-2.5 1.3-.5.6-1 1.6-.9 2.6.9.07 1.8-.5 2.5-1.2z"/></svg>';
-const PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M3.6 2.3c-.2.2-.3.5-.3.9v17.6c0 .4.1.7.3.9l.1.1L13.5 12 3.7 2.2l-.1.1zM17 8.3l-2.4-1.4L5.6 16l9-5.2L17 9.4v-1.1zM4.7 21.3l9.9-9.3 2.4 1.4c.9.5.9 1.4 0 1.9l-2.4 1.4-9.9 4.6zM5.6 8L14.6 17 17 15.6c.9-.5.9-1.4 0-1.9L14.6 12 5.6 8z"/></svg>';
+// Monochrome glyphs. Apple/Play are brand marks; RuStore/Yandex/VK are recognisable
+// approximations — swap in official SVGs later. Must stay byte-identical to landing/index.html.
+const STORE_SVG = {
+  ios:     '<svg viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.5 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.5 2.2 2.6 2.1 1-.04 1.4-.7 2.7-.7s1.6.7 2.7.66c1.1-.02 1.8-1 2.5-2a9 9 0 001.1-2.3c-.02-.01-2.1-.8-2.1-3.2zM14.3 6.1c.6-.7 1-1.7.9-2.7-.8.03-1.9.5-2.5 1.3-.5.6-1 1.6-.9 2.6.9.07 1.8-.5 2.5-1.2z"/></svg>',
+  android: '<svg viewBox="0 0 24 24"><path d="M3.6 2.3c-.2.2-.3.5-.3.9v17.6c0 .4.1.7.3.9l.1.1L13.5 12 3.7 2.2l-.1.1zM17 8.3l-2.4-1.4L5.6 16l9-5.2L17 9.4v-1.1zM4.7 21.3l9.9-9.3 2.4 1.4c.9.5.9 1.4 0 1.9l-2.4 1.4-9.9 4.6zM5.6 8L14.6 17 17 15.6c.9-.5.9-1.4 0-1.9L14.6 12 5.6 8z"/></svg>',
+  rustore: '<svg viewBox="0 0 24 24"><path d="M8 7V6a4 4 0 018 0v1h2.4l.9 12.6a1.4 1.4 0 01-1.4 1.4H6.1a1.4 1.4 0 01-1.4-1.4L5.6 7H8zm2 0h4V6a2 2 0 00-4 0v1zm-2 3a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"/></svg>',
+  yandex:  '<svg viewBox="0 0 24 24"><path d="M7 7h10a4 4 0 014 4v4.2A2.8 2.8 0 0116.4 17l-1.2-1.5H8.8L7.6 17A2.8 2.8 0 013 15.2V11a4 4 0 014-4zm-.2 3v1.3H5.5v1.4h1.3V14h1.4v-1.3h1.3v-1.4H8.2V10H6.8zM15 10.6a1 1 0 100 2.1 1 1 0 000-2.1zm2.3 2.1a1 1 0 100 2 1 1 0 000-2z"/></svg>',
+  vk:      '<svg viewBox="0 0 24 24"><path d="M12.9 16.4c-5.6 0-8.9-3.9-9-10.4h2.8c.1 4.8 2.2 6.8 3.9 7.2V6h2.6v4.1c1.7-.2 3.4-2.1 4-4.1h2.6c-.5 2.5-2.4 4.4-3.6 5.1 1.2.6 3.4 2.3 4.2 5.3h-2.9c-.6-2-2.2-3.5-4.3-3.7v3.7h-.3z"/></svg>'
+};
+// Which store badges each locale shows, in order. Must match landing/index.html.
+// Default (locale not listed) = iOS + Android. uk stays default (Russian services blocked).
+const STORES_BY_LANG = {
+  ru: ["ios", "android", "rustore", "yandex", "vk"],
+  tr: ["ios", "android", "yandex"],
+  en: ["ios", "android", "yandex"]
+};
+const storesFor = code => STORES_BY_LANG[code] || ["ios", "android"];
+const storeMeta = t => ({
+  ios:     { pre: "ios",     small: t.downloadOn, big: t.appstore },
+  android: { pre: "android", small: t.getItOn,    big: t.playstore },
+  rustore: { pre: "rustore", small: t.getItOn,    big: t.rustore },
+  yandex:  { pre: "yandex",  small: t.playOn,     big: t.yandexgames },
+  vk:      { pre: "vk",      small: t.playOn,     big: t.vkminigames }
+});
 
 // the two distinct English description strings present in the <head> template
 // (must match landing/index.html byte-for-byte so the per-locale split() below finds them)
@@ -121,13 +143,20 @@ const escAttr = s => escText(s).replace(/"/g, "&quot;");
 const langPath = code => (code === "en" ? "/" : `/${URLCODE[code]}/`);
 const absUrl = code => SITE_URL + langPath(code);
 
-function storeBadges(t) {
-  return (
-    '<a class="store" href="#get" data-prereg="ios"><span class="store__soon">' + escText(t.soon) + "</span>" + APPLE_SVG +
-    '<span class="store__txt"><span class="store__small">' + escText(t.downloadOn) + '</span><span class="store__big">' + escText(t.appstore) + "</span></span></a>" +
-    '<a class="store" href="#get" data-prereg="android"><span class="store__soon">' + escText(t.soon) + "</span>" + PLAY_SVG +
-    '<span class="store__txt"><span class="store__small">' + escText(t.getItOn) + '</span><span class="store__big">' + escText(t.playstore) + "</span></span></a>"
-  );
+function storeBadges(t, code) {
+  const meta = storeMeta(t);
+  return storesFor(code).map(k => {
+    const m = meta[k];
+    return '<a class="store" href="#get" data-prereg="' + m.pre + '"><span class="store__soon">' + escText(t.soon) + "</span>" + STORE_SVG[k] +
+      '<span class="store__txt"><span class="store__small">' + escText(m.small) + '</span><span class="store__big">' + escText(m.big) + "</span></span></a>";
+  }).join("");
+}
+
+function footerGetLinks(t, code) {
+  const meta = storeMeta(t);
+  return storesFor(code).map(k =>
+    '<a href="#get" data-prereg="' + meta[k].pre + '">' + escText(meta[k].big) + "</a>"
+  ).join("");
 }
 
 function friendsGrid(names, assetPrefix) {
@@ -255,7 +284,8 @@ function renderLang(code, template) {
   });
 
   // JS-injected containers → bake real HTML so crawlers see it (JS rebuilds it identically for users)
-  h = h.split('<div class="stores" data-stores></div>').join('<div class="stores" data-stores>' + storeBadges(t) + "</div>");
+  h = h.split('<div class="stores" data-stores></div>').join('<div class="stores" data-stores>' + storeBadges(t, code) + "</div>");
+  h = h.split('<div data-getlinks><a href="#get" data-prereg="ios">App Store</a><a href="#get" data-prereg="android">Google Play</a></div>').join('<div data-getlinks>' + footerGetLinks(t, code) + "</div>");
   h = h.replace('<div class="friends-grid" data-friends></div>', '<div class="friends-grid" data-friends>' + friendsGrid(names, assetPrefix) + "</div>");
   h = h.replace('<div class="faq-list" data-faq></div>', '<div class="faq-list" data-faq>' + faqList(t) + "</div>");
   h = h.replace('<div class="confetti-row" data-confetti></div>', '<div class="confetti-row" data-confetti>' + confettiRow(assetPrefix) + "</div>");
