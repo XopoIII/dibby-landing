@@ -113,14 +113,27 @@ const STORE_SVG = {
   android: '<svg viewBox="0 0 24 24"><path d="M3.6 2.3c-.2.2-.3.5-.3.9v17.6c0 .4.1.7.3.9l.1.1L13.5 12 3.7 2.2l-.1.1zM17 8.3l-2.4-1.4L5.6 16l9-5.2L17 9.4v-1.1zM4.7 21.3l9.9-9.3 2.4 1.4c.9.5.9 1.4 0 1.9l-2.4 1.4-9.9 4.6zM5.6 8L14.6 17 17 15.6c.9-.5.9-1.4 0-1.9L14.6 12 5.6 8z"/></svg>',
   rustore: '<svg viewBox="0 0 24 24"><path d="M8 7V6a4 4 0 018 0v1h2.4l.9 12.6a1.4 1.4 0 01-1.4 1.4H6.1a1.4 1.4 0 01-1.4-1.4L5.6 7H8zm2 0h4V6a2 2 0 00-4 0v1zm-2 3a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"/></svg>',
   yandex:  '<svg viewBox="0 0 24 24"><path d="M7 7h10a4 4 0 014 4v4.2A2.8 2.8 0 0116.4 17l-1.2-1.5H8.8L7.6 17A2.8 2.8 0 013 15.2V11a4 4 0 014-4zm-.2 3v1.3H5.5v1.4h1.3V14h1.4v-1.3h1.3v-1.4H8.2V10H6.8zM15 10.6a1 1 0 100 2.1 1 1 0 000-2.1zm2.3 2.1a1 1 0 100 2 1 1 0 000-2z"/></svg>',
-  vk:      '<svg viewBox="0 0 24 24"><path d="M12.9 16.4c-5.6 0-8.9-3.9-9-10.4h2.8c.1 4.8 2.2 6.8 3.9 7.2V6h2.6v4.1c1.7-.2 3.4-2.1 4-4.1h2.6c-.5 2.5-2.4 4.4-3.6 5.1 1.2.6 3.4 2.3 4.2 5.3h-2.9c-.6-2-2.2-3.5-4.3-3.7v3.7h-.3z"/></svg>'
+  vk:      '<svg viewBox="0 0 24 24"><path d="M12.9 16.4c-5.6 0-8.9-3.9-9-10.4h2.8c.1 4.8 2.2 6.8 3.9 7.2V6h2.6v4.1c1.7-.2 3.4-2.1 4-4.1h2.6c-.5 2.5-2.4 4.4-3.6 5.1 1.2.6 3.4 2.3 4.2 5.3h-2.9c-.6-2-2.2-3.5-4.3-3.7v3.7h-.3z"/></svg>',
+  telegram:'<svg viewBox="0 0 24 24"><path d="M21.9 4.3l-3 14.1c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.8L18.4 6c.4-.3-.1-.5-.6-.2L7.4 12.5l-4.5-1.4c-1-.3-1-1 .2-1.5l17.6-6.8c.8-.3 1.5.2 1.2 1.5z"/></svg>'
 };
 // Which store badges each locale shows, in order. Must match landing/index.html.
-// Default (locale not listed) = iOS + Android. uk stays default (Russian services blocked).
+// Default (locale not listed) = iOS + Android. Telegram Mini App (@dibbyplay_bot)
+// shows after ios+android wherever Telegram is reachable and used; excluded on
+// vi/zh_CN (blocked), ja/ko/zh_TW (negligible), th (politically shaky).
 const STORES_BY_LANG = {
-  ru: ["ios", "android", "rustore", "yandex", "vk"],
-  tr: ["ios", "android", "yandex"],
-  en: ["ios", "android", "yandex"]
+  ru: ["ios", "android", "telegram", "rustore", "yandex", "vk"],
+  tr: ["ios", "android", "telegram", "yandex"],
+  en: ["ios", "android", "telegram", "yandex"],
+  uk: ["ios", "android", "telegram"],
+  hi: ["ios", "android", "telegram"],
+  id: ["ios", "android", "telegram"],
+  ar: ["ios", "android", "telegram"],
+  pt: ["ios", "android", "telegram"],
+  es: ["ios", "android", "telegram"],
+  it: ["ios", "android", "telegram"],
+  de: ["ios", "android", "telegram"],
+  fr: ["ios", "android", "telegram"],
+  pl: ["ios", "android", "telegram"]
 };
 const storesFor = code => STORES_BY_LANG[code] || ["ios", "android"];
 const storeMeta = t => ({
@@ -128,7 +141,8 @@ const storeMeta = t => ({
   android: { pre: "android", small: t.getItOn,    big: t.playstore },
   rustore: { pre: "rustore", small: t.getItOn,    big: t.rustore },
   yandex:  { pre: "yandex",  small: t.playOn,     big: t.yandexgames },
-  vk:      { pre: "vk",      small: t.playOn,     big: t.vkminigames }
+  vk:      { pre: "vk",      small: t.playOn,     big: t.vkminigames },
+  telegram:{ pre: "telegram",small: t.playOn || t.getItOn, big: "Telegram" }
 });
 
 // the two distinct English description strings present in the <head> template
@@ -147,7 +161,9 @@ function storeBadges(t, code) {
   const meta = storeMeta(t);
   return storesFor(code).map(k => {
     const m = meta[k];
-    return '<a class="store" href="#get" data-prereg="' + m.pre + '"><span class="store__soon">' + escText(t.soon) + "</span>" + STORE_SVG[k] +
+    // Telegram Mini App is playable now — no "Soon" ribbon, unlike the not-yet-launched stores.
+    const soon = k === "telegram" ? "" : '<span class="store__soon">' + escText(t.soon) + "</span>";
+    return '<a class="store" href="#get" data-prereg="' + m.pre + '">' + soon + STORE_SVG[k] +
       '<span class="store__txt"><span class="store__small">' + escText(m.small) + '</span><span class="store__big">' + escText(m.big) + "</span></span></a>";
   }).join("");
 }
