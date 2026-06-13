@@ -161,8 +161,8 @@ function storeBadges(t, code) {
   const meta = storeMeta(t);
   return storesFor(code).map(k => {
     const m = meta[k];
-    // Telegram Mini App is playable now — no "Soon" ribbon, unlike the not-yet-launched stores.
-    const soon = k === "telegram" ? "" : '<span class="store__soon">' + escText(t.soon) + "</span>";
+    // Telegram Mini App and RuStore are live now — no "Soon" ribbon, unlike the not-yet-launched stores.
+    const soon = (k === "telegram" || k === "rustore") ? "" : '<span class="store__soon">' + escText(t.soon) + "</span>";
     return '<a class="store" href="#get" data-prereg="' + m.pre + '">' + soon + STORE_SVG[k] +
       '<span class="store__txt"><span class="store__small">' + escText(m.small) + '</span><span class="store__big">' + escText(m.big) + "</span></span></a>";
   }).join("");
@@ -502,6 +502,15 @@ function build() {
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemap());
   fs.writeFileSync(path.join(OUT, "robots.txt"), robots());
   fs.writeFileSync(path.join(OUT, "llms.txt"), llms());
+
+  // ads.txt / app-ads.txt — authorized-sellers files for РСЯ (Yandex Ad Network).
+  // Source of truth is landing/<name>; paste the lines you get from the РСЯ
+  // interface (Настройки → Общие → app-ads.txt) here. Must sit at the site root
+  // so РСЯ can fetch https://dibbyplay.com/app-ads.txt to verify app access.
+  for (const f of ["app-ads.txt", "ads.txt"]) {
+    const src = path.join(SRC, f);
+    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(OUT, f));
+  }
 
   console.log(`Built ${LANGS.length} locales → ${path.relative(ROOT, OUT)}/`);
   console.log(`Locales: ${LANGS.map(l => l.code === "en" ? "/" : "/" + URLCODE[l.code] + "/").join("  ")}`);

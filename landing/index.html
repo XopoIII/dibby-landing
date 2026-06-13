@@ -309,7 +309,7 @@ Save a friend.</h1>
   var LINKS = {
     preregIos:     "", // App Store "coming soon"/pre-order page
     preregAndroid: "", // Google Play pre-registration page
-    preregRustore: "", // RuStore listing (ru only)
+    preregRustore: "https://www.rustore.ru/catalog/app/com.xopoiii.dibby", // RuStore listing (ru only — live now)
     preregYandex:  "", // Yandex Games page (ru/tr/en)
     preregVk:      "", // VK Mini Games page (ru only)
     telegram:      "https://t.me/dibbyplay_bot/play", // Telegram Mini App (live now — bot @dibbyplay_bot, app short_name "play")
@@ -417,8 +417,8 @@ Save a friend.</h1>
     var meta = storeMeta(t);
     return storesFor(lang).map(function (k) {
       var m = meta[k];
-      // Telegram Mini App is playable now — no "Soon" ribbon, unlike the not-yet-launched stores.
-      var soon = k === "telegram" ? "" : '<span class="store__soon">' + t.soon + "</span>";
+      // Telegram Mini App and RuStore are live now — no "Soon" ribbon, unlike the not-yet-launched stores.
+      var soon = (k === "telegram" || k === "rustore") ? "" : '<span class="store__soon">' + t.soon + "</span>";
       return '<a class="store" href="#get" data-prereg="' + m.pre + '">' + soon + STORE_SVG[k] +
         '<span class="store__txt"><span class="store__small">' + m.small + '</span><span class="store__big">' + m.big + "</span></span></a>";
     }).join("");

@@ -1,0 +1,17 @@
+{
+  // Worker for the short domain dib.by. It serves /app-ads.txt and /ads.txt
+  // directly (200, no redirect) and 301-redirects everything else to
+  // dibbyplay.com. See worker.js for the why.
+  //
+  // Before this takes effect: remove/disable the existing dib.by Redirect Rule
+  // in the Cloudflare dashboard (Rules -> Redirect Rules / Bulk Redirects) —
+  // Redirect Rules run before Workers and would otherwise pre-empt this Worker.
+  "name": "dib-by-redirect",
+  "main": "worker.js",
+  "compatibility_date": "2025-01-01",
+  // Bind the Worker to the dib.by zone. `npx wrangler deploy` reads this; the
+  // zone must already be active in this Cloudflare account.
+  "routes": [
+    { "pattern": "dib.by/*", "zone_name": "dib.by" }
+  ]
+}
