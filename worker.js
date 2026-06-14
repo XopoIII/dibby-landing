@@ -78,33 +78,82 @@ function readCookie(header, name) {
   return m ? decodeURIComponent(m[1]) : null;
 }
 
+// Security headers applied to every response at the edge (the static assets layer
+// sets none of these). CSP allows our self-hosted CSS/fonts/images and the inline
+// boot script (no third-party scripts, no analytics, no user input on the page).
+const SECURITY_HEADERS = {
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+  "Content-Security-Policy":
+    "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; " +
+    "script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; " +
+    "base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; " +
+    "upgrade-insecure-requests",
+};
+
+// HTML must always revalidate (cheap via ETag) so a redeploy is seen immediately;
+// other static assets (css/js/fonts/images) may sit in cache a while. Filenames
+// are not content-hashed yet, so we revalidate rather than mark immutable.
+function isHtml(url, res) {
+  const ct = (res.headers.get("Content-Type") || "").toLowerCase();
+  if (ct.includes("text/html")) return true;
+  return url.pathname === "/" || url.pathname.endsWith("/") || url.pathname.endsWith(".html");
+}
+
+function harden(res, url) {
+  const h = new Headers(res.headers);
+  for (const k in SECURITY_HEADERS) h.set(k, SECURITY_HEADERS[k]);
+  h.delete("X-Powered-By");
+  if (isHtml(url, res)) {
+    h.set("Cache-Control", "public, max-age=0, must-revalidate");
+  } else if (res.ok) {
+    h.set("Cache-Control", "public, max-age=86400, must-revalidate");
+  }
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Only the root makes a language decision; everything else is a plain asset.
+    // 0. canonical host: collapse www -> apex with a permanent redirect (one
+    //    canonical URL per page, no duplicate-content split for SEO).
+    if (url.hostname.startsWith("www.")) {
+      url.hostname = url.hostname.slice(4);
+      return new Response(null, {
+        status: 301,
+        headers: Object.assign({ Location: url.toString() }, SECURITY_HEADERS),
+      });
+    }
+
+    // 1. Only the root makes a language decision; everything else is a plain asset.
     if (url.pathname === "/") {
-      // 1. explicit saved choice wins (set when the visitor uses the picker)
+      // a. explicit saved choice wins (set when the visitor uses the picker)
       const saved = readCookie(request.headers.get("Cookie"), "dibby_lang");
       let code = saved && LOCALE_PATH[saved] ? saved : null;
 
-      // 2. otherwise detect from the browser / system languages
+      // b. otherwise detect from the browser / system languages
       if (!code) code = fromAcceptLanguage(request.headers.get("Accept-Language"));
 
-      // 3. default is English, which lives at the root — only redirect for the rest
+      // c. default is English, which lives at the root — only redirect for the rest
       if (code && code !== "en" && LOCALE_PATH[code]) {
         return new Response(null, {
           status: 302, // per-request decision -> must NOT be cached as permanent
-          headers: {
-            Location: LOCALE_PATH[code],
-            Vary: "Accept-Language, Cookie",
-            "Cache-Control": "no-store",
-          },
+          headers: Object.assign(
+            {
+              Location: LOCALE_PATH[code],
+              Vary: "Accept-Language, Cookie",
+              "Cache-Control": "no-store",
+            },
+            SECURITY_HEADERS
+          ),
         });
       }
       // en / no match: fall through and serve the English root asset
     }
 
-    return env.ASSETS.fetch(request);
+    return harden(await env.ASSETS.fetch(request), url);
   },
 };

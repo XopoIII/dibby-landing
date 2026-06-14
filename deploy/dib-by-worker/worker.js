@@ -25,8 +25,16 @@ export default {
     // Serve the sellers files inline (200) from the canonical origin.
     if (PASSTHROUGH.has(url.pathname)) {
       const upstream = await fetch(CANONICAL + url.pathname, { cf: { cacheTtl: 300 } });
+      // Only cache a genuine 200. A 404/5xx (missing or broken upstream file) must
+      // NOT be cached for 5 minutes — surface it with no-store so a fix propagates.
+      if (!upstream.ok) {
+        return new Response(null, {
+          status: upstream.status,
+          headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+        });
+      }
       return new Response(upstream.body, {
-        status: upstream.status,
+        status: 200,
         headers: {
           "content-type": "text/plain; charset=utf-8",
           "cache-control": "public, max-age=300",

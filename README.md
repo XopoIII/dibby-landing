@@ -1,6 +1,6 @@
 # dibby — landing page
 
-A cozy landing page for the game **dibby** (one-finger rescue arcade). Localized into 11 languages.
+A cozy landing page for the game **dibby** (one-finger rescue arcade). Localized into 19 languages.
 
 ## Running (development)
 Open `landing/index.html` in a browser. No build step is needed for development — it's plain HTML/CSS/JS.
@@ -23,7 +23,7 @@ Generates the `dist/` folder — that's what you deploy (not `landing/`).
 landing/
   index.html     ← page (markup + all logic: i18n, player, gallery)
   styles.css     ← styles (palette taken from the game)
-  i18n.js        ← translations for 11 languages + names of 36 friends
+  i18n.js        ← translations for 19 languages + names of 36 friends
 assets/
   fonts/         ← m6x11 (pixel) + Golos Text
   friends/       ← 36 friend sprites
@@ -55,6 +55,6 @@ While a value is empty, the corresponding button smoothly scrolls to the hero CT
 The domain in the meta tags (`canonical`, `og:*`, `twitter:*`) is already set to `https://dibbyplay.com/`; `build.cjs` rewrites them per locale at build time. If the domain changes, edit `SITE_URL` in `build.cjs` (plus the placeholders in `landing/index.html` that it relies on).
 
 ## Notes
-- **Languages**: switcher in the top right. Default is English. The choice is remembered. All 11 languages have a complete set of keys.
+- **Languages**: switcher in the top right. Default is English. The choice is remembered. All 19 languages have a complete set of keys.
 - **Hero**: a single variant (cozy split). The `hero 1/2/3` switcher is gone — #hero1 is chosen and locked in, with the friends row and a "Coming soon" status line.
 - **Friends gallery**: 6 are revealed, the other 30 are silhouettes ("???"). Which ones are revealed is the `REVEAL` array in `index.html`. Below the counter is a teaser for the hidden friends and a CTA.

@@ -680,3 +680,15 @@ section { position: relative; }
 /* while the consent banner is open, don't stack the mobile CTA on top of it */
 .consent-open .mobile-cta { display: none; }
 [dir="rtl"] .cookie-text a { text-underline-offset: 2px; }
+
+/* ---------- a11y / responsive hardening ---------- */
+/* Long localized labels (de "Yandex Games", ru "ВК Мини Игры") and headings must
+   wrap instead of forcing a horizontal scroll on 320px screens. */
+.btn, .store__big, .store__small, h1, h2, h3, .hero-h1, .section-title { overflow-wrap: break-word; }
+.hero-h1, .section-title, .about-lede { hyphens: auto; }
+/* Logical alignment so the Arabic (RTL) build mirrors correctly. */
+.store__txt, .lang__opt, .faq-q, .keyfacts th, .keyfacts td { text-align: start; }
+/* Comfortable touch targets (>=44px) on small screens. */
+.lang__opt { min-height: 44px; display: flex; align-items: center; }
+.footer-col a { padding: 11px 0; }
+.footer-legal a { display: inline-block; padding: 8px 0; }

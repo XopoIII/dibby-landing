@@ -8,7 +8,7 @@
   // every other request straight through to the static asset via env.ASSETS.
   "name": "dibby-landing",
   "main": "worker.js",
-  "compatibility_date": "2025-01-01",
+  "compatibility_date": "2025-06-01",
   "assets": {
     "directory": "./dist",
     // expose the static assets to worker.js as env.ASSETS.fetch(...)
@@ -18,6 +18,7 @@
     "run_worker_first": true,
     // serve /ru/ as /ru/index.html etc.
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
+    // serve the branded dist/404.html (with a 404 status) for unknown paths
+    "not_found_handling": "404-page"
   }
 }

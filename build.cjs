@@ -44,14 +44,17 @@ const PUBLISHER = {
   email:   "support@dib.by",  // public support + privacy contact
   address: "",                // not shown on the website — provided to the stores for the EU DSA display
   phone:   "",                // none — provided to the stores for the EU DSA display
-  updated: "2026-06-09"       // privacy-policy "last updated" date
+  updated: "2026-06-14"       // privacy-policy "last updated" date
 };
 const YANDEX_PRIVACY = "https://yandex.com/legal/confidential/";
 // Public profiles for the brand entity (App Store / Google Play / Discord / X / YouTube …).
 // Fill these as channels go live — they feed Organization/VideoGame `sameAs`, which is how
 // search + AI engines tie the unsearched name "dibby" to a recognised entity. Keep in sync
 // with LINKS in landing/index.html.
-const SAMEAS = [];
+const SAMEAS = [
+  "https://t.me/dibbyplay_bot",                                  // Telegram (Mini App + channel — live)
+  "https://www.rustore.ru/catalog/app/com.xopoiii.dibby"        // RuStore listing (live)
+];
 const LEGAL_SLUGS = ["privacy", "support", "legal"];
 const LEGAL_DIR = path.join(SRC, "legal");
 
@@ -135,6 +138,17 @@ const STORES_BY_LANG = {
   fr: ["ios", "android", "telegram"],
   pl: ["ios", "android", "telegram"]
 };
+// Live destinations — baked as real <a href> so crawlers and no-JS visitors get
+// working links. Keep in sync with LINKS in landing/index.html. Not-yet-live
+// stores (ios/android/yandex/vk) carry a "Soon" ribbon and stay inert (#get).
+const STORE_HREF = {
+  rustore:  "https://www.rustore.ru/catalog/app/com.xopoiii.dibby",
+  telegram: "https://t.me/dibbyplay_bot/play"
+};
+const CTA_HREF = STORE_HREF.telegram; // primary CTA — playable now in every locale
+const hrefFor = pre => STORE_HREF[pre] || "#get";
+const extAttr = url => url === "#get" ? "" : ' target="_blank" rel="noopener"';
+
 const storesFor = code => STORES_BY_LANG[code] || ["ios", "android"];
 const storeMeta = t => ({
   ios:     { pre: "ios",     small: t.downloadOn, big: t.appstore },
@@ -147,11 +161,38 @@ const storeMeta = t => ({
 
 // the two distinct English description strings present in the <head> template
 // (must match landing/index.html byte-for-byte so the per-locale split() below finds them)
-const EN_DESC_LONG = "Cozy one-finger arcade for iOS & Android. Lower the rope past the rubble and carry a little friend home. Free to play — get a launch reminder.";
-const EN_DESC_SHORT = "Cozy one-finger rope-rescue arcade. Lower the rope, save a little friend. Free — coming soon to iOS & Android.";
+const EN_DESC_LONG = "Cozy one-finger arcade you can play right now in Telegram. Lower the rope past the rubble and carry a little friend home. Free to play — App Store & Google Play soon.";
+const EN_DESC_SHORT = "Cozy one-finger rope-rescue arcade. Lower the rope, save a little friend. Free — play now in Telegram.";
 const EN_TITLE = "Cozy one-finger rope-rescue arcade — dibby";
 
 // ---- helpers ---------------------------------------------------------------
+let CSS_MIN = ""; // minified styles.css, filled in build() and inlined per page
+
+// Conservative CSS minifier: strip comments, collapse whitespace, trim around
+// punctuation. Leaves spaces inside calc()/clamp() and media `and` untouched.
+function minifyCss(s) {
+  return s
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}:;,>])\s*/g, "$1")
+    .replace(/;}/g, "}")
+    .trim();
+}
+
+// Per-locale i18n payload: only this locale + the English fallback, instead of
+// shipping all 19 languages (119KB) on every page. The picker still lists every
+// language (LANGS) and navigates between baked URLs (DIBBY_PATHS), so nothing is
+// lost. I18N here already carries the merged About/footer/cookie keys.
+function slimI18nJs(code) {
+  const i18n = { en: I18N.en };
+  const fnames = { en: FRIEND_NAMES.en };
+  if (code !== "en") { i18n[code] = I18N[code]; fnames[code] = FRIEND_NAMES[code] || FRIEND_NAMES.en; }
+  return "window.LANGS=" + JSON.stringify(LANGS) +
+    ";window.FRIEND_SLUGS=" + JSON.stringify(FRIEND_SLUGS) +
+    ";window.FRIEND_NAMES=" + JSON.stringify(fnames) +
+    ";window.I18N=" + JSON.stringify(i18n) + ";\n";
+}
+
 const escText = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const escAttr = s => escText(s).replace(/"/g, "&quot;");
 const langPath = code => (code === "en" ? "/" : `/${URLCODE[code]}/`);
@@ -163,16 +204,18 @@ function storeBadges(t, code) {
     const m = meta[k];
     // Telegram Mini App and RuStore are live now — no "Soon" ribbon, unlike the not-yet-launched stores.
     const soon = (k === "telegram" || k === "rustore") ? "" : '<span class="store__soon">' + escText(t.soon) + "</span>";
-    return '<a class="store" href="#get" data-prereg="' + m.pre + '">' + soon + STORE_SVG[k] +
+    const href = hrefFor(m.pre);
+    return '<a class="store" href="' + href + '"' + extAttr(href) + ' data-prereg="' + m.pre + '">' + soon + STORE_SVG[k] +
       '<span class="store__txt"><span class="store__small">' + escText(m.small) + '</span><span class="store__big">' + escText(m.big) + "</span></span></a>";
   }).join("");
 }
 
 function footerGetLinks(t, code) {
   const meta = storeMeta(t);
-  return storesFor(code).map(k =>
-    '<a href="#get" data-prereg="' + meta[k].pre + '">' + escText(meta[k].big) + "</a>"
-  ).join("");
+  return storesFor(code).map(k => {
+    const href = hrefFor(meta[k].pre);
+    return '<a href="' + href + '"' + extAttr(href) + ' data-prereg="' + meta[k].pre + '">' + escText(meta[k].big) + "</a>";
+  }).join("");
 }
 
 function friendsGrid(names, assetPrefix) {
@@ -201,6 +244,16 @@ function faqList(t) {
     '<div class="faq-a" id="faq-a-' + i + '" role="region" aria-labelledby="faq-q-' + i + '"><p>' + escText(t[a]) + "</p></div>" +
     "</div>"
   ).join("");
+}
+
+// Bake the language picker as real <a> links so it works (and reads correctly)
+// without JS. The browser script replaces these with buttons for the enhanced
+// in-page switch; crawlers and no-JS visitors get working localized links.
+function langMenuBaked(code) {
+  return LANGS.map(l => {
+    const cur = l.code === code ? ' aria-current="true"' : "";
+    return '<a class="lang__opt" role="menuitem" href="' + langPath(l.code) + '" data-code="' + l.code + '"' + cur + '>' + escText(l.name) + "</a>";
+  }).join("");
 }
 
 function confettiRow(assetPrefix) {
@@ -254,7 +307,7 @@ function jsonLd(code, t) {
     datePublished: PUBLISHER.updated,
     dateModified: PUBLISHER.updated,
     isPartOf: { "@id": SITE_ID },
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/PreOrder" },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
     publisher: { "@id": ORG_ID },
     author: { "@id": ORG_ID }
   };
@@ -307,6 +360,13 @@ function renderLang(code, template) {
   h = h.replace('<div class="confetti-row" data-confetti></div>', '<div class="confetti-row" data-confetti>' + confettiRow(assetPrefix) + "</div>");
   h = h.replace('<div class="final-confetti" data-confetti2></div>', '<div class="final-confetti" data-confetti2>' + confettiRow(assetPrefix) + "</div>");
 
+  // bake the primary CTA destination (Telegram Mini App) so it works without JS and is crawlable
+  h = h.split('href="#get" data-cta').join('href="' + CTA_HREF + '" target="_blank" rel="noopener" data-cta');
+
+  // language picker: bake the menu links + the current-locale label (works without JS)
+  h = h.replace('<div class="lang__menu" id="langMenu" role="menu"></div>', '<div class="lang__menu" id="langMenu" role="menu">' + langMenuBaked(code) + "</div>");
+  h = h.replace('<span id="langCurrent">English</span>', '<span id="langCurrent">' + escText((LANGS.find(l => l.code === code) || { name: "English" }).name) + "</span>");
+
   // per-locale og:locale (Facebook uses xx_YY, not BCP-47). EN keeps the template's en_US.
   h = h.replace('<meta property="og:locale" content="en_US" />', `<meta property="og:locale" content="${OGLOCALE[code]}" />`);
 
@@ -326,8 +386,10 @@ function renderLang(code, template) {
   // relative paths by depth
   h = h.split('../assets/').join(assetPrefix);                 // icons, og fallbacks, inline ASSET var, etc.
   h = h.split('var ASSET = "assets/";').join('var ASSET = "' + assetPrefix + '";'); // fix only if the above turned it wrong
-  h = h.replace('href="styles.css"', `href="${sitePrefix}styles.css"`);
-  h = h.replace('<script src="i18n.js"></script>', dibbyConfigScript(code) + '\n<script src="' + sitePrefix + 'i18n.js"></script>');
+  // inline the (minified) CSS so the page has no render-blocking stylesheet request
+  h = h.replace('<link rel="stylesheet" href="styles.css" />', "<style>" + CSS_MIN + "</style>");
+  // each locale dir gets its own slim i18n.js (this locale + en only), referenced locally
+  h = h.replace('<script src="i18n.js"></script>', dibbyConfigScript(code) + '\n<script src="i18n.js"></script>');
 
   // hreflang + JSON-LD before </head>
   h = h.replace("</head>", hreflangLinks() + "\n" + jsonLd(code, t) + "\n</head>");
@@ -354,6 +416,9 @@ function renderLegalPage(code, slug) {
   const lp = sub => home + sub + "/";
   const navLabel = s => escText(data[s].title);
   const updated = page.updated ? `<p class="legal-updated">${escText(fillTokens(page.updated, code))}</p>` : "";
+  // meta description: first ~155 chars of the page's own text (strip tags/whitespace)
+  const plain = s => String(s).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const metaDesc = escAttr(plain(fillTokens(page.html, code)).slice(0, 155));
   // reciprocal hreflang for this slug across every localized legal page + x-default
   const hreflang = LEGAL_LANGS.map(c => `<link rel="alternate" hreflang="${HREFLANG[c]}" href="${legalUrl(slug, c)}" />`).join("\n") +
     `\n<link rel="alternate" hreflang="x-default" href="${legalUrl(slug, "en")}" />`;
@@ -372,11 +437,23 @@ function renderLegalPage(code, slug) {
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>${escText(page.title)} — dibby</title>
+<meta name="description" content="${metaDesc}" />
 <meta name="theme-color" content="#bde8db" />
-<link rel="icon" type="image/png" href="/assets/icon.png" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
 <link rel="apple-touch-icon" href="/assets/icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <link rel="canonical" href="${SITE_URL}${lp(slug)}" />
 <meta name="robots" content="index,follow" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dibby" />
+<meta property="og:locale" content="${OGLOCALE[code]}" />
+<meta property="og:title" content="${escAttr(page.title)} — dibby" />
+<meta property="og:description" content="${metaDesc}" />
+<meta property="og:url" content="${SITE_URL}${lp(slug)}" />
+<meta property="og:image" content="${SITE_URL}/assets/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="${SITE_URL}/assets/og.png" />
 ${hreflang}
 <script type="application/ld+json">${breadcrumb}</script>
 <link rel="stylesheet" href="/styles.css" />
@@ -409,6 +486,48 @@ ${hreflang}
         <a href="${lp("support")}">${navLabel("support")}</a>
         <a href="${lp("legal")}">${navLabel("legal")}</a>
       </nav>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
+`;
+}
+
+// ---- 404 page --------------------------------------------------------------
+// Branded not-found page served (with a 404 status) by Workers Assets via
+// not_found_handling: "404-page". Root-absolute paths — it can render at any URL.
+function render404() {
+  return `<!DOCTYPE html>
+<html lang="en" data-script="latin">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Page not found — dibby</title>
+<meta name="theme-color" content="#bde8db" />
+<meta name="robots" content="noindex, follow" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="dibby">dibby</a>
+  </div>
+</header>
+<main class="legal-main">
+  <div class="wrap legal center">
+    <h1 class="section-title">This rope didn't reach</h1>
+    <p class="section-lede">The page you were looking for isn't here. Let's get you back to solid ground.</p>
+    <p><a class="btn btn--lg" href="/">Back home</a></p>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p class="footer-made">${escText(PUBLISHER.name)}</p>
     </div>
   </div>
 </footer>
@@ -451,8 +570,37 @@ function robots() {
   return `User-agent: *\nAllow: /\n\n${blocks}\nSitemap: ${SITE_URL}/sitemap.xml\n`;
 }
 
+// Scalable favicon — the rope + little-friend mark on the brand mint background.
+function faviconSvg() {
+  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" rx="22" fill="#bde8db"/>
+  <line x1="50" y1="18" x2="50" y2="56" stroke="#9a6a3c" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="50" cy="64" r="13" fill="#f0b878" stroke="#3d4a52" stroke-width="3"/>
+  <circle cx="45" cy="63" r="2.4" fill="#3d4a52"/>
+  <circle cx="55" cy="63" r="2.4" fill="#3d4a52"/>
+</svg>
+`;
+}
+
+function webmanifest() {
+  return JSON.stringify({
+    name: "dibby",
+    short_name: "dibby",
+    description: "A cozy one-finger rope-rescue arcade.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#bde8db",
+    theme_color: "#bde8db",
+    icons: [
+      { src: "/assets/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { src: "/assets/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { src: "/assets/icon.png", sizes: "1024x1024", type: "image/png", purpose: "any maskable" }
+    ]
+  }, null, 2) + "\n";
+}
+
 function llms() {
-  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free to play. Coming soon to iOS & Android.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 19 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n- [Privacy Policy](${SITE_URL}/privacy/) · [Support](${SITE_URL}/support/) · [Legal](${SITE_URL}/legal/)\n`;
+  return `# dibby\n\n> dibby — a cozy one-finger rope-rescue arcade game. Lower a rope with one finger, slip past falling rubble, and lift a little friend home to a growing camp. Free to play. Playable now in Telegram (Mini App @dibbyplay_bot) and on RuStore for Android; App Store, Google Play, Yandex Games and VK are coming.\n\nKey facts: one-finger controls; rescue 36 little friends (plus a few rare hidden ones); 30-second runs; speedrun-friendly magnet-rope; soft cozy art and music; 19 languages.\n\n## Pages\n- [Home](${SITE_URL}/): the offer, how to play, the 36 friends, why it's fun, and FAQ.\n- [Privacy Policy](${SITE_URL}/privacy/) · [Support](${SITE_URL}/support/) · [Legal](${SITE_URL}/legal/)\n`;
 }
 
 // ---- fs helpers ------------------------------------------------------------
@@ -475,8 +623,10 @@ function build() {
 
   // shared static files
   copyDir(ASSETS_SRC, path.join(OUT, "assets"));
-  fs.copyFileSync(path.join(SRC, "styles.css"), path.join(OUT, "styles.css"));
-  fs.copyFileSync(path.join(SRC, "i18n.js"), path.join(OUT, "i18n.js"));
+  // minify CSS once; inlined into locale pages and written out for legal/404 pages
+  CSS_MIN = minifyCss(fs.readFileSync(path.join(SRC, "styles.css"), "utf8"));
+  fs.writeFileSync(path.join(OUT, "styles.css"), CSS_MIN);
+  // the full 119KB i18n.js is no longer shipped — each locale dir gets a slim one below
 
   // NOTE: the edge language router (worker.js) is NOT copied into dist anymore.
   // It's deployed as the Worker entrypoint via "main" in wrangler.jsonc; a
@@ -488,6 +638,7 @@ function build() {
     const dir = l.code === "en" ? OUT : path.join(OUT, URLCODE[l.code]);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, "index.html"), html);
+    fs.writeFileSync(path.join(dir, "i18n.js"), slimI18nJs(l.code)); // slim per-locale payload
   }
 
   // legal/utility pages (EN at /privacy/, RU at /ru/privacy/, etc.)
@@ -499,6 +650,9 @@ function build() {
     }
   }
 
+  fs.writeFileSync(path.join(OUT, "404.html"), render404());
+  fs.writeFileSync(path.join(OUT, "favicon.svg"), faviconSvg());
+  fs.writeFileSync(path.join(OUT, "site.webmanifest"), webmanifest());
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemap());
   fs.writeFileSync(path.join(OUT, "robots.txt"), robots());
   fs.writeFileSync(path.join(OUT, "llms.txt"), llms());
