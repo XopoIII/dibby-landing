@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-script="latin">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}" />
+<meta name="theme-color" content="{{ACCENT}}" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preload" href="../assets/fonts/GolosText.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../assets/fonts/m6x11cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+<!-- canonical + social cards. build.cjs fills these per-locale. -->
+<link rel="canonical" href="{{CANONICAL}}" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="dibby" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="{{TITLE}}" />
+<meta property="og:description" content="{{DESC}}" />
+<meta property="og:url" content="{{CANONICAL}}" />
+<meta property="og:image" content="https://dibbyplay.com/assets/og.png" />
+<meta property="og:image:secure_url" content="https://dibbyplay.com/assets/og.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{OG_ALT}}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{TITLE}}" />
+<meta name="twitter:description" content="{{DESC}}" />
+<meta name="twitter:image" content="https://dibbyplay.com/assets/og.png" />
+<meta name="twitter:image:alt" content="{{OG_ALT}}" />
+<link rel="stylesheet" href="styles.css" />
+<style id="accent">:root{--mint:{{ACCENT}};--mint-deep:{{ACCENT_DEEP}}}</style>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="dibby">dibby</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#games" data-i18n="universeTitle">Games</a>
+      <a href="#friends" data-i18n="friendsTitle">Friends</a>
+      <a href="#why" data-i18n="whyTitle">Why it's cozy</a>
+    </nav>
+    <div class="header-right">
+      <div class="lang" id="lang">
+        <button class="lang__btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Language">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.93 6h-2.95a15.7 15.7 0 00-1.38-3.56A8.03 8.03 0 0118.93 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.96 7.96 0 010-4h3.38a16.6 16.6 0 000 4H4.26zm.81 2h2.95c.32 1.25.78 2.45 1.38 3.56A8.03 8.03 0 015.07 16zm2.95-8H5.07a8.03 8.03 0 014.33-3.56A15.7 15.7 0 008.02 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82A13.7 13.7 0 0112 19.96zM14.34 14H9.66a14.7 14.7 0 010-4h4.68a14.7 14.7 0 010 4zm.27 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 01-4.33 3.56zM16.36 14a16.6 16.6 0 000-4h3.38a7.96 7.96 0 010 4h-3.38z"/></svg>
+          <span id="langCurrent">English</span>
+        </button>
+        <div class="lang__menu" id="langMenu" role="menu"></div>
+      </div>
+      <a class="btn" href="{{DIBBY_PATH}}" data-i18n="cardPlay">Play</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================ HERO — universe ============================ -->
+<section class="hero hero--hub" id="hero" aria-label="Dibby">
+  <div class="wrap center">
+    <div class="logo logo--xl">dibby</div>
+    <p class="eyebrow" data-i18n="kicker">The Dibby world</p>
+    <h1 class="hero-h1" data-i18n="h1">One little world,
+four cozy games.</h1>
+    <p class="hero-sub hero-sub--center" data-i18n="sub">Dibby is a tiny critter with one big habit: bringing friends home. Four soft, one-finger games, one gentle world — pick where to start.</p>
+    <div class="confetti-row" data-confetti></div>
+  </div>
+</section>
+
+<!-- ============================ GAMES GRID ============================ -->
+<section class="section-pad" id="games">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="universeTitle">Four ways to play</p>
+      <h2 class="section-title" data-i18n="universeSub">Every game shares the same soft world and the same warm goal.</h2>
+    </div>
+    <div class="games-grid" data-cards></div>
+  </div>
+</section>
+
+<!-- ============================ FRIENDS — universe-wide ============================ -->
+<section class="section-pad" id="friends">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="friendsTitle">Save a friend</p>
+      <h2 class="section-title" data-i18n="friendsTitle">Save a friend — in every game</h2>
+      <p class="section-lede" data-i18n="friendsSub">36 little ones live across the Dibby world. However you play, you're always reaching for someone.</p>
+    </div>
+    <div class="friends-grid" data-friends></div>
+  </div>
+</section>
+
+<!-- ============================ WHY COZY ============================ -->
+<section class="section-pad" id="why">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="whyTitle">Why it's cozy</p>
+      <h2 class="section-title" data-i18n="whyTitle">Cozy, all the way down</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat__icon" style="background:var(--mint);"><svg viewBox="0 0 24 24" fill="none" stroke="#3d4a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a2 2 0 014 0v5"/><path d="M13 11V8a2 2 0 014 0v3"/><path d="M17 11a2 2 0 014 0v4a6 6 0 01-6 6h-2a6 6 0 01-5.5-3.6L5 16a1.6 1.6 0 012.7-1.7L9 16V6a2 2 0 014 0"/></svg></div>
+        <div><h3 data-i18n="f1t">One finger</h3><p data-i18n="f1d">Every game plays with a single thumb. Nothing to learn.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat__icon" style="background:var(--pink);"><svg viewBox="0 0 24 24" fill="none" stroke="#3d4a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.3C.8 9.3 1.8 5.5 5 4.8 7.2 4.3 9 5.5 12 8c3-2.5 4.8-3.7 7-3.2 3.2.7 4.2 4.5 3 6.9C19.5 16.4 12 21 12 21z"/></svg></div>
+        <div><h3 data-i18n="f2t">Soft on purpose</h3><p data-i18n="f2d">Quiet colours, quiet music, gentle pixel art.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat__icon" style="background:var(--gold);"><svg viewBox="0 0 24 24" fill="none" stroke="#3d4a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div><h3 data-i18n="f3t">30-second runs</h3><p data-i18n="f3d">A minute on the bus or an hour in bed. Both feel right.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat__icon" style="background:var(--sky);"><svg viewBox="0 0 24 24" fill="none" stroke="#3d4a52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <div><h3 data-i18n="f4t">One world</h3><p data-i18n="f4d">Same critter, same friends, same kind universe.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FINAL CTA ============================ -->
+<section class="section-pad final-cta" id="final">
+  <div class="wrap center">
+    <div class="final-confetti" data-confetti2></div>
+    <p class="eyebrow" data-i18n="finalKicker">where to begin</p>
+    <h2 class="section-title" data-i18n="finalTitle">Pick a game and dive in</h2>
+    <p class="section-lede" data-i18n="finalSub">They're all free and all cozy. Start with the rope, the road, or the sky.</p>
+    <div class="cta-row center-cta">
+      <a class="btn btn--lg" href="{{DIBBY_PATH}}" data-i18n="cardPlay">Play</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="logo">dibby</div>
+        <p class="footer-soon" data-i18n="universeSub">One little world, four cozy games.</p>
+        <span class="age-badge" title="Suitable for all ages — rated 4+">4+</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <div class="footer-col">
+          <h3 data-i18n="universeTitle">Games</h3>
+          <div data-cardlinks></div>
+        </div>
+        <div class="footer-col">
+          <h3 data-i18n="footerLegal">Legal</h3>
+          <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a>
+          <a href="/support/" data-i18n="linkSupport">Support</a>
+          <a href="/legal/" data-i18n="linkLegal">Legal notice</a>
+        </div>
+      </nav>
+    </div>
+    <nav class="footer-legal" aria-label="Legal">
+      <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a>
+      <a href="/support/" data-i18n="linkSupport">Support</a>
+      <a href="/legal/" data-i18n="linkLegal">Legal notice</a>
+    </nav>
+    <div class="footer-bottom">
+      <p class="footer-credits" data-i18n="credits">Fonts: m6x11 by Daniel Linssen (Cyrillic by Natto Games) · Fusion Pixel by TakWolf · Golos Text. UI tiles by Cup Nooble — Sprout Lands.</p>
+      <p class="footer-made" data-i18n="footerMade">Made with care for small hands and tired evenings.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- cookie consent banner -->
+<div class="cookie-banner" id="cookieBanner" hidden role="region" aria-live="polite" aria-labelledby="cookieText">
+  <p class="cookie-text"><span id="cookieText" data-i18n="cookieText">We use a necessary cookie to remember your language, and — only with your consent — optional cookies to understand how the site is used.</span> <a href="/privacy/" data-i18n="linkPrivacy">Privacy Policy</a></p>
+  <div class="cookie-actions">
+    <button class="btn btn--ghost cookie-btn" id="cookieDecline" data-i18n="cookieDecline">Decline</button>
+    <button class="btn cookie-btn" id="cookieAccept" data-i18n="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script>
+(function () {
+  "use strict";
+  var ASSET = "../assets/";
+
+  /* ---------- friends gallery (universe-wide) ---------- */
+  var REVEAL = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
+  var revealedIdx = REVEAL.map(function (s) { return window.FRIEND_SLUGS.indexOf(s); }).filter(function (i) { return i >= 0; });
+  var isRevealed = {};
+  revealedIdx.forEach(function (i) { isRevealed[i] = true; });
+  function buildFriends(lang) {
+    var grid = document.querySelector("[data-friends]");
+    if (!grid) return;
+    var names = window.FRIEND_NAMES[lang] || window.FRIEND_NAMES.en;
+    grid.innerHTML = "";
+    var order = revealedIdx.concat(window.FRIEND_SLUGS.map(function (_, i) { return i; }).filter(function (i) { return !isRevealed[i]; }));
+    order.forEach(function (i) {
+      var found = !!isRevealed[i];
+      var el = document.createElement("div");
+      el.className = "friend " + (found ? "friend--found" : "friend--locked");
+      var no = String(i + 1).padStart(2, "0");
+      el.innerHTML =
+        '<div class="friend__pic"><img class="pixelated" src="' + ASSET + "friends/" + window.FRIEND_SLUGS[i] + '.png" alt="' + (found ? names[i] : "") + '" /></div>' +
+        '<div class="friend__name">' + (found ? names[i] : "???") + "</div>" +
+        '<div class="friend__no">#' + no + "</div>";
+      grid.appendChild(el);
+    });
+  }
+
+  /* ---------- confetti row ---------- */
+  function buildConfetti() {
+    var pick = ["pushok", "kvaki", "kotik", "utenok", "zaychik", "zvyozdochka"];
+    var html = pick.map(function (s, i) {
+      return '<img class="pixelated bob" style="animation-delay:' + (i * 0.3) + 's" src="' + ASSET + "friends/" + s + '.png" alt="" />';
+    }).join("");
+    document.querySelectorAll("[data-confetti], [data-confetti2]").forEach(function (row) { row.innerHTML = html; });
+  }
+
+  /* ---------- i18n apply (text + friends only; cards are baked + locale-routed) ---------- */
+  var SCRIPT_OF = { ja: "ja", zh_CN: "cjk", zh_TW: "cjk", ko: "cjk", th: "thai", hi: "deva", ar: "arab" };
+  var RTL = { ar: true };
+  function rememberLang(code) {
+    try { localStorage.setItem("dibby_lang", code); } catch (e) {}
+    try { document.cookie = "dibby_lang=" + code + ";path=/;max-age=31536000;samesite=lax"; } catch (e) {}
+  }
+  function applyLang(lang) {
+    var t = window.I18N[lang] || window.I18N.en;
+    document.documentElement.lang = lang.replace("_", "-");
+    document.documentElement.setAttribute("data-script", SCRIPT_OF[lang] || "latin");
+    document.documentElement.dir = RTL[lang] ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (t[k] != null) el.textContent = t[k];
+    });
+    buildFriends(lang);
+    var cur = document.getElementById("langCurrent");
+    var meta = window.LANGS.filter(function (l) { return l.code === lang; })[0];
+    if (cur && meta) cur.textContent = meta.name;
+    document.querySelectorAll(".lang__opt").forEach(function (o) {
+      o.setAttribute("aria-current", o.getAttribute("data-code") === lang ? "true" : "false");
+    });
+    rememberLang(lang);
+  }
+
+  /* ---------- language picker ---------- */
+  function buildLangMenu() {
+    var menu = document.getElementById("langMenu");
+    menu.innerHTML = "";
+    var current = pickInitialLang();
+    var ordered = window.LANGS.slice().sort(function (a, b) {
+      if (a.code === current) return -1;
+      if (b.code === current) return 1;
+      return a.name.localeCompare(b.name);
+    });
+    ordered.forEach(function (l) {
+      var b = document.createElement("button");
+      b.className = "lang__opt";
+      b.setAttribute("data-code", l.code);
+      b.setAttribute("role", "menuitem");
+      b.textContent = l.name;
+      b.addEventListener("click", function () {
+        document.getElementById("lang").classList.remove("open");
+        rememberLang(l.code);
+        if (window.DIBBY_PATHS && window.DIBBY_PATHS[l.code] && l.code !== window.DIBBY_LANG) {
+          location.href = window.DIBBY_PATHS[l.code];
+        } else {
+          applyLang(l.code);
+        }
+      });
+      menu.appendChild(b);
+    });
+    var lang = document.getElementById("lang");
+    var btn = document.getElementById("langBtn");
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = lang.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.addEventListener("click", function () { lang.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && lang.classList.contains("open")) {
+        lang.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+        btn.focus();
+      }
+    });
+  }
+
+  /* ---------- cookie consent ---------- */
+  function initConsent() {
+    var banner = document.getElementById("cookieBanner");
+    if (!banner) return;
+    var stored = null;
+    try { stored = localStorage.getItem("dibby_consent"); } catch (e) {}
+    if (stored === "all" || stored === "necessary") { window.__dibbyConsent = stored; return; }
+    document.body.classList.add("consent-open");
+    banner.hidden = false;
+    function choose(val) {
+      try { localStorage.setItem("dibby_consent", val); } catch (e) {}
+      window.__dibbyConsent = val;
+      banner.hidden = true;
+      document.body.classList.remove("consent-open");
+    }
+    var a = document.getElementById("cookieAccept");
+    var d = document.getElementById("cookieDecline");
+    if (a) a.addEventListener("click", function () { choose("all"); });
+    if (d) d.addEventListener("click", function () { choose("necessary"); });
+  }
+
+  /* ---------- boot ---------- */
+  function matchBrowserLang(tag) {
+    if (!tag) return null;
+    tag = tag.toLowerCase();
+    if (tag.indexOf("zh") === 0) return /hant|tw|hk|mo/.test(tag) ? "zh_TW" : "zh_CN";
+    var direct = { en: "en", ru: "ru", uk: "uk", ja: "ja", ko: "ko", de: "de", fr: "fr", es: "es", pt: "pt", pl: "pl", it: "it", id: "id", tr: "tr", vi: "vi", th: "th", hi: "hi", ar: "ar" };
+    return direct[tag.split("-")[0]] || null;
+  }
+  function detectBrowserLang() {
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      var hit = matchBrowserLang(list[i]);
+      if (hit && window.I18N[hit]) return hit;
+    }
+    return null;
+  }
+  function pickInitialLang() {
+    if (window.DIBBY_LANG && window.DIBBY_LANG !== "en" && window.I18N[window.DIBBY_LANG]) return window.DIBBY_LANG;
+    try { var s = localStorage.getItem("dibby_lang"); if (s && window.I18N[s]) return s; } catch (e) {}
+    return detectBrowserLang() || "en";
+  }
+
+  buildLangMenu();
+  buildConfetti();
+  applyLang(pickInitialLang());
+  initConsent();
+})();
+</script>
+
+</body>
+</html>

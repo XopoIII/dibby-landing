@@ -3,47 +3,48 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Cozy one-finger rope-rescue arcade — dibby</title>
-<meta name="description" content="Cozy one-finger arcade you can play right now in Telegram. Lower the rope past the rubble and carry a little friend home. Free to play — App Store & Google Play soon." />
-<meta name="theme-color" content="#bde8db" />
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}" />
+<meta name="theme-color" content="{{ACCENT}}" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="preload" href="../assets/fonts/GolosText.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="../assets/fonts/m6x11cyrillic.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" as="image" href="../assets/screens/gp-water.webp" type="image/webp" fetchpriority="high" />
-<!-- canonical + social cards. Domain: dibbyplay.com (dib.by short-link 301s here). build.cjs rewrites these per-locale. -->
-<link rel="canonical" href="https://dibbyplay.com/" />
-<meta property="og:type" content="website" />
+<link rel="preload" as="image" href="{{PRELOAD_HERO}}" type="image/webp" fetchpriority="high" />
+<!-- canonical + social cards. Domain: dibbyplay.com (dib.by short-link 301s here). build.cjs fills these per-game/per-locale. -->
+<link rel="canonical" href="{{CANONICAL}}" />
+<meta property="og:type" content="game" />
 <meta property="og:site_name" content="dibby" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:title" content="Cozy one-finger rope-rescue arcade — dibby" />
-<meta property="og:description" content="Cozy one-finger arcade you can play right now in Telegram. Lower the rope past the rubble and carry a little friend home. Free to play — App Store & Google Play soon." />
-<meta property="og:url" content="https://dibbyplay.com/" />
+<meta property="og:title" content="{{TITLE}}" />
+<meta property="og:description" content="{{DESC}}" />
+<meta property="og:url" content="{{CANONICAL}}" />
 <meta property="og:image" content="https://dibbyplay.com/assets/og.png" />
 <meta property="og:image:secure_url" content="https://dibbyplay.com/assets/og.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="dibby — a cozy one-finger rope-rescue arcade you can play now in Telegram" />
+<meta property="og:image:alt" content="{{OG_ALT}}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Cozy one-finger rope-rescue arcade — dibby" />
-<meta name="twitter:description" content="Cozy one-finger rope-rescue arcade. Lower the rope, save a little friend. Free — play now in Telegram." />
+<meta name="twitter:title" content="{{TITLE}}" />
+<meta name="twitter:description" content="{{DESC}}" />
 <meta name="twitter:image" content="https://dibbyplay.com/assets/og.png" />
-<meta name="twitter:image:alt" content="dibby — a cozy one-finger rope-rescue arcade you can play now in Telegram" />
+<meta name="twitter:image:alt" content="{{OG_ALT}}" />
 <link rel="stylesheet" href="styles.css" />
+<style id="accent">:root{--mint:{{ACCENT}};--mint-deep:{{ACCENT_DEEP}}}</style>
 </head>
 <body>
 
 <!-- ============================ HEADER ============================ -->
 <header class="site-header">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="dibby">dibby</a>
+    <a class="logo" href="{{HUB_PATH}}" aria-label="Dibby — all games">dibby</a>
     <nav class="nav" aria-label="Primary">
       <a href="#how" data-i18n="navHow">How to play</a>
       <a href="#shots" data-i18n="navShots">Screenshots</a>
-      <a href="#friends" data-i18n="navFriends">Friends</a>
+      <a href="#friends" data-friends-link data-i18n="navFriends">Friends</a>
       <a href="#why" data-i18n="navWhy">Why it's fun</a>
       <a href="#faq" data-i18n="navFaq">FAQ</a>
     </nav>
@@ -66,7 +67,8 @@
 <section class="hero" id="hero" aria-label="dibby">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <div class="logo">dibby</div>
+      <a class="games-back" href="{{HUB_PATH}}" data-i18n="navAllGames">All games</a>
+      <div class="logo">{{GAME_NAME}}</div>
       <p class="eyebrow" data-i18n="kicker">Cozy one-finger arcade</p>
       <h1 class="hero-h1" data-i18n="h1">Lower the rope.
 Save a friend.</h1>
@@ -82,7 +84,7 @@ Save a friend.</h1>
     </div>
     <div class="phone-wrap">
       <div class="phone bob">
-        <div class="phone__screen" data-phone><picture><source type="image/webp" srcset="../assets/screens/gp-water.webp" /><img class="pixelated phone__poster" width="540" height="960" fetchpriority="high" src="../assets/screens/gp-water.png" alt="dibby gameplay — guiding the rope down the pit toward a little friend" /></picture></div>
+        <div class="phone__screen" data-phone></div>
       </div>
     </div>
   </div>
@@ -97,20 +99,30 @@ Save a friend.</h1>
       <h2 class="section-title" data-i18n="aboutTitle">What is dibby?</h2>
       <p class="about-lede" data-i18n="aboutLede">dibby is a free, cozy one-finger rope-rescue arcade game, coming soon to iOS and Android. You lower a rope with a single finger, slip past falling rubble, and carry 36 little friends home to a growing camp — in runs of about 30 seconds.</p>
     </div>
-    <table class="keyfacts">
-      <tbody>
-        <tr><th scope="row" data-i18n="factPrice">Price</th><td data-i18n="factPriceV">Free to play</td></tr>
-        <tr><th scope="row" data-i18n="factPlatforms">Platforms</th><td>Telegram, iOS &amp; Android</td></tr>
-        <tr><th scope="row" data-i18n="factGenre">Genre</th><td data-i18n="factGenreV">Cozy arcade</td></tr>
-        <tr><th scope="row" data-i18n="factControls">Controls</th><td data-i18n="factControlsV">One finger</td></tr>
-        <tr><th scope="row" data-i18n="factFriends">Friends to rescue</th><td>36</td></tr>
-        <tr><th scope="row" data-i18n="factLangs">Languages</th><td>19</td></tr>
-        <tr><th scope="row" data-i18n="factStatus">Status</th><td data-i18n="factStatusV">Coming soon</td></tr>
-      </tbody>
-    </table>
+    <table class="keyfacts" data-keyfacts></table>
   </div>
 </section>
 
+<!-- ============================ FRIENDS GALLERY (moved up — the collectible hook reads early) ============================ -->
+<!--FRIENDS:START-->
+<section class="section-pad" id="friends">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="navFriends">Friends</p>
+      <h2 class="section-title" data-i18n="friendsTitle">36 little friends, all waiting</h2>
+      <p class="section-lede" data-i18n="friendsSub">Every dive brings someone new back to camp. Collect the whole fuzzy, sleepy, sparkly crowd.</p>
+    </div>
+    <div class="friends-grid" data-friends></div>
+    <div class="center">
+      <div class="friends-tally"><b data-found>6</b><span class="sep">/</span><span>36</span> <span data-i18n="rescued">saved</span></div>
+      <p class="friends-secret" data-i18n="secretLine">…and a few rare friends hide even deeper.</p>
+      <a class="btn btn--lg friends-cta" href="#get" data-cta data-i18n="friendsCta">Save the other 30 — get a launch reminder</a>
+    </div>
+  </div>
+</section>
+<!--FRIENDS:END-->
+
+<!--SEC:how-->
 <!-- ============================ HOW TO PLAY ============================ -->
 <section class="section-pad" id="how">
   <div class="wrap">
@@ -142,6 +154,34 @@ Save a friend.</h1>
   </div>
 </section>
 
+<!--/SEC:how-->
+
+<!-- ============================ MODES (genre section — runners; gated by sections) ============================ -->
+<!--SEC:modes-->
+<section class="section-pad modes" id="modes">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow" data-i18n="modesKicker">two ways to run</p>
+      <h2 class="section-title" data-i18n="modesTitle">Two ways to run</h2>
+      <p class="section-lede" data-i18n="modesSub">A gentle campaign to bring every friend home, or an endless road that just keeps going.</p>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card mode-card--campaign">
+        <div class="mode-card__tag" data-i18n="mode1tag">Campaign</div>
+        <h3 data-i18n="mode1t">Bring everyone home</h3>
+        <p data-i18n="mode1d">Run biome after biome, free a little friend at the end of each, and watch the camp fill up.</p>
+      </div>
+      <div class="mode-card mode-card--endless">
+        <div class="mode-card__tag" data-i18n="mode2tag">Endless</div>
+        <h3 data-i18n="mode2t">Chase the horizon</h3>
+        <p data-i18n="mode2d">No finish line — just the road, your distance, and one more run to beat your best.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/SEC:modes-->
+
+<!--SEC:shots-->
 <!-- ============================ SCREENSHOTS GALLERY ============================ -->
 <section class="section-pad shots" id="shots">
   <div class="wrap">
@@ -150,34 +190,12 @@ Save a friend.</h1>
       <h2 class="section-title" data-i18n="shotsTitle">Straight from the pit</h2>
       <p class="section-lede" data-i18n="shotsSub">Real frames from the game — four biomes, dozens of friends, one rope.</p>
     </div>
-    <div class="shots-grid">
-      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/gp-earth.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/gp-earth.png" alt="dibby gameplay — lowering the rope past obstacles in the earth biome" /></picture></div><figcaption data-i18n="shot1">One finger, one rope</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/gp-water.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/gp-water.png" alt="dibby gameplay — threading the rope between obstacles in the water biome" /></picture></div><figcaption data-i18n="shot2">Every near-miss feels good</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/gp-crystal.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/gp-crystal.png" alt="dibby gameplay — deeper crystal biome with new dangers" /></picture></div><figcaption data-i18n="shot3">Deeper down, new dangers</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/rescued.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/rescued.png" alt="dibby — the moment a little friend is rescued from the pit" /></picture></div><figcaption data-i18n="shot4">Bring a friend home</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/finale.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/finale.png" alt="dibby — the finale screen with all 36 friends saved" /></picture></div><figcaption data-i18n="shot5">36 friends, all saved</figcaption></figure>
-      <figure class="shot"><div class="shot__frame"><picture><source type="image/webp" srcset="../assets/screens/friends-menu.webp" /><img class="pixelated" loading="lazy" width="540" height="960" src="../assets/screens/friends-menu.png" alt="dibby — the camp screen showing the collection of rescued friends" /></picture></div><figcaption data-i18n="shot6">Your camp keeps growing</figcaption></figure>
-    </div>
+    <div class="shots-grid" data-shots></div>
   </div>
 </section>
+<!--/SEC:shots-->
 
-<!-- ============================ FRIENDS GALLERY ============================ -->
-<section class="section-pad" id="friends">
-  <div class="wrap">
-    <div class="center">
-      <p class="eyebrow" data-i18n="navFriends">Friends</p>
-      <h2 class="section-title" data-i18n="friendsTitle">36 little friends, all waiting</h2>
-      <p class="section-lede" data-i18n="friendsSub">Every dive brings someone new back to camp. Collect the whole fuzzy, sleepy, sparkly crowd.</p>
-    </div>
-    <div class="friends-grid" data-friends></div>
-    <div class="center">
-      <div class="friends-tally"><b data-found>6</b><span class="sep">/</span><span>36</span> <span data-i18n="rescued">saved</span></div>
-      <p class="friends-secret" data-i18n="secretLine">…and a few rare friends hide even deeper.</p>
-      <a class="btn btn--lg friends-cta" href="#get" data-cta data-i18n="friendsCta">Save the other 30 — get a launch reminder</a>
-    </div>
-  </div>
-</section>
-
+<!--SEC:why-->
 <!-- ============================ WHY IT'S FUN ============================ -->
 <section class="section-pad" id="why">
   <div class="wrap">
@@ -206,7 +224,10 @@ Save a friend.</h1>
   </div>
 </section>
 
+<!--/SEC:why-->
+
 <!-- ============================ FAQ ============================ -->
+<!--SEC:faq-->
 <section class="section-pad" id="faq">
   <div class="wrap">
     <div class="center">
@@ -216,6 +237,8 @@ Save a friend.</h1>
     <div class="faq-list" data-faq></div>
   </div>
 </section>
+
+<!--/SEC:faq-->
 
 <!-- ============================ FINAL CTA ============================ -->
 <section class="section-pad final-cta" id="final">
@@ -250,7 +273,7 @@ Save a friend.</h1>
           <h3 data-i18n="footerGame">Game</h3>
           <a href="#how" data-i18n="navHow">How to play</a>
           <a href="#shots" data-i18n="navShots">Screenshots</a>
-          <a href="#friends" data-i18n="navFriends">Friends</a>
+          <a href="#friends" data-friends-link data-i18n="navFriends">Friends</a>
           <a href="#why" data-i18n="navWhy">Why it's fun</a>
           <a href="#faq" data-i18n="navFaq">FAQ</a>
         </div>
@@ -292,26 +315,29 @@ Save a friend.</h1>
   <a class="btn btn--lg" href="#get" data-cta data-i18n="notify">Play now</a>
 </div>
 
+<!-- desktop scroll-reveal CTA — JS reveals it once the hero CTA leaves view -->
+<div class="float-cta" id="floatCta">
+  <a class="btn btn--lg" href="#get" data-cta data-i18n="notify">Play now</a>
+</div>
+
 <script src="i18n.js"></script>
 <script>
 (function () {
   "use strict";
   var ASSET = "../assets/";
 
-  /* ---------- store / play links ----------
-     Live now: Telegram Mini App (everywhere) + RuStore (Android, RU). The native
-     stores below are not live yet — their "Soon" badges stay inert (href="#get").
-     Fill a value as a store goes live and its badge becomes a real link. */
-  var LINKS = {
-    preregIos:     "", // App Store — not live yet ("Soon" badge)
-    preregAndroid: "", // Google Play — not live yet ("Soon" badge)
-    preregRustore: "https://www.rustore.ru/catalog/app/com.xopoiii.dibby", // RuStore listing (Android, RU — live now)
-    preregYandex:  "", // Yandex Games — not live yet ("Soon" badge)
-    preregVk:      "", // VK Mini Games — not live yet ("Soon" badge)
-    telegram:      "https://t.me/dibbyplay_bot/play" // Telegram Mini App (live now — bot @dibbyplay_bot, app short_name "play")
-  };
-  // Primary CTA target: the Telegram Mini App — playable now in every locale.
-  var CTA_URL = LINKS.telegram;
+  /* ---------- store / play links (per-game) ----------
+     The current game's live stores + CTA come from window.DIBBY_GAME, injected
+     by the build from games.config.js. A store with no live href stays inert
+     (its "Soon" badge links to #get); when it goes live, set its href in the
+     game's `liveStores` in games.config.js and rebuild. */
+  var GAME = window.DIBBY_GAME || { slug: "dibby", cta: null, liveStores: {}, screens: [], friends: true };
+  var LIVE = GAME.liveStores || {};
+  function liveHref(key) { return (LIVE[key] && LIVE[key].href) ? LIVE[key].href : ""; }
+  function isLive(key) { return !!(LIVE[key] && LIVE[key].status === "live" && LIVE[key].href); }
+  // Primary CTA target: the game's live store (e.g. Dibby → Telegram). If nothing
+  // is live yet, the CTA stays inert (#get) and just scrolls to the store list.
+  var CTA_URL = (GAME.cta && liveHref(GAME.cta)) ? liveHref(GAME.cta) : "";
   function applyHref(el, url) {
     if (!el) return;
     if (url) { el.setAttribute("href", url); el.setAttribute("target", "_blank"); el.setAttribute("rel", "noopener"); }
@@ -319,15 +345,11 @@ Save a friend.</h1>
   }
   function wireLinks() {
     document.querySelectorAll("[data-cta]").forEach(function (el) { applyHref(el, CTA_URL); });
-    // Not-yet-live store badges link only to their own store (empty -> inert "#get"),
-    // never to the CTA, so a "Soon" App Store badge can't bounce into Telegram.
-    document.querySelectorAll('[data-prereg="ios"]').forEach(function (el) { applyHref(el, LINKS.preregIos); });
-    document.querySelectorAll('[data-prereg="android"]').forEach(function (el) { applyHref(el, LINKS.preregAndroid); });
-    document.querySelectorAll('[data-prereg="yandex"]').forEach(function (el) { applyHref(el, LINKS.preregYandex); });
-    document.querySelectorAll('[data-prereg="vk"]').forEach(function (el) { applyHref(el, LINKS.preregVk); });
-    // Live stores — real links.
-    document.querySelectorAll('[data-prereg="rustore"]').forEach(function (el) { applyHref(el, LINKS.preregRustore); });
-    document.querySelectorAll('[data-prereg="telegram"]').forEach(function (el) { applyHref(el, LINKS.telegram); });
+    // Each store badge links only to its own store (empty -> inert "#get"), never
+    // to the CTA, so a "Soon" badge can't bounce into a different live store.
+    document.querySelectorAll("[data-prereg]").forEach(function (el) {
+      applyHref(el, liveHref(el.getAttribute("data-prereg")));
+    });
   }
 
   /* ---------- friends gallery: reveal a curated few, silhouette the rest ---------- */
@@ -377,20 +399,11 @@ Save a friend.</h1>
   // vi (blocked since May 2025), zh_CN (blocked since 2015), ja/ko (LINE/KakaoTalk
   // dominate, ~negligible Telegram use), zh_TW (low penetration), th (politically
   // shaky — left out for now). Russian services (vk/rustore/yandex) stay RU-only.
-  var STORES_BY_LANG = {
+  // The one badge set, shared by every game (injected from games.config.js).
+  var STORES_BY_LANG = window.STORES_BY_LANG || {
     ru: ["ios", "android", "telegram", "rustore", "yandex", "vk"],
     tr: ["ios", "android", "telegram", "yandex"],
-    en: ["ios", "android", "telegram", "yandex"],
-    uk: ["ios", "android", "telegram"],
-    hi: ["ios", "android", "telegram"],
-    id: ["ios", "android", "telegram"],
-    ar: ["ios", "android", "telegram"],
-    pt: ["ios", "android", "telegram"],
-    es: ["ios", "android", "telegram"],
-    it: ["ios", "android", "telegram"],
-    de: ["ios", "android", "telegram"],
-    fr: ["ios", "android", "telegram"],
-    pl: ["ios", "android", "telegram"]
+    en: ["ios", "android", "telegram", "yandex"]
   };
   function storesFor(lang) { return STORES_BY_LANG[lang] || ["ios", "android"]; }
   function storeMeta(t) {
@@ -407,8 +420,8 @@ Save a friend.</h1>
     var meta = storeMeta(t);
     return storesFor(lang).map(function (k) {
       var m = meta[k];
-      // Telegram Mini App and RuStore are live now — no "Soon" ribbon, unlike the not-yet-launched stores.
-      var soon = (k === "telegram" || k === "rustore") ? "" : '<span class="store__soon">' + t.soon + "</span>";
+      // No "Soon" ribbon on a store that's live for THIS game; the rest show one.
+      var soon = isLive(k) ? "" : '<span class="store__soon">' + t.soon + "</span>";
       return '<a class="store" href="#get" data-prereg="' + m.pre + '">' + soon + STORE_SVG[k] +
         '<span class="store__txt"><span class="store__small">' + m.small + '</span><span class="store__big">' + m.big + "</span></span></a>";
     }).join("");
@@ -537,58 +550,60 @@ Save a friend.</h1>
     });
   }
 
-  /* ---------- gameplay phone: real video when present, screenshots until then ---------- */
+  /* ---------- gameplay phone: a soft crossfade of real screenshots ---------- */
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // Drop the capture in when ready, then flip HAS_VIDEO to true (files: assets/gameplay.mp4 + .webm).
-  var HAS_VIDEO = false;
-  var VIDEO = [[ASSET + "gameplay.webm", "video/webm"], [ASSET + "gameplay.mp4", "video/mp4"]];
-  var SCREENS = [
-    ASSET + "screens/gp-water.webp",
-    ASSET + "screens/gp-crystal.webp",
-    ASSET + "screens/rescued.webp",
-    ASSET + "screens/gp-space.webp",
-    ASSET + "screens/finale.webp"
-  ];
+  // Hero crossfade screens come from the current game (build injects resolved
+  // {webp,png} paths). Fall back to Dibby's screens in the raw dev file.
+  var SCREENS = (GAME.screens && GAME.screens.length)
+    ? GAME.screens.map(function (s) { return s.webp; })
+    : [ASSET + "screens/gp-water.webp", ASSET + "screens/gp-crystal.webp", ASSET + "screens/rescued.webp", ASSET + "screens/finale.webp"];
+
+  // Real gameplay loop when the game provides one (Dash); else the screenshot
+  // crossfade. Honour reduced-motion by skipping the video (still crossfade).
+  var GP = GAME.gameplay; // { mp4, poster } or null
 
   function buildPhones() {
     document.querySelectorAll("[data-phone]").forEach(function (scr) {
       if (scr.dataset.built) return;
       scr.dataset.built = "1";
-      var videoHtml = "";
-      if (HAS_VIDEO) {
-        var sources = VIDEO.map(function (s) { return '<source src="' + s[0] + '" type="' + s[1] + '">'; }).join("");
-        videoHtml = '<video class="game-video" data-gameplay muted loop playsinline preload="auto" poster="' + SCREENS[0] + '">' + sources + '</video>';
-      }
-      scr.innerHTML =
-        videoHtml +
+      var fallbackHtml =
         '<div class="game-fallback" data-fallback>' +
           SCREENS.map(function (s, i) { return '<img class="pixelated' + (i === 0 ? " is-on" : "") + '" src="' + s + '" alt="">'; }).join("") +
-        '</div>' +
-        '<span class="live-tag">gameplay</span>';
-      wireVideo(scr);
+        '</div>';
+      var videoHtml = (GP && GP.mp4 && !reduced)
+        ? '<video class="game-video" data-gameplay muted loop playsinline autoplay preload="auto" poster="' + GP.poster + '"><source src="' + GP.mp4 + '" type="video/mp4"></video>'
+        : "";
+      scr.innerHTML = videoHtml + fallbackHtml + '<span class="live-tag">gameplay</span>';
+      if (videoHtml) {
+        var fb0 = scr.querySelector("[data-fallback]");
+        if (fb0) fb0.style.display = "none"; // video (with poster) on top; wireVideo re-shows on failure
+        wireVideo(scr);
+      } else {
+        crossfade(scr.querySelectorAll("[data-fallback] img"));
+      }
     });
   }
 
+  // Show the video once it can play; if it errors or never loads, fall back to
+  // the screenshot crossfade so the hero is never blank.
   function wireVideo(scr) {
     var v = scr.querySelector("[data-gameplay]");
     var fb = scr.querySelector("[data-fallback]");
-    var imgs = fb ? fb.querySelectorAll("img") : [];
     var settled = false;
-    function fallback() {
+    function toFallback() {
       if (settled) return; settled = true;
       if (v) v.style.display = "none";
-      if (fb) fb.style.display = "block";
-      crossfade(imgs);
+      if (fb) { fb.style.display = "block"; crossfade(fb.querySelectorAll("img")); }
     }
     function ok() {
       if (settled) return; settled = true;
       if (fb) fb.style.display = "none";
-      if (v) { v.style.display = "block"; var p = v.play && v.play(); if (p && p.catch) p.catch(function () {}); }
+      if (v) { var p = v.play && v.play(); if (p && p.catch) p.catch(function () {}); }
     }
-    if (!v) { fallback(); return; }
+    if (!v) { toFallback(); return; }
     v.addEventListener("loadeddata", function () { if (v.videoWidth) ok(); });
-    v.addEventListener("error", fallback, true);
-    setTimeout(function () { if (!v.videoWidth) fallback(); }, 1400);
+    v.addEventListener("error", toFallback, true);
+    setTimeout(function () { if (!v.videoWidth) toFallback(); }, 1600);
   }
 
   function crossfade(imgs) {
@@ -601,10 +616,36 @@ Save a friend.</h1>
     }, 3600);
   }
 
-  function playVisiblePhones() {
-    document.querySelectorAll("[data-gameplay]").forEach(function (v) {
-      var p = v.play && v.play(); if (p && p.catch) p.catch(function () {});
+  /* ---------- desktop scroll-reveal CTA ---------- */
+  function initFloatCta() {
+    var fc = document.getElementById("floatCta");
+    var anchor = document.getElementById("get"); // the hero CTA block
+    if (!fc || !anchor || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      fc.classList.toggle("is-on", !entries[0].isIntersecting);
     });
+    io.observe(anchor);
+  }
+
+  /* ---------- animated count-up for the friends tally ---------- */
+  function initCounters() {
+    var el = document.querySelector("[data-found]");
+    if (!el) return;
+    var target = parseInt(el.textContent, 10) || 0;
+    if (reduced || !("IntersectionObserver" in window)) { el.textContent = target; return; }
+    var done = false;
+    var io = new IntersectionObserver(function (entries) {
+      if (done || !entries[0].isIntersecting) return;
+      done = true; io.disconnect();
+      var start = null, dur = 900;
+      requestAnimationFrame(function tick(ts) {
+        if (start == null) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        el.textContent = Math.round(p * target);
+        if (p < 1) requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    io.observe(el);
   }
 
   /* ---------- cookie consent ----------
@@ -667,7 +708,8 @@ Save a friend.</h1>
   applyLang(pickInitialLang());
   buildPhones();
   initConsent();
-  requestAnimationFrame(function () { requestAnimationFrame(playVisiblePhones); });
+  initFloatCta();
+  initCounters();
 })();
 </script>
 

@@ -5,14 +5,15 @@
 // entrypoint ("main" in wrangler.jsonc) and runs in front of the assets
 // (run_worker_first); we serve static files through env.ASSETS.fetch().
 //
-// Only the root "/" makes a language decision, based on, in order:
+// The English entry paths (the universe hub "/" and each game's English page
+// "/dibby/", "/dash/", "/chirp/") make a language decision, based on, in order:
 //   1. an explicit saved choice  — cookie `dibby_lang` (set by the picker / applyLang)
 //   2. the visitor's browser/system language — Accept-Language header
-//   3. English — the default, served straight from the root asset
+//   3. English — the default, served straight from the English asset
 //
-// Everything else (/ru/, /de/, images, css, js) is passed through to static
-// assets untouched. Locale sub-pages already carry hreflang + JSON-LD, so
-// crawlers and shared links keep working exactly as before.
+// Everything else (/ru/, /ru/dibby/, images, css, js) is passed through to
+// static assets untouched. Locale sub-pages already carry hreflang + JSON-LD,
+// so crawlers and shared links keep working exactly as before.
 
 // our locale code -> URL path (mirrors URLCODE/langPath in build.cjs)
 const LOCALE_PATH = {
@@ -128,8 +129,11 @@ export default {
       });
     }
 
-    // 1. Only the root makes a language decision; everything else is a plain asset.
-    if (url.pathname === "/") {
+    // 1. The English entry paths (hub + each game's English page) make a language
+    //    decision; everything else is a plain asset. Keep ENTRY_PATHS in sync with
+    //    the `page:true` games in landing/games.config.js.
+    const ENTRY_PATHS = new Set(["/", "/dibby/", "/dash/", "/chirp/"]);
+    if (ENTRY_PATHS.has(url.pathname)) {
       // a. explicit saved choice wins (set when the visitor uses the picker)
       const saved = readCookie(request.headers.get("Cookie"), "dibby_lang");
       let code = saved && LOCALE_PATH[saved] ? saved : null;
@@ -137,13 +141,14 @@ export default {
       // b. otherwise detect from the browser / system languages
       if (!code) code = fromAcceptLanguage(request.headers.get("Accept-Language"));
 
-      // c. default is English, which lives at the root — only redirect for the rest
+      // c. English lives at the entry path itself — only redirect for the rest.
+      //    "/" -> "/ru/", "/dash/" -> "/ru/dash/", etc.
       if (code && code !== "en" && LOCALE_PATH[code]) {
         return new Response(null, {
           status: 302, // per-request decision -> must NOT be cached as permanent
           headers: Object.assign(
             {
-              Location: LOCALE_PATH[code],
+              Location: LOCALE_PATH[code] + url.pathname.slice(1),
               Vary: "Accept-Language, Cookie",
               "Cache-Control": "no-store",
             },
@@ -151,7 +156,7 @@ export default {
           ),
         });
       }
-      // en / no match: fall through and serve the English root asset
+      // en / no match: fall through and serve the English asset
     }
 
     return harden(await env.ASSETS.fetch(request), url);
