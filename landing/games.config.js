@@ -135,25 +135,22 @@
      stores as Dibby). The final visible set for a page is just this list;
      each badge's live/soon state comes from the game's `liveStores`.
 
-     Default (locale not listed) = iOS + Android. RuStore (Android) is the one
-     store that's LIVE now (and the primary CTA), so it's shown wherever there's
-     a web/store option; Yandex Games is the one web build, riding right after it.
-     Locales left at the iOS+Android default (vi, zh_CN, zh_TW, ja, ko, th) ship
-     native-only — no RuStore, no web build.                                   */
+     App Store + Google Play are the universal pair → they're the default for
+     EVERY locale (any locale not listed below falls back to ["ios","android"]).
+     The two web/regional stores are gated:
+       • RuStore — Russia only, so it rides on the `ru` locale alone.
+       • Yandex Games — the one web build; shown where Yandex actually has reach:
+         RU/CIS (ru, uk) plus its strong international markets (tr, ar, hi, id, vi).
+     Every other locale (en, pt, es, it, de, fr, pl, zh_CN, zh_TW, ja, ko, th)
+     stays on the App Store + Google Play default — no RuStore, no Yandex.      */
   var STORES_BY_LANG = {
     ru: ["ios", "android", "rustore", "yandex"],
-    tr: ["ios", "android", "rustore", "yandex"],
-    en: ["ios", "android", "rustore", "yandex"],
-    uk: ["ios", "android", "rustore", "yandex"],
-    hi: ["ios", "android", "rustore", "yandex"],
-    id: ["ios", "android", "rustore", "yandex"],
-    ar: ["ios", "android", "rustore", "yandex"],
-    pt: ["ios", "android", "rustore", "yandex"],
-    es: ["ios", "android", "rustore", "yandex"],
-    it: ["ios", "android", "rustore", "yandex"],
-    de: ["ios", "android", "rustore", "yandex"],
-    fr: ["ios", "android", "rustore", "yandex"],
-    pl: ["ios", "android", "rustore", "yandex"]
+    uk: ["ios", "android", "yandex"],
+    tr: ["ios", "android", "yandex"],
+    ar: ["ios", "android", "yandex"],
+    hi: ["ios", "android", "yandex"],
+    id: ["ios", "android", "yandex"],
+    vi: ["ios", "android", "yandex"]
   };
 
   root.GAMES = GAMES;

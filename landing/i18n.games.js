@@ -88,11 +88,11 @@
     dibby: {
       en: {
         aboutTitle: "What is Dibby?",
-        aboutLede: "Dibby is a free, cozy one-finger rope-rescue arcade. You lower a rope with a single finger, slip past falling rubble, and carry 36 little friends home to a growing camp — in runs of about 30 seconds. Play now on RuStore for Android.",
+        aboutLede: "Dibby is a free, cozy one-finger rope-rescue arcade. You lower a rope with a single finger, slip past falling rubble, and carry 36 little friends home to a growing camp — in runs of about 30 seconds. Coming soon to the App Store & Google Play.",
         factPriceV: "Free to play",
         factGenreV: "Cozy arcade",
         factControlsV: "One finger",
-        factStatusV: "Playable now"
+        factStatusV: "Coming soon"
       },
       ru: {
         aboutTitle: "Что такое Dibby?",

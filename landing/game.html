@@ -335,16 +335,23 @@ Save a friend.</h1>
   var LIVE = GAME.liveStores || {};
   function liveHref(key) { return (LIVE[key] && LIVE[key].href) ? LIVE[key].href : ""; }
   function isLive(key) { return !!(LIVE[key] && LIVE[key].status === "live" && LIVE[key].href); }
-  // Primary CTA target: the game's live store (e.g. Dibby → RuStore). If nothing
-  // is live yet, the CTA stays inert (#get) and just scrolls to the store list.
-  var CTA_URL = (GAME.cta && liveHref(GAME.cta)) ? liveHref(GAME.cta) : "";
+  // Primary CTA target: the game's live store (e.g. Dibby → RuStore), but ONLY in
+  // locales where that store is actually offered (rustore is ru-only). Elsewhere —
+  // and whenever nothing is live yet — the CTA stays inert (#get) and just scrolls
+  // to the store list. Recomputed per locale so a client-side language switch
+  // doesn't leave a non-RU page deep-linking RuStore.
+  function ctaUrlFor(lang) {
+    if (!GAME.cta) return "";
+    return storesFor(lang).indexOf(GAME.cta) !== -1 ? liveHref(GAME.cta) : "";
+  }
   function applyHref(el, url) {
     if (!el) return;
     if (url) { el.setAttribute("href", url); el.setAttribute("target", "_blank"); el.setAttribute("rel", "noopener"); }
     else { el.setAttribute("href", "#get"); el.removeAttribute("target"); }
   }
-  function wireLinks() {
-    document.querySelectorAll("[data-cta]").forEach(function (el) { applyHref(el, CTA_URL); });
+  function wireLinks(lang) {
+    var ctaUrl = ctaUrlFor(lang);
+    document.querySelectorAll("[data-cta]").forEach(function (el) { applyHref(el, ctaUrl); });
     // Each store badge links only to its own store (empty -> inert "#get"), never
     // to the CTA, so a "Soon" badge can't bounce into a different live store.
     document.querySelectorAll("[data-prereg]").forEach(function (el) {
@@ -390,15 +397,19 @@ Save a friend.</h1>
     rustore: '<svg viewBox="0 0 24 24"><path d="M8 7V6a4 4 0 018 0v1h2.4l.9 12.6a1.4 1.4 0 01-1.4 1.4H6.1a1.4 1.4 0 01-1.4-1.4L5.6 7H8zm2 0h4V6a2 2 0 00-4 0v1zm-2 3a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"/></svg>',
     yandex:  '<svg viewBox="0 0 24 24"><path d="M7 7h10a4 4 0 014 4v4.2A2.8 2.8 0 0116.4 17l-1.2-1.5H8.8L7.6 17A2.8 2.8 0 013 15.2V11a4 4 0 014-4zm-.2 3v1.3H5.5v1.4h1.3V14h1.4v-1.3h1.3v-1.4H8.2V10H6.8zM15 10.6a1 1 0 100 2.1 1 1 0 000-2.1zm2.3 2.1a1 1 0 100 2 1 1 0 000-2z"/></svg>'
   };
-  // Which store badges each locale shows, in order. Default (any locale not listed)
-  // = iOS + Android. RuStore (Android) is RU-only; Yandex Games is the one web build
-  // and rides along in every locale that gets a web option. Locales left at the
-  // iOS+Android default (vi, zh_CN, zh_TW, ja, ko, th) ship native-only, no web build.
-  // The one badge set, shared by every game (injected from games.config.js).
+  // Which store badges each locale shows, in order. App Store + Google Play are
+  // the universal default (any locale not listed = ["ios","android"]). RuStore is
+  // Russia-only (ru); Yandex Games (the one web build) shows where Yandex has reach:
+  // RU/CIS (ru, uk) + strong markets (tr, ar, hi, id, vi). The real source of truth
+  // is games.config.js (injected as window.STORES_BY_LANG); this is just a fallback.
   var STORES_BY_LANG = window.STORES_BY_LANG || {
     ru: ["ios", "android", "rustore", "yandex"],
-    tr: ["ios", "android", "rustore", "yandex"],
-    en: ["ios", "android", "rustore", "yandex"]
+    uk: ["ios", "android", "yandex"],
+    tr: ["ios", "android", "yandex"],
+    ar: ["ios", "android", "yandex"],
+    hi: ["ios", "android", "yandex"],
+    id: ["ios", "android", "yandex"],
+    vi: ["ios", "android", "yandex"]
   };
   function storesFor(lang) { return STORES_BY_LANG[lang] || ["ios", "android"]; }
   function storeMeta(t) {
@@ -481,7 +492,7 @@ Save a friend.</h1>
     document.querySelectorAll("[data-getlinks]").forEach(function (el) { el.innerHTML = footerGetLinks(t, lang); });
     buildFriends(lang);
     buildFaq(t);
-    wireLinks();
+    wireLinks(lang);
     var cur = document.getElementById("langCurrent");
     var meta = window.LANGS.filter(function (l) { return l.code === lang; })[0];
     if (cur && meta) cur.textContent = meta.name;

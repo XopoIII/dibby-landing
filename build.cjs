@@ -420,9 +420,11 @@ function renderGame(game, code, template) {
     }
   });
 
-  // primary CTA destination
-  const live = game.cta ? liveOf(game, game.cta) : null;
-  if (live) h = h.split('href="#get" data-cta').join('href="' + escAttr(live.href) + '" target="_blank" rel="noopener" data-cta');
+  // primary CTA destination — only goes live where the CTA's store is actually
+  // offered for this locale (e.g. rustore is ru-only), so non-RU "Play now" falls
+  // back to #get (the store list) instead of deep-linking RuStore.
+  const ctaLive = (game.cta && storesFor(code).indexOf(game.cta) !== -1) ? liveOf(game, game.cta) : null;
+  if (ctaLive) h = h.split('href="#get" data-cta').join('href="' + escAttr(ctaLive.href) + '" target="_blank" rel="noopener" data-cta');
 
   // language picker (baked) — links stay on this game in each locale
   const pathFor = c => gamePath(game.slug, c);
