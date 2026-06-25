@@ -52,7 +52,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibby 是什么？",
-      "aboutLede": "Dibby 是一款免费、治愈的单指绳索救援街机游戏。用一根手指放下绳子，避开落下的碎石，把 36 个小伙伴带回越来越热闹的营地——每局大约 30 秒。现在就在 Telegram 里玩。",
+      "aboutLede": "Dibby 是一款免费、治愈的单指绳索救援街机游戏。用一根手指放下绳子，避开落下的碎石，把 36 个小伙伴带回越来越热闹的营地——每局大约 30 秒。现在就在 Android 版 RuStore 上玩。",
       "factPriceV": "免费畅玩",
       "factGenreV": "治愈街机",
       "factControlsV": "一根手指",
@@ -238,7 +238,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibby 是什麼？",
-      "aboutLede": "Dibby 是款免費又溫馨、一指就能玩的垂繩救援小遊戲。你用一根手指放下繩子，閃過掉落的碎石，把 36 個小朋友帶回逐漸熱鬧起來的營地——每局大約 30 秒。現在就能在 Telegram 裡玩。",
+      "aboutLede": "Dibby 是款免費又溫馨、一指就能玩的垂繩救援小遊戲。你用一根手指放下繩子，閃過掉落的碎石，把 36 個小朋友帶回逐漸熱鬧起來的營地——每局大約 30 秒。現在就能在 Android 版 RuStore 上玩。",
       "factPriceV": "免費遊玩",
       "factGenreV": "溫馨小遊戲",
       "factControlsV": "一根手指",
@@ -424,7 +424,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibbyってなに？",
-      "aboutLede": "Dibbyは無料で、指1本のロープ救出アーケード。指1本でロープを下ろし、落ちてくるがれきをかわしながら、36人の小さな友だちをおうちへ、だんだん大きくなるキャンプへ連れて帰ろう。1回およそ30秒。今すぐTelegramであそべる。",
+      "aboutLede": "Dibbyは無料で、指1本のロープ救出アーケード。指1本でロープを下ろし、落ちてくるがれきをかわしながら、36人の小さな友だちをおうちへ、だんだん大きくなるキャンプへ連れて帰ろう。1回およそ30秒。今すぐAndroid版RuStoreであそべる。",
       "factPriceV": "無料であそべる",
       "factGenreV": "ほっとするアーケード",
       "factControlsV": "指1本",
@@ -610,7 +610,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibby가 뭐예요?",
-      "aboutLede": "Dibby는 손가락 하나로 즐기는 무료 포근한 밧줄 구조 아케이드예요. 손가락 하나로 밧줄을 내려, 떨어지는 잔해를 살짝 피하고, 36명의 작은 친구들을 점점 커지는 캠프로 데려와요 — 한 판은 약 30초. 지금 Telegram에서 플레이하세요.",
+      "aboutLede": "Dibby는 손가락 하나로 즐기는 무료 포근한 밧줄 구조 아케이드예요. 손가락 하나로 밧줄을 내려, 떨어지는 잔해를 살짝 피하고, 36명의 작은 친구들을 점점 커지는 캠프로 데려와요 — 한 판은 약 30초. 지금 안드로이드용 RuStore에서 플레이하세요.",
       "factPriceV": "무료 플레이",
       "factGenreV": "포근한 아케이드",
       "factControlsV": "손가락 하나",
@@ -796,7 +796,7 @@
     },
     "dibby": {
       "aboutTitle": "Was ist Dibby?",
-      "aboutLede": "Dibby ist eine kostenlose, gemütliche Ein-Finger-Seilrettungs-Arcade. Du lässt mit einem Finger ein Seil hinab, schlüpfst an fallendem Geröll vorbei und trägst 36 kleine Freunde nach Hause in ein wachsendes Lager – in Läufen von rund 30 Sekunden. Jetzt in Telegram spielen.",
+      "aboutLede": "Dibby ist eine kostenlose, gemütliche Ein-Finger-Seilrettungs-Arcade. Du lässt mit einem Finger ein Seil hinab, schlüpfst an fallendem Geröll vorbei und trägst 36 kleine Freunde nach Hause in ein wachsendes Lager – in Läufen von rund 30 Sekunden. Jetzt im RuStore für Android spielen.",
       "factPriceV": "Kostenlos spielbar",
       "factGenreV": "Gemütliche Arcade",
       "factControlsV": "Ein Finger",
@@ -982,7 +982,7 @@
     },
     "dibby": {
       "aboutTitle": "C'est quoi, Dibby ?",
-      "aboutLede": "Dibby est une arcade de sauvetage à la corde, gratuite et toute douce, à un seul doigt. Tu descends une corde d'un doigt, tu te faufiles entre les gravats qui tombent et tu ramènes 36 petits amis dans un camp qui s'agrandit — par parties d'environ 30 secondes. Joue maintenant dans Telegram.",
+      "aboutLede": "Dibby est une arcade de sauvetage à la corde, gratuite et toute douce, à un seul doigt. Tu descends une corde d'un doigt, tu te faufiles entre les gravats qui tombent et tu ramènes 36 petits amis dans un camp qui s'agrandit — par parties d'environ 30 secondes. Joue maintenant sur RuStore pour Android.",
       "factPriceV": "Gratuit",
       "factGenreV": "Arcade toute douce",
       "factControlsV": "Un seul doigt",
@@ -1168,7 +1168,7 @@
     },
     "dibby": {
       "aboutTitle": "¿Qué es Dibby?",
-      "aboutLede": "Dibby es un arcade de rescate con cuerda, acogedor, gratis y de un solo dedo. Bajas una cuerda con un dedo, esquivas los escombros que caen y llevas a 36 amiguitos a casa, a un campamento que crece, en partidas de unos 30 segundos. Juega ya en Telegram.",
+      "aboutLede": "Dibby es un arcade de rescate con cuerda, acogedor, gratis y de un solo dedo. Bajas una cuerda con un dedo, esquivas los escombros que caen y llevas a 36 amiguitos a casa, a un campamento que crece, en partidas de unos 30 segundos. Juega ya en RuStore para Android.",
       "factPriceV": "Gratis",
       "factGenreV": "Arcade acogedor",
       "factControlsV": "Un solo dedo",
@@ -1354,7 +1354,7 @@
     },
     "dibby": {
       "aboutTitle": "O que é Dibby?",
-      "aboutLede": "Dibby é um arcade de resgate com corda, gratuito, aconchegante e de um dedo só. Você desce uma corda com um dedo, passa por entre os escombros que caem e leva 36 amiguinhos pra casa, num acampamento que cresce — em partidas de cerca de 30 segundos. Jogue já no Telegram.",
+      "aboutLede": "Dibby é um arcade de resgate com corda, gratuito, aconchegante e de um dedo só. Você desce uma corda com um dedo, passa por entre os escombros que caem e leva 36 amiguinhos pra casa, num acampamento que cresce — em partidas de cerca de 30 segundos. Jogue já na RuStore para Android.",
       "factPriceV": "Grátis pra jogar",
       "factGenreV": "Arcade aconchegante",
       "factControlsV": "Um dedo",
@@ -1540,7 +1540,7 @@
     },
     "dibby": {
       "aboutTitle": "Czym jest Dibby?",
-      "aboutLede": "Dibby to darmowa, przytulna zręcznościówka-ratownictwo na jeden palec. Spuszczasz linę jednym palcem, mijasz spadające gruzy i odnosisz 36 maluchów do domu, do rosnącego obozu — w rundach po jakieś 30 sekund. Graj teraz w Telegramie.",
+      "aboutLede": "Dibby to darmowa, przytulna zręcznościówka-ratownictwo na jeden palec. Spuszczasz linę jednym palcem, mijasz spadające gruzy i odnosisz 36 maluchów do domu, do rosnącego obozu — w rundach po jakieś 30 sekund. Graj teraz w RuStore na Androida.",
       "factPriceV": "Za darmo",
       "factGenreV": "Przytulna zręcznościówka",
       "factControlsV": "Jeden palec",
@@ -1726,7 +1726,7 @@
     },
     "dibby": {
       "aboutTitle": "Що таке Dibby?",
-      "aboutLede": "Dibby — безкоштовна затишна аркада-рятування одним пальцем. Опускаєш мотузку одним пальцем, прослизаєш повз уламки, що падають, і повертаєш 36 малюків додому в табір, що росте, — забігами приблизно по 30 секунд. Грай зараз у Telegram.",
+      "aboutLede": "Dibby — безкоштовна затишна аркада-рятування одним пальцем. Опускаєш мотузку одним пальцем, прослизаєш повз уламки, що падають, і повертаєш 36 малюків додому в табір, що росте, — забігами приблизно по 30 секунд. Уже в RuStore на Android.",
       "factPriceV": "Безкоштовно",
       "factGenreV": "Затишна аркада",
       "factControlsV": "Один палець",
@@ -1912,7 +1912,7 @@
     },
     "dibby": {
       "aboutTitle": "Cos'è Dibby?",
-      "aboutLede": "Dibby è un'arcade di salvataggio con la corda, gratis, accogliente e da un dito. Cali una corda con un solo dito, scivoli tra le macerie che cadono e riporti 36 amichetti a casa in un accampamento che cresce — in partite di circa 30 secondi. Gioca ora su Telegram.",
+      "aboutLede": "Dibby è un'arcade di salvataggio con la corda, gratis, accogliente e da un dito. Cali una corda con un solo dito, scivoli tra le macerie che cadono e riporti 36 amichetti a casa in un accampamento che cresce — in partite di circa 30 secondi. Gioca ora su RuStore per Android.",
       "factPriceV": "Gratis",
       "factGenreV": "Arcade accogliente",
       "factControlsV": "Un dito",
@@ -2098,7 +2098,7 @@
     },
     "dibby": {
       "aboutTitle": "Apa itu Dibby?",
-      "aboutLede": "Dibby adalah arkade penyelamatan tali satu jari yang gratis dan hangat. Kamu menurunkan tali dengan satu jari, menyelinap melewati reruntuhan yang jatuh, dan membawa 36 teman kecil pulang ke kemah yang terus tumbuh — dalam permainan sekitar 30 detik. Main sekarang di Telegram.",
+      "aboutLede": "Dibby adalah arkade penyelamatan tali satu jari yang gratis dan hangat. Kamu menurunkan tali dengan satu jari, menyelinap melewati reruntuhan yang jatuh, dan membawa 36 teman kecil pulang ke kemah yang terus tumbuh — dalam permainan sekitar 30 detik. Main sekarang di RuStore untuk Android.",
       "factPriceV": "Gratis dimainkan",
       "factGenreV": "Arkade hangat",
       "factControlsV": "Satu jari",
@@ -2284,7 +2284,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibby nedir?",
-      "aboutLede": "Dibby, ücretsiz, rahat, tek parmakla oynanan bir ip-kurtarma arcade oyunu. Tek parmakla bir ip sarkıtıyor, düşen molozların arasından sıyrılıyor ve 36 minik dostu büyüyen bir kampa, eve taşıyorsun — yaklaşık 30 saniyelik turlarla. Hemen Telegram'da oyna.",
+      "aboutLede": "Dibby, ücretsiz, rahat, tek parmakla oynanan bir ip-kurtarma arcade oyunu. Tek parmakla bir ip sarkıtıyor, düşen molozların arasından sıyrılıyor ve 36 minik dostu büyüyen bir kampa, eve taşıyorsun — yaklaşık 30 saniyelik turlarla. Hemen Android için RuStore'da oyna.",
       "factPriceV": "Ücretsiz",
       "factGenreV": "Rahat arcade",
       "factControlsV": "Tek parmak",
@@ -2656,7 +2656,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibby คืออะไร",
-      "aboutLede": "Dibby คือเกมอาร์เคดช่วยเพื่อนด้วยเชือกแสนอบอุ่น เล่นฟรีด้วยนิ้วเดียว คุณหย่อนเชือกด้วยนิ้วเดียว หลบเศษหินที่ร่วงลงมา แล้วพาเพื่อนตัวน้อย 36 ตัวกลับบ้านสู่แคมป์ที่ค่อยๆ เติบโต ในรอบราว 30 วินาที เล่นได้เลยตอนนี้ใน Telegram",
+      "aboutLede": "Dibby คือเกมอาร์เคดช่วยเพื่อนด้วยเชือกแสนอบอุ่น เล่นฟรีด้วยนิ้วเดียว คุณหย่อนเชือกด้วยนิ้วเดียว หลบเศษหินที่ร่วงลงมา แล้วพาเพื่อนตัวน้อย 36 ตัวกลับบ้านสู่แคมป์ที่ค่อยๆ เติบโต ในรอบราว 30 วินาที เล่นได้เลยตอนนี้บน RuStore สำหรับ Android",
       "factPriceV": "เล่นฟรี",
       "factGenreV": "อาร์เคดอบอุ่น",
       "factControlsV": "นิ้วเดียว",
@@ -2842,7 +2842,7 @@
     },
     "dibby": {
       "aboutTitle": "Dibby क्या है?",
-      "aboutLede": "Dibby एक मुफ़्त, आरामदायक, एक उँगली वाला रस्सी-बचाव आर्केड है। तुम एक उँगली से रस्सी नीचे उतारते हो, गिरते मलबे से बचकर निकलते हो और 36 नन्हे दोस्तों को एक बढ़ते कैंप में घर ले आते हो — करीब 30 सेकंड की दौड़ों में। Telegram में अभी खेलो।",
+      "aboutLede": "Dibby एक मुफ़्त, आरामदायक, एक उँगली वाला रस्सी-बचाव आर्केड है। तुम एक उँगली से रस्सी नीचे उतारते हो, गिरते मलबे से बचकर निकलते हो और 36 नन्हे दोस्तों को एक बढ़ते कैंप में घर ले आते हो — करीब 30 सेकंड की दौड़ों में। Android के लिए RuStore पर अभी खेलो।",
       "factPriceV": "मुफ़्त",
       "factGenreV": "आरामदायक आर्केड",
       "factControlsV": "एक उँगली",
@@ -3028,7 +3028,7 @@
     },
     "dibby": {
       "aboutTitle": "ما هي Dibby؟",
-      "aboutLede": "Dibby لعبة أركيد دافئة ومجانية للإنقاذ بالحبل، بإصبعٍ واحد. تُنزِل حبلاً بإصبعٍ واحد، وتتسلّل بين الأنقاض المتساقطة، وتحمل ٣٦ صديقاً صغيراً إلى مخيّمٍ ينمو شيئاً فشيئاً — في جولاتٍ من نحو ٣٠ ثانية. العب الآن في Telegram.",
+      "aboutLede": "Dibby لعبة أركيد دافئة ومجانية للإنقاذ بالحبل، بإصبعٍ واحد. تُنزِل حبلاً بإصبعٍ واحد، وتتسلّل بين الأنقاض المتساقطة، وتحمل ٣٦ صديقاً صغيراً إلى مخيّمٍ ينمو شيئاً فشيئاً — في جولاتٍ من نحو ٣٠ ثانية. العب الآن على RuStore لنظام Android.",
       "factPriceV": "مجانية اللعب",
       "factGenreV": "أركيد دافئة",
       "factControlsV": "إصبعٌ واحد",

@@ -41,8 +41,8 @@
       genre: "Arcade",
       bundleId: "com.xopoiii.dibby",
       // OS platforms to advertise in JSON-LD (honest about what's playable NOW).
-      // Dibby lives via Telegram Mini App (Web) + RuStore (Android); iOS native is soon.
-      platforms: ["Android", "Web"],
+      // Dibby is playable now on RuStore (Android); iOS native + Yandex Games (Web) are soon.
+      platforms: ["Android"],
       accent: "#bde8db",        // mint — the universe base colour
       accentDeep: "#9ed7c4",
       icon: "games/dibby/icon.png",
@@ -51,9 +51,8 @@
       screens: ["gp-earth", "gp-water", "gp-crystal", "rescued", "finale", "friends-menu"],
       friends: true,
       sections: ["about", "how", "shots", "friends", "why", "faq", "final"],
-      cta: "telegram",
+      cta: "rustore",
       liveStores: {
-        telegram: { status: "live", href: "https://t.me/dibbyplay_bot/play" },
         rustore:  { status: "live", href: "https://www.rustore.ru/catalog/app/com.xopoiii.dibby" }
       }
     },
@@ -136,25 +135,25 @@
      stores as Dibby). The final visible set for a page is just this list;
      each badge's live/soon state comes from the game's `liveStores`.
 
-     Default (locale not listed) = iOS + Android. Russian services
-     (rustore/yandex/vk) are RU-only. Telegram Mini App sits after ios+android
-     wherever Telegram is reachable AND used; excluded on purpose:
-     vi (blocked 2025), zh_CN (blocked 2015), ja/ko (LINE/KakaoTalk dominate),
-     zh_TW (low penetration), th (left out for now).                          */
+     Default (locale not listed) = iOS + Android. RuStore (Android) is the one
+     store that's LIVE now (and the primary CTA), so it's shown wherever there's
+     a web/store option; Yandex Games is the one web build, riding right after it.
+     Locales left at the iOS+Android default (vi, zh_CN, zh_TW, ja, ko, th) ship
+     native-only — no RuStore, no web build.                                   */
   var STORES_BY_LANG = {
-    ru: ["ios", "android", "telegram", "rustore", "yandex", "vk"],
-    tr: ["ios", "android", "telegram", "yandex"],
-    en: ["ios", "android", "telegram", "yandex"],
-    uk: ["ios", "android", "telegram"],
-    hi: ["ios", "android", "telegram"],
-    id: ["ios", "android", "telegram"],
-    ar: ["ios", "android", "telegram"],
-    pt: ["ios", "android", "telegram"],
-    es: ["ios", "android", "telegram"],
-    it: ["ios", "android", "telegram"],
-    de: ["ios", "android", "telegram"],
-    fr: ["ios", "android", "telegram"],
-    pl: ["ios", "android", "telegram"]
+    ru: ["ios", "android", "rustore", "yandex"],
+    tr: ["ios", "android", "rustore", "yandex"],
+    en: ["ios", "android", "rustore", "yandex"],
+    uk: ["ios", "android", "rustore", "yandex"],
+    hi: ["ios", "android", "rustore", "yandex"],
+    id: ["ios", "android", "rustore", "yandex"],
+    ar: ["ios", "android", "rustore", "yandex"],
+    pt: ["ios", "android", "rustore", "yandex"],
+    es: ["ios", "android", "rustore", "yandex"],
+    it: ["ios", "android", "rustore", "yandex"],
+    de: ["ios", "android", "rustore", "yandex"],
+    fr: ["ios", "android", "rustore", "yandex"],
+    pl: ["ios", "android", "rustore", "yandex"]
   };
 
   root.GAMES = GAMES;
