@@ -226,7 +226,7 @@ function keyfactsTable(game, t, code) {
 
 // universe hub: one card per game
 function gameCards(t, code, assetPrefix) {
-  const blurbKey = { dibby: "cardDibby", dash: "cardDash", chirp: "cardChirp", sling: "cardSling" };
+  const blurbKey = { dibby: "cardDibby", dash: "cardDash", chirp: "cardChirp", sling: "cardSling", bloom: "cardBloom" };
   const statusLabel = { live: t.cardPlay, soon: t.cardSoon, dev: t.cardDev };
   return GAMES.map(g => {
     const icon = assetPrefix + g.icon.replace(/\.png$/, "");

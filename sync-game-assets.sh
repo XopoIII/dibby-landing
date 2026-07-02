@@ -45,10 +45,21 @@ for s in 01-home 02-fly 03-glide 04-gap 05-sky 06-deep; do
   copy "publishing/chirp/store-screenshots/google-play/en/phone/$s.png" "$DST/chirp/screens/$s.png"
 done
 
-# ---- Dibby Sling — still in development; teaser card art only ---------------
+# ---- Dibby Sling — one-finger slingshot arcade -----------------------------
 echo "Sling:"
 copy "assets/sling/ios/icon_1024.png" "$DST/sling/icon.png"
 copy "assets/sling/sling_splash.png"  "$DST/sling/wordmark.png"
+for s in 01-aim 02-arc 03-fling 04-rescue 05-tower 06-offline; do
+  copy "publishing/sling/store-screenshots/google-play/en/phone/$s.png" "$DST/sling/screens/$s.png"
+done
+
+# ---- Dibby Bloom — one-tap rhythm climber ----------------------------------
+echo "Bloom:"
+copy "assets/bloom/ios/icon_1024.png" "$DST/bloom/icon.png"
+copy "assets/bloom/bloom_splash.png"  "$DST/bloom/wordmark.png"
+for s in 01-build 02-climb 03-flood 04-honey 05-rescue 06-offline; do
+  copy "publishing/bloom/store-screenshots/google-play/en/phone/$s.png" "$DST/bloom/screens/$s.png"
+done
 
 # ---- WebP pass --------------------------------------------------------------
 # The page serves screenshots via <picture> (webp source, png fallback), the

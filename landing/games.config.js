@@ -16,7 +16,7 @@
 (function (root) {
   "use strict";
 
-  /* ---- the four games ----------------------------------------------------
+  /* ---- the five games ----------------------------------------------------
      status:  "live" → released, has at least one live store
               "soon" → submitted / in moderation; all badges show "Soon"
               "dev"  → still in development; hub teaser card only, no page
@@ -110,21 +110,47 @@
     {
       slug: "sling",
       name: "Dibby Sling",
-      fullName: "Dibby Sling",
-      status: "dev",             // still in development
-      page: true,                // minimal teaser page (logo + a bit + "coming soon")
-      teaser: true,              // no gameplay screens yet → hero shows the app-icon splash, no phone crossfade
+      fullName: "Dibby Sling: Cozy Arcade",
+      status: "soon",            // in moderation — all stores "Soon"
+      page: true,
       verb: "up",
       genre: "Arcade",
       bundleId: "com.xopoiii.dibbysling",
-      platforms: ["iOS", "Android"],
-      accent: "#ffc9de",
-      accentDeep: "#ff9ec1",
+      platforms: ["iOS", "Android"],   // target stores: App Store + Google Play (in review)
+      accent: "#86cfe8",         // sky blue — the floating-island climb
+      accentDeep: "#4f9fc9",
       icon: "games/sling/icon.png",
-      hero: "games/sling/icon",  // used only for the <link rel=preload>; the teaser splash reuses the icon
-      screens: [],
-      friends: false,            // teaser stays minimal — no 36-friends gallery yet
-      sections: ["about", "final"],
+      // cozy slingshot arcade; friends you saved hold the rope, you fling the
+      // next one up through floating islands. Reuses the 36 friends. HAS ads.
+      screenDir: "games/sling/screens/",
+      hero: "games/sling/screens/03-fling",
+      screens: ["01-aim", "02-arc", "03-fling", "04-rescue", "05-tower", "06-offline"],
+      friends: true,
+      // slingshot gets the genre-required Modes block (Campaign vs Endless)
+      sections: ["about", "friends", "how", "modes", "shots", "why", "faq", "final"],
+      cta: null,
+      liveStores: {}
+    },
+    {
+      slug: "bloom",
+      name: "Dibby Bloom",
+      fullName: "Dibby Bloom: Cozy Arcade",
+      status: "soon",            // in moderation — all stores "Soon"
+      page: true,
+      verb: "climb",
+      genre: "Arcade",
+      bundleId: "com.xopoiii.dibbybloom",
+      platforms: ["iOS", "Android"],   // target stores: App Store + Google Play (in review)
+      accent: "#f6a81f",         // honey gold — the rising-flood climb
+      accentDeep: "#cf7d10",
+      icon: "games/bloom/icon.png",
+      // cozy one-tap rhythm climber; build honey arches up, outrun the flood,
+      // free a caged friend at the top. Reuses the 36 friends. HAS ads.
+      screenDir: "games/bloom/screens/",
+      hero: "games/bloom/screens/03-flood",
+      screens: ["01-build", "02-climb", "03-flood", "04-honey", "05-rescue", "06-offline"],
+      friends: true,
+      sections: ["about", "friends", "how", "shots", "why", "faq", "final"],
       cta: null,
       liveStores: {}
     }
