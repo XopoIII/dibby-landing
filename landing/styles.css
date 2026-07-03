@@ -472,6 +472,38 @@ section { position: relative; }
   color: var(--ink); line-height: 1.25;
 }
 
+/* ---------- biome reel (runners) — screenshots ARE the biome showcase ----------
+   A horizontal scroll-snap strip; each tile carries its biome's own colour glow so
+   the palette visibly shifts meadow → steppe → dusk → grove → night → wonder as you
+   scan across. Falls back to the plain grid on very wide screens is unnecessary —
+   the reel reads well everywhere and keeps the "variety" read front and centre. */
+.shots-grid--reel {
+  display: flex; grid-template-columns: none;
+  gap: clamp(16px, 2.4vw, 30px);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 8px 4px 20px; margin-inline: -4px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+.shots-grid--reel .shot {
+  scroll-snap-align: center;
+  flex: 0 0 clamp(220px, 62vw, 300px);
+}
+/* per-biome glow behind the frame; colours cycle across the six tiles */
+.shots-grid--reel .shot { --biome: var(--mint-deep); position: relative; }
+.shots-grid--reel .shot:nth-child(1) { --biome: #8fd39a; }  /* meadow — green   */
+.shots-grid--reel .shot:nth-child(2) { --biome: #f2c24b; }  /* steppe — gold    */
+.shots-grid--reel .shot:nth-child(3) { --biome: #b08bd6; }  /* dusk   — purple  */
+.shots-grid--reel .shot:nth-child(4) { --biome: #4fb3a3; }  /* grove  — teal    */
+.shots-grid--reel .shot:nth-child(5) { --biome: #6f7bc4; }  /* night  — indigo  */
+.shots-grid--reel .shot:nth-child(6) { --biome: #ec9ac4; }  /* wonder — pink    */
+.shots-grid--reel .shot__frame {
+  box-shadow: 0 22px 44px -22px color-mix(in srgb, var(--biome) 75%, rgba(61,74,82,0.5)),
+              inset 0 0 0 2px rgba(255,255,255,0.06);
+}
+.shots-grid--reel .shot__frame img { background: var(--biome); }
+.shots-grid--reel .shot figcaption { max-width: 260px; }
+
 /* ---------- friends gallery ---------- */
 #friends { background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--mint-deep) 50%, transparent) 100%); }
 .friends-grid {
@@ -536,6 +568,21 @@ section { position: relative; }
   padding: 9px 22px; box-shadow: 0 5px 0 -1px var(--peach-edge);
 }
 
+/* friends progress bar — the collection meter, fill animates with the count-up */
+.friends-bar {
+  width: min(420px, 78%); height: 16px; margin: 18px auto 0;
+  background: color-mix(in srgb, var(--ink) 12%, var(--cream));
+  border: 2.5px solid var(--ink); border-radius: 999px;
+  box-shadow: inset 0 2px 5px -2px rgba(61, 74, 82, 0.4);
+  overflow: hidden;
+}
+.friends-bar__fill {
+  display: block; width: 0; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--mint-deep), var(--peach));
+  transition: width 0.9s var(--ease);
+}
+@media (prefers-reduced-motion: reduce) { .friends-bar__fill { transition: none; } }
+
 /* ---------- features ---------- */
 .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
 .feat {
@@ -565,7 +612,9 @@ section { position: relative; }
 .mode-card:hover { transform: translateY(-4px); }
 @media (prefers-reduced-motion: reduce) { .mode-card:hover { transform: none; } }
 .mode-card__tag {
-  font-family: var(--font-pixel); font-size: 0.95rem; color: var(--on-accent);
+  /* darker than --on-accent so the pixel label clears AA on the deeper game
+     accents (Dash amber, Bloom gold) where #3d4a52 lands at 4.38 */
+  font-family: var(--font-pixel); font-size: 0.95rem; color: #333e46;
   background: var(--mint); border: 2.5px solid var(--ink); border-radius: 999px;
   padding: 3px 14px 1px; margin-bottom: 16px; box-shadow: 0 4px 0 -1px var(--peach-edge);
 }
@@ -874,4 +923,7 @@ a.gcard:hover, a.gcard:focus-visible {
   .mobile-cta { background: linear-gradient(0deg, #161311 72%, rgba(22, 19, 17, 0)); }
   /* soft dark behind transparent screenshot edges */
   .phone__screen { background: linear-gradient(180deg, color-mix(in srgb, var(--mint) 28%, #1b1714), #1b1714); }
+  /* footer wordmark: the light default stroke (#1c2429) is dark-on-dark here —
+     warm it up so the sticker edge stays legible against the near-black footer */
+  .site-footer .logo { -webkit-text-stroke-color: var(--peach-edge); text-shadow: 0 2px 0 var(--peach-edge), 0 4px 0 rgba(0,0,0,0.4); }
 }

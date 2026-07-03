@@ -77,6 +77,9 @@
       gameplay: { mp4: "games/dash/dash-hero.mp4", poster: "games/dash/dash-hero-poster" },
       screens: ["02-meadow", "03-steppe", "04-dusk", "05-grove", "06-night", "07-wonder"],
       friends: true,
+      // runner's screenshots ARE the biome showcase → render shots as a horizontal
+      // palette-shifting reel (per-tile biome glow) instead of the plain grid.
+      biomeReel: true,
       // runner gets the genre-required Modes block (Campaign vs Endless)
       sections: ["about", "friends", "how", "modes", "shots", "why", "faq", "final"],
       cta: null,

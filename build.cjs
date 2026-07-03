@@ -393,7 +393,9 @@ function renderGame(game, code, template) {
   } else {
     h = h.replace('<div class="phone__screen" data-phone></div>', '<div class="phone__screen" data-phone>' + heroPicture(game, t, ap) + "</div>");
   }
-  h = h.replace('<div class="shots-grid" data-shots></div>', '<div class="shots-grid" data-shots>' + shotsGrid(game, t, ap) + "</div>");
+  // runner: render the screenshot gallery as a palette-shifting biome reel
+  const shotsCls = game.biomeReel ? "shots-grid shots-grid--reel" : "shots-grid";
+  h = h.replace('<div class="shots-grid" data-shots></div>', '<div class="' + shotsCls + '" data-shots>' + shotsGrid(game, t, ap) + "</div>");
   h = h.replace('<table class="keyfacts" data-keyfacts></table>', '<table class="keyfacts" data-keyfacts>' + keyfactsTable(game, t, code) + "</table>");
   h = h.split('<div class="stores" data-stores></div>').join('<div class="stores" data-stores>' + storeBadges(game, t, code) + "</div>");
   h = h.split('<div data-getlinks><a href="#get" data-prereg="ios">App Store</a><a href="#get" data-prereg="android">Google Play</a></div>').join('<div data-getlinks>' + footerGetLinks(game, t, code) + "</div>");

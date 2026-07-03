@@ -114,7 +114,8 @@ Save a friend.</h1>
     </div>
     <div class="friends-grid" data-friends></div>
     <div class="center">
-      <div class="friends-tally"><b data-found>6</b><span class="sep">/</span><span>36</span> <span data-i18n="rescued">saved</span></div>
+      <div class="friends-tally" id="friendsTally"><b data-found>6</b><span class="sep">/</span><span>36</span> <span data-i18n="rescued">saved</span></div>
+      <div class="friends-bar" role="progressbar" aria-labelledby="friendsTally" aria-valuemin="0" aria-valuemax="36" aria-valuenow="6" data-friends-bar><span class="friends-bar__fill" data-friends-fill></span></div>
       <p class="friends-secret" data-i18n="secretLine">…and a few rare friends hide even deeper.</p>
       <a class="btn btn--lg friends-cta" href="#get" data-cta data-i18n="friendsCta">Save the other 30 — get a launch reminder</a>
     </div>
@@ -631,12 +632,21 @@ Save a friend.</h1>
     io.observe(anchor);
   }
 
-  /* ---------- animated count-up for the friends tally ---------- */
+  /* ---------- animated count-up for the friends tally + progress bar ---------- */
   function initCounters() {
     var el = document.querySelector("[data-found]");
     if (!el) return;
     var target = parseInt(el.textContent, 10) || 0;
-    if (reduced || !("IntersectionObserver" in window)) { el.textContent = target; return; }
+    var total = 36;
+    var fill = document.querySelector("[data-friends-fill]");
+    var bar = document.querySelector("[data-friends-bar]");
+    var pct = Math.round((target / total) * 100);
+    function paint(n) {
+      el.textContent = n;
+      if (fill) fill.style.width = ((n / total) * 100) + "%";
+      if (bar) bar.setAttribute("aria-valuenow", n);
+    }
+    if (reduced || !("IntersectionObserver" in window)) { paint(target); return; }
     var done = false;
     var io = new IntersectionObserver(function (entries) {
       if (done || !entries[0].isIntersecting) return;
@@ -645,7 +655,7 @@ Save a friend.</h1>
       requestAnimationFrame(function tick(ts) {
         if (start == null) start = ts;
         var p = Math.min((ts - start) / dur, 1);
-        el.textContent = Math.round(p * target);
+        paint(Math.round(p * target));
         if (p < 1) requestAnimationFrame(tick);
       });
     }, { threshold: 0.6 });
